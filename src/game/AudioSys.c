@@ -120,7 +120,17 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800200AC);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800200E4);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", UnkFunc04); // Used by InputSys__Quit
+void UnkFunc04(UnkStruct10* arg0, s32 arg1) {
+    s32 temp_a0;
+
+    temp_a0 = arg0->unk6;
+    if (!(temp_a0 & 3)) {
+        func_800341A8(temp_a0, 0, 0);
+    }
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800201C4);
 

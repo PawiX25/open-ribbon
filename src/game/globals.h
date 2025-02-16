@@ -131,6 +131,11 @@ typedef struct {
     s32 unk48;
 } UnkStruct09;
 
+typedef struct {
+    s32 pad1[0x6];
+    s32 unk6;
+} UnkStruct10;
+
 // No origin established yet
 extern UnkStruct01* UnkVar03;
 
