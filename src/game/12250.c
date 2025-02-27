@@ -1,4 +1,5 @@
 #include "common.h"
+#include "globals.h"
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AA50);
 
@@ -12,7 +13,13 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", FontHack__UnkFunc00);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B01C);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B054);
+void func_8002B054(UnkStruct07* arg0) {
+    if (arg0->unk0 == 0) {
+        arg0->unk4 = 1;
+        arg0->unk8 = 1;
+        arg0->unk0 = 1;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B078);
 
