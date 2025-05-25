@@ -120,7 +120,6 @@ typedef struct {
 		s32 unk8;
 } UnkStruct07;
 
-
 typedef struct {
 		s32 unk0;
 		s32 unk4;
@@ -168,7 +167,6 @@ typedef struct {
     s32 unk18;
     s32 unk1C;
 } UnkStruct16;
-
 
 // No origin established yet
 extern UnkStruct01* UnkVar03;
