@@ -16,7 +16,9 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpUsage);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpHead);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Init01);
+void MemorySys__Init01(void) {
+    MemorySys__Init();
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__malloc);
 
@@ -83,7 +85,21 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022C80);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022D78);
+u8* func_80022D78(u8* arg0, u8* arg1, u8* arg2) {
+    u8* var_a0;
+    u8* var_a1;
+
+    var_a0 = arg0;
+    var_a1 = arg1;
+    if (var_a1 != NULL) {
+        do {
+            var_a1 -= 1;
+            *var_a0 = *arg2;
+            var_a0 += 1;
+        } while (var_a1 != NULL);
+    }
+    return var_a0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022D9C);
 
