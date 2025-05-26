@@ -86,19 +86,14 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022C80);
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
 
 u8* func_80022D78(u8* arg0, u8* arg1, u8* arg2) {
-    u8* var_a0;
-    u8* var_a1;
+    u8* ptr = arg0;
 
-    var_a0 = arg0;
-    var_a1 = arg1;
-    if (var_a1 != NULL) {
-        do {
-            var_a1 -= 1;
-            *var_a0 = *arg2;
-            var_a0 += 1;
-        } while (var_a1 != NULL);
+    for (; arg1 != NULL; arg1--) {
+        *ptr = *arg2;
+        ptr++;
     }
-    return var_a0;
+
+    return ptr;
 }
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022D9C);
