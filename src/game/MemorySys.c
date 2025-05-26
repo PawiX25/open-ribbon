@@ -85,12 +85,13 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022C80);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
 
-u8* func_80022D78(u8* arg0, u8* arg1, u8* arg2) {
-    u8* ptr = arg0;
+u8* func_80022D78(u8* dest, s32 count, u8* value) {
+    // memset-like function
+    u8* ptr = dest;
 
-    for (; arg1 != NULL; arg1--) {
-        *ptr = *arg2;
-        ptr++;
+    while (count != 0) {
+        *ptr++ = *value;
+        count--;
     }
 
     return ptr;
