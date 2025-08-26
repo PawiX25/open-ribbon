@@ -1,0 +1,82 @@
+name: vib-ribbon (loader) (Europe)
+sha1: 4072b2c5550f50ba46a87fcd775403e4c2119ae6
+options:
+  # paths
+  basename: SCES_028.73
+  base_path: ..
+  target_path: iso/SCES_028.73
+
+  # compiler
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/loader
+  src_path: src
+  build_path: build
+
+  ld_script_path: loader.ld
+
+  find_file_boundaries: True
+  gp_value: 0x800167CC
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  disasm_unknown: True
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  # (poly): Should .ctors be here as well?
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+
+  migrate_rodata_to_functions: True
+  ld_bss_is_noload: False
+
+  symbol_addrs_path:
+    - config/loader.symbol_addrs.txt
+  reloc_addrs_path:
+    - config/loader.reloc_addrs.txt
+
+  undefined_funcs_auto_path: config/loader.undefined_funcs_auto.txt
+  undefined_syms_auto_path: config/loader.undefined_syms_auto.txt
+
+  extensions_path: tools/splat_ext
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x80010000
+    align: 4
+    subalign: 4
+    bss_size: 0x2434 # From `__bsslen`
+    subsegments:
+      - [0x800, rodata, unk0] # Input related strings, unreferenced
+      - [0x84c, .rodata, loader]
+      - [0x93c, rodata, sdk]
+
+      - [0xebc, cpp, loader]
+      - [0x12e0, cpp, GameParams]
+      - [0x12f0, asm, sdk]
+
+      - [0x515c, data, ctors]
+      - [0x5160, data, loader]
+      - [0x5a28, data, sdk]
+
+      - [0x6fcc, sdata, loader]
+
+      - [0x6fe0, sbss, loader]
+      - [0x6fe4, sbss, sdk]
+
+      - [0x6fe8, bss, sdk]
+  - [0x7000]

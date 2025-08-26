@@ -1,0 +1,6 @@
+asm/
+build/
+expected/
+iso/
+compile_commands.json
+*.ld

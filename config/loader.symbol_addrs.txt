@@ -1,0 +1,15 @@
+// src/GameParams.cpp
+__11CGameParams = 0x80010ae0; // type:func size:0x10
+
+//
+// Psy-Q symbols
+//
+
+// libcd.lib
+CdMode          = 0x80011914; // type:func
+CdControl       = 0x80011998; // type:func
+CdSearchFile    = 0x80012044; // type:func
+CdPosToInt      = 0x80012ae8; // type:func
+
+// libetc.lib
+VSync           = 0x80012b84; // type:func
