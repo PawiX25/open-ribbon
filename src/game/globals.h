@@ -71,7 +71,7 @@ struct PakFile {
     s32 unk4;
     s32 size;
 };
-s32 delete(PakFile);
+void delete(void *);
 
 
 typedef struct {

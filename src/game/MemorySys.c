@@ -62,7 +62,7 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__LoadFile);
 void FileSys__DeleteFile(PakFile pf)
 {
     if (pf.size != 0 && pf.next != NULL)
-        delete(pf);
+        delete(pf.next);
 }
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Unknown);
