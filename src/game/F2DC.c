@@ -64,7 +64,13 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029B0C);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029BE0);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029D88);
+extern s32 D_80047EC8;
+
+s32 func_80029D88(s32 arg0) {
+    s64 hilo = arg0 * (u64)D_80047EC8;
+    s32 v0 = hilo >> 16;
+    return v0 >> 16;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029DB8);
 
@@ -82,8 +88,12 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A950);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A960);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A9F8);
+s32 func_8002A9F8(UnkStruct08* arg0) {
+    return ((u32) arg0->unk4 >> 3) & 1;
+}
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002AA0C);
+s32 func_8002AA0C(s32 arg0) {
+    return arg0 + 8;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002AA14);

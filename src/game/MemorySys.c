@@ -67,7 +67,32 @@ void FileSys__DeleteFile(PakFile pf)
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Unknown);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Unk00);
+typedef struct {
+    char *start;
+    char *end;
+} FileSysStr0;
+
+extern void *memcpy(void *, const void *, int);
+extern void *memmove(void *, const void *, int);
+
+FileSysStr0* FileSys__Unk00(FileSysStr0* self, char* new_start, char* new_end) {
+    if ((unsigned int)(self->end - self->start) >= (unsigned int)(new_end - new_start)) {
+        memcpy(self->start, new_start, new_end - new_start);
+
+        char *curEnd = self->end;
+        char *newEnd = self->start + (new_end - new_start);
+
+        if (newEnd != curEnd) {
+            memmove(newEnd, curEnd, 1);
+            self->end -= (curEnd - newEnd);
+        }
+    } else {
+        memcpy(self->start, new_start, self->end - self->start);
+        func_80022660(self, new_start + (self->end - self->start), new_end, 0);
+    }
+
+    return self;
+}
 
 void func_80022658(void) {}
 

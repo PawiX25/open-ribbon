@@ -64,7 +64,15 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__new);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk01);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk02);
+typedef struct {
+    char unk0[0x1c];
+    s32 unk1C;
+} AudioSysUnkStruct01;
+
+void AudioSys__Unk02(AudioSysUnkStruct01* arg0, s32 arg1, s32 arg2) {
+    arg0->unk1C = arg1;
+    AudioSys__Unk01(arg0, arg2);
+}
 
 s32 AudioSys__IsTransferCompleted(s32 flag)
 {
