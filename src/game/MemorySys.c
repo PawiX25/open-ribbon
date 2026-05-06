@@ -72,22 +72,25 @@ typedef struct {
     char *end;
 } FileSysStr0;
 
-extern void *memcpy(void *, const void *, int);
-extern void *memmove(void *, const void *, int);
+extern void *func_8003424C(void *, const void *, int); /* memcpy */
+extern void *func_80030BF4(void *, const void *, int); /* memmove */
 
 FileSysStr0* FileSys__Unk00(FileSysStr0* self, char* new_start, char* new_end) {
-    if ((unsigned int)(self->end - self->start) >= (unsigned int)(new_end - new_start)) {
-        memcpy(self->start, new_start, new_end - new_start);
+    char *curEnd;
+    char *newEnd;
 
-        char *curEnd = self->end;
-        char *newEnd = self->start + (new_end - new_start);
+    if ((unsigned int)(self->end - self->start) >= (unsigned int)(new_end - new_start)) {
+        func_8003424C(self->start, new_start, new_end - new_start);
+
+        curEnd = self->end;
+        newEnd = self->start + (new_end - new_start);
 
         if (newEnd != curEnd) {
-            memmove(newEnd, curEnd, 1);
+            func_80030BF4(newEnd, curEnd, 1);
             self->end -= (curEnd - newEnd);
         }
     } else {
-        memcpy(self->start, new_start, self->end - self->start);
+        func_8003424C(self->start, new_start, self->end - self->start);
         func_80022660(self, new_start + (self->end - self->start), new_end, 0);
     }
 

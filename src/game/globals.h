@@ -59,7 +59,7 @@ extern int AudioSys__UnkFunc08();
 
 
 extern void VideoSys__AddVSyncCB(void *callback);
-extern void VideoSys__RemoveVSyncCB(void *callback);
+extern void VideoSys__RemoveVSyncCB(s32 callback);
 
 extern void MemorySys__free(void *addr);
 

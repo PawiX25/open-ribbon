@@ -82,13 +82,13 @@ void VideoSys__RemoveVSyncCB(s32 arg0) {
 
     SwEnterCriticalSection();
 
-    v0 = func_8001E658(vsync.cb, vsync.tail, &arg0, 0);
+    v0 = func_8001E658((s32)vsync.cb, (s32)vsync.tail, &arg0, 0);
     v1 = v0 + 4;
-    if (v1 != vsync.tail) {
+    if (v1 != (s32)vsync.tail) {
         func_80030BF4(v0, v1, ((s32)vsync.tail - v1) >> 0x2 << 0x2);
     }
 
-    (s32)vsync.tail -= 4;
+    vsync.tail = (VSyncCb)((s32)vsync.tail - 4);
     SwExitCriticalSection();
 }
 
