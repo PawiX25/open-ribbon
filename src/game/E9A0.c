@@ -4,18 +4,13 @@
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800271A0);
 
 void func_80027340(UnkStruct16* arg0, s32 arg1) {
-    s32 temp_v0;
-    s32 temp_v1;
-
     if (arg1 != 0) {
-        arg0->unk18 = (s32) (arg0->unk18 + arg0->unk1C);
+        arg0->unk18 += arg0->unk1C;
         return;
     }
-    temp_v1 = arg0->unk18;
-    if (temp_v1 != 0) {
-        temp_v0 = temp_v1 + arg0->unk1C;
-        arg0->unk18 = temp_v0;
-        if (temp_v0 == 0) {
+    if (arg0->unk18 != 0) {
+        arg0->unk18 += arg0->unk1C;
+        if (arg0->unk18 == 0) {
             arg0->unk1C = 1;
         }
     }
@@ -30,7 +25,7 @@ s32 func_80027570(void) {
 }
 
 void func_80027578(UnkStruct12* arg0) {
-    arg0->unk0 = (s32) (arg0->unk14 - 1);
+    arg0->unk0 = arg0->unk14 - 1;
 }
 
 void func_8002758C(UnkStruct14* arg0) {
