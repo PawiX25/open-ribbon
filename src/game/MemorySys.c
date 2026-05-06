@@ -299,7 +299,25 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024884);
 // part of TmdLineObj.cpp
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024A48);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024CC4);
+typedef struct {
+    s32 unk0;
+    char pad4[8];
+    void *unkC;
+    char pad10[0x1C];
+    void *unk2C;
+} UnkStruct17;
+
+void func_80024CC4(UnkStruct17* arg0, s32 arg1) {
+    if (arg0->unkC != NULL) {
+        delete(arg0->unkC);
+    }
+    if (arg0->unk0 != 0 && arg0->unk2C != NULL) {
+        delete(arg0->unk2C);
+    }
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024D40);
 
