@@ -319,7 +319,26 @@ void func_80024CC4(UnkStruct17* arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024D40);
+typedef struct {
+    char pad0[0x20];
+    s32 idx0;
+    s32 idx1;
+    s32 idx2;
+    SVECTOR *vbuf;
+} TriObj;
+
+s32 func_80024D40(TriObj* arg0) {
+    long sxy0, sxy1, sxy2;
+    long flag;
+
+    RotTransPers3(
+        arg0->vbuf + arg0->idx0,
+        arg0->vbuf + arg0->idx1,
+        arg0->vbuf + arg0->idx2,
+        &sxy0, &sxy1, &sxy2, &flag, &flag);
+
+    return (u32)NormalClip(sxy0, sxy1, sxy2) >> 31;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024DBC);
 
