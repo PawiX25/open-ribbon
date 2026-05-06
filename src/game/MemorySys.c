@@ -250,7 +250,11 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023A94);
 
 void func_80023AF0(void) {}
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023AF8);
+s32* func_80023AF8(s32* arg0) {
+    arg0[30] = 0; /* 0x78 */
+    arg0[38] = 0; /* 0x98 */
+    return arg0;
+}
 
 s32* func_80023B08(s32* arg0) {
     *arg0 = 0;
