@@ -149,16 +149,33 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__CallBack);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc08);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_80020020);
+extern s32 D_8003FC9C[];
 
-extern s32 D_8003FC9C[2];
+void func_80020020(void) {
+    s32 *p;
+    PakFile pf;
+    p = (s32*)D_8003FC9C[0];
+    if (p == NULL) return;
+    *p = *p - 1;
+    if (*p != 0) return;
+    pf = *(PakFile *)&D_8003FC9C[1];
+    FileSys__DeleteFile(pf);
+    free((void*)D_8003FC9C[0]);
+}
 
 void UnkCtor02(void) {
     D_8003FC9C[0] = 0;
     D_8003FC9C[1] = 0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800200AC);
+extern void *func_800202C0(void *, s32);
+
+void *func_800200AC(void *arg0) {
+    *(u8*)arg0 = 1;
+    *(u16*)((char*)arg0 + 2) = 0;
+    func_800202C0(arg0, 0);
+    return arg0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800200E4);
 

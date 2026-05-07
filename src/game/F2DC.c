@@ -32,7 +32,40 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028C1C);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028CC8);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028D6C);
+typedef struct VT_28D6C {
+    char pad[0x20];
+    s16 offset20;
+    void (*func24)(s32);
+} VT_28D6C;
+
+typedef struct VT_28E74 {
+    char pad[0x10];
+    s16 offset10;
+    void (*func14)(s32, s32);
+} VT_28E74;
+
+typedef struct Item_28D6C {
+    char pad[8];
+    void *vt;
+} Item_28D6C;
+
+typedef struct Container_28D6C {
+    s32 count;
+    Item_28D6C *items[1];
+} Container_28D6C;
+
+void func_80028D6C(Container_28D6C *arg0) {
+    s32 i;
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_28D6C *item = arg0->items[i];
+            VT_28D6C *vt = (VT_28D6C *)item->vt;
+            vt->func24((s32)item + (s32)vt->offset20);
+            i++;
+        } while (i < arg0->count);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028DE4);
 
