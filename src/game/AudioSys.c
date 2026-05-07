@@ -151,7 +151,12 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc08);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_80020020);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", UnkCtor02);
+extern s32 D_8003FC9C[2];
+
+void UnkCtor02(void) {
+    D_8003FC9C[0] = 0;
+    D_8003FC9C[1] = 0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800200AC);
 
