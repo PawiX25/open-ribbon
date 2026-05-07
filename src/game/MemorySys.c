@@ -49,7 +49,23 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021E6C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021EF4);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Unk00);
+extern s32 D_800194A4[];
+
+s32 PackedFiles__Unk00(s32 arg0, s32 *arg1, s32 arg2) {
+    s32 c;
+    s32 v;
+
+    if (*arg1 >= 5) {
+        if (arg2 == 0) {
+            return 0;
+        }
+        *arg1 = 0;
+    }
+    c = *arg1;
+    v = D_800194A4[c];
+    *arg1 = c + 1;
+    return arg0 | v;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Init);
 
