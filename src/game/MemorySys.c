@@ -440,7 +440,26 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026F5C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027000);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027090);
+typedef struct {
+    char pad0[0xC];
+    s32 unkC;
+} F800270XXEntry;
+
+typedef struct {
+    char pad0[0x4];
+    s32 unk4;
+    char pad8[0x4];
+    F800270XXEntry *unkC;
+} F800270XXStruct;
+
+extern s32 AudioSys__UnkFunc09();
+
+s32 func_80027090(F800270XXStruct *arg0) {
+    if (arg0->unkC[arg0->unk4].unkC == -97) {
+        return 0;
+    }
+    return AudioSys__UnkFunc09(0) ^ 1;
+}
 
 extern s32 func_8001F5E4(s16);
 
