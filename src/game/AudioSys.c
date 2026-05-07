@@ -56,7 +56,24 @@ int AudioSys__UnkFunc09()
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__ParseVH);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc00); // Since its "circled" by AudioSys, its probably part of AudioSys
+typedef struct {
+    char pad0[0x10];
+    void *unk10;
+    char pad14[0x4];
+    void *unk18;
+} AudioSysUnkStruct02;
+
+extern u32 D_8001918C;
+
+void AudioSys__UnkFunc00(AudioSysUnkStruct02 *arg0, s32 arg1) {
+    arg0->unk18 = &D_8001918C;
+    if (arg0->unk10 != NULL) {
+        delete(arg0->unk10);
+    }
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F74C);
 
