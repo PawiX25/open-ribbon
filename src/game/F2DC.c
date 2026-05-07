@@ -89,7 +89,22 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002990C);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029A38);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029A80);
+extern int (*D_80048028)();
+extern char D_80019FBC[]; // "out of memory\n"
+extern s32 MemorySys__malloc(s32);
+
+void func_80029A80(s32 arg0) {
+    int (*var_v0)();
+
+    do {
+        var_v0 = D_80048028;
+        if (var_v0 == NULL) {
+            printf(&D_80019FBC);
+            exit(1);
+        }
+        var_v0();
+    } while (MemorySys__malloc(arg0) == 0);
+}
 
 void func_80029ADC(void) {}
 

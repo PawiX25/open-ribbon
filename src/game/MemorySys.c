@@ -281,7 +281,20 @@ s32 func_80023A88(s32 arg0, s32 arg1, s32 arg2) {
     return arg0 + (arg2 - arg1);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023A94);
+extern char D_800195F4[]; // "out of memory\n"
+
+void func_80023A94(s32 arg0) {
+    int (*var_v0)();
+
+    do {
+        var_v0 = D_80048028;
+        if (var_v0 == NULL) {
+            printf(&D_800195F4);
+            exit(1);
+        }
+        var_v0();
+    } while (MemorySys__malloc(arg0) == 0);
+}
 
 void func_80023AF0(void) {}
 
