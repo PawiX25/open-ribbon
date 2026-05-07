@@ -18,7 +18,32 @@ void func_80027340(UnkStruct16* arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_80027394);
 
-INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800274EC);
+typedef struct {
+    s32 unk0;
+    char pad4[0x8];
+    UnkStruct16 *unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+} AnimStruct;
+
+extern void func_80025954(UnkStruct16*);
+
+void func_800274EC(AnimStruct* arg0, s32 arg1) {
+    if (arg0->unk0 == 0) {
+        arg0->unk18 = 0;
+        arg0->unk1C = 1;
+    }
+    arg0->unk0++;
+    if (arg0->unk0 > arg0->unk14) {
+        func_80027340((UnkStruct16*)arg0, arg1);
+        arg0->unkC->unk18 = 0;
+        if (arg0->unk18 == 0) {
+            func_80025954(arg0->unkC);
+        }
+    }
+}
 
 s32 func_80027570(void) {
     return 1;
