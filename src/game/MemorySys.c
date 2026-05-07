@@ -442,6 +442,12 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027000);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027090);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800270DC);
+extern s32 func_8001F5E4(s16);
+
+void func_800270DC(s32 *arg0) {
+    arg0[1] = 0;
+    arg0[0] = 0;
+    func_8001F5E4(0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027104);
