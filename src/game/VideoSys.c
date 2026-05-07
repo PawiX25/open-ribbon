@@ -92,6 +92,23 @@ void VideoSys__RemoveVSyncCB(s32 arg0) {
     SwExitCriticalSection();
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__alloc);
+INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_8001906C);
+
+extern int (*D_80048028)();
+extern char D_8001906C[]; // "out of memory\n"
+extern s32 MemorySys__malloc(s32);
+
+void VideoSys__alloc(s32 arg0) {
+    int (*var_v0)();
+
+    do {
+        var_v0 = D_80048028;
+        if (var_v0 == NULL) {
+            printf(&D_8001906C);
+            exit(1);
+        }
+        var_v0();
+    } while (MemorySys__malloc(arg0) == 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", func_8001E4E4);

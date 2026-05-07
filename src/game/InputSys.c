@@ -30,7 +30,24 @@ INCLUDE_RODATA("asm/game/nonmatchings/InputSys", D_800191E8);
 
 INCLUDE_RODATA("asm/game/nonmatchings/InputSys", D_80019210);
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__alloc);
+INCLUDE_RODATA("asm/game/nonmatchings/InputSys", D_80019234);
+
+extern int (*D_80048028)();
+extern char D_80019234[]; // "out of memory\n"
+extern s32 MemorySys__malloc(s32);
+
+void InputSys__alloc(s32 arg0) {
+    int (*var_v0)();
+
+    do {
+        var_v0 = D_80048028;
+        if (var_v0 == NULL) {
+            printf(&D_80019234);
+            exit(1);
+        }
+        var_v0();
+    } while (MemorySys__malloc(arg0) == 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020920);
 

@@ -178,7 +178,13 @@ void func_8001EC74(UnkStruct03 *arg0) {
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);
 #endif
 
-INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001ED44);
+extern void func_80031B54(void);
+extern s32 func_800314B8(void);
+
+s32 func_8001ED44(void) {
+    func_80031B54();
+    return func_800314B8();
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001ED6C);
 

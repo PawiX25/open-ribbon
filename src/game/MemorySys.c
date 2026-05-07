@@ -202,7 +202,24 @@ void func_8002317C(UnkStruct09* arg0, int arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800231A8);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800231C4);
+typedef struct {
+    char pad0[0x50];
+    s16 *unk50;
+} F800231C4Struct;
+
+s16 *func_800231C4(F800231C4Struct *arg0, s16 arg1, s16 arg2, s16 arg3) {
+    s16 *r = arg0->unk50;
+    r[0] = arg1;
+    r[1] = 0;
+    r[2] = 0;
+    r[3] = 0;
+    r[4] = arg2;
+    r[5] = 0;
+    r[6] = 0;
+    r[7] = 0;
+    r[8] = arg3;
+    return r;
+}
 
 extern int D_8003FE8C;
 

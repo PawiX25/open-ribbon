@@ -81,7 +81,11 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800291FC);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029210);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800293B8);
+extern void func_800291FC(s32 arg0, s32 arg1);
+
+void func_800293B8(void) {
+    func_800291FC(0xA8F5, 0x547A);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800293DC);
 
