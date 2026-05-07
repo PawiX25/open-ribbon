@@ -4,7 +4,19 @@
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", Movie__Ctor);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028A88);
+typedef struct {
+    char pad0[0x8];
+    void *unk8;
+} F2DC_Object;
+
+extern u32 D_80019F40;
+
+void func_80028A88(F2DC_Object *arg0, s32 arg1) {
+    arg0->unk8 = &D_80019F40;
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 void UnkFunc01(UnkStruct00* a1, s32 a2)
 {
