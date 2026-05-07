@@ -47,7 +47,11 @@ void AudioSys__UnkFunc01(UnkStruct02* arg0, s16 arg1, s16 arg2, s16 arg3)
     AudioSys__UnkFunc06(arg1, UnkVar04, arg0->unk0, arg0->unk4, (s16) (arg0->unk4 + 1), 0, arg2, arg2, arg3);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F5E4);
+extern s32 func_8001FE34(s32);
+
+s32 func_8001F5E4(s16 arg0) {
+    return func_8001FE34(arg0);
+}
 
 int AudioSys__UnkFunc09()
 {
