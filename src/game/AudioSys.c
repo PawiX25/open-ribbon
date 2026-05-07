@@ -63,11 +63,13 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__ParseVH);
 typedef struct {
     char pad0[0x10];
     void *unk10;
-    char pad14[0x4];
+    s32 unk14;
     void *unk18;
 } AudioSysUnkStruct02;
 
 extern u32 D_8001918C;
+extern u32 AudioSys__UnknownVar;
+extern void SpuFree(s32);
 
 void AudioSys__UnkFunc00(AudioSysUnkStruct02 *arg0, s32 arg1) {
     arg0->unk18 = &D_8001918C;
@@ -100,7 +102,13 @@ s32 AudioSys__IsTransferCompleted(s32 flag)
     return SpuIsTransferCompleted(flag != 0) != 0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Dtor); // Uses AudioSys__UnkFunc00
+void AudioSys__Dtor(AudioSysUnkStruct02 *arg0, s32 arg1) {
+    arg0->unk18 = &AudioSys__UnknownVar;
+    if (arg0->unk14 >= 0) {
+        SpuFree(arg0->unk14);
+    }
+    AudioSys__UnkFunc00(arg0, arg1);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__InitSpu);
 
