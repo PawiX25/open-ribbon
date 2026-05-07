@@ -130,7 +130,21 @@ void func_80022A58(void) {}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022A60);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022C80);
+extern int (*D_80048028)();
+extern char D_80019494[]; // "out of memory\n"
+
+void func_80022C80(s32 arg0) {
+    int (*var_v0)();
+
+    do {
+        var_v0 = D_80048028;
+        if (var_v0 == NULL) {
+            printf(&D_80019494);
+            exit(1);
+        }
+        var_v0();
+    } while (MemorySys__malloc(arg0) == 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
 
