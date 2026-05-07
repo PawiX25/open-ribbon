@@ -53,7 +53,12 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Unk00);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Init);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Quit);
+extern PakFile D_8003FE68;
+
+void PackedFiles__Quit(void) {
+    PakFile pf = D_8003FE68;
+    FileSys__DeleteFile(pf);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Load);
 
