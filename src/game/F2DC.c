@@ -38,7 +38,25 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028DE4);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028E74);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", Movie__Unk02);
+typedef struct {
+    s32 count;
+    void *items[10];
+} Movie;
+
+extern char D_80019790[];
+extern char D_800197B8[];
+
+void Movie__Unk02(Movie *arg0, void *arg1) {
+    s32 c;
+
+    c = arg0->count;
+    if (c >= 10) {
+        printf(D_80019790, D_800197B8, 0x25);
+        exit(1);
+    }
+    arg0->items[c] = arg1;
+    arg0->count = c + 1;
+}
 
 void func_80028F44(void) {}
 
