@@ -48,7 +48,12 @@ int UnkFunc02() { return 1; }; // Don't ask me why does this function exists :')
 
 void func_80028F5C(void) {}
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028F64);
+void func_80028F64(F2DC_Object *arg0, s32 arg1) {
+    arg0->unk8 = &D_80019F40;
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028F98);
 
