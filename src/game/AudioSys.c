@@ -343,7 +343,36 @@ void UnkFunc04(UnkStruct10* arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800201C4);
+extern s32 func_80033FD0(s32);
+extern void func_80034170(s32, s32 *);
+extern s32 D_80047F98;
+
+void func_800201C4(s32 *arg0, s8 *arg1) {
+    s32 r;
+    *(s8*)arg0 = arg1[0];
+    *((s8*)arg0 + 1) = arg1[1];
+    if (*(u8*)arg0 != 0) {
+        func_800202C0(arg0, 0);
+    } else {
+        func_800202C0(arg0, ~(*(u16*)((s8*)arg1 + 2)) & 0xFFFF);
+    }
+    r = func_80033FD0(arg0[6]);
+    if (r == arg0[8]) goto end;
+    if (r == 1) {
+        arg0[7] = 1;
+    } else if (r < 2) {
+        if (r == 0) {
+            func_800202C0(arg0, 0);
+        }
+    } else if (r == 6) {
+        if (arg0[7] != 0) {
+            arg0[7] = 0;
+            func_80034170(arg0[6], &D_80047F98);
+        }
+    }
+end:
+    arg0[8] = r;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800202C0);
 
