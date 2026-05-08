@@ -61,7 +61,24 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1E0);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B410);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B42C);
+extern void AudioSys__UnkFunc01(s32 *, s32, s32, s32, s32);
+
+void func_8002B42C(void) {
+    s32 buf[3];
+    if (D_80040858[4] != 0 || D_80040858[3] != 0 ||
+        D_80040858[1] != 0 || D_80040858[2] != 0) {
+        if (D_80040858[6] != 0) {
+            buf[0] = 0;
+            buf[1] = 6;
+            AudioSys__UnkFunc01(buf, 5, 0x40, -1, 0);
+        }
+    }
+    if (D_80040858[0] != 0) {
+        buf[0] = 0;
+        buf[1] = 0;
+        AudioSys__UnkFunc01(buf, 1, 0x40, -1, 0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B4EC);
 
