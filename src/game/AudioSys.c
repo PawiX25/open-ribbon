@@ -205,7 +205,27 @@ void UnkFunc00(void) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk00);
+extern s32 func_800303BC(s32);
+
+s32 AudioSys__Unk00(s32 arg0, s16 arg1) {
+    s32 i;
+    s32 *slot;
+    s32 *new_obj;
+    if ((s32)(s16)arg1 != -1) {
+        printf(D_80019114, D_8001913C, 0x15E);
+        exit(1);
+    }
+    i = 0;
+    while (i < 10) {
+        if (D_8003FD8C[i] == 0) break;
+        i++;
+    }
+    if (i == 10) return -1;
+    slot = &D_8003FD8C[i];
+    new_obj = (s32*)func_800303BC(0x24);
+    *slot = (s32)AudioSys__new(new_obj, arg0);
+    return (s16)i;
+}
 
 extern s32 D_8003FD8C[];
 
