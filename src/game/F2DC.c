@@ -152,29 +152,8 @@ void func_80028C1C(Container_28CC8 *arg0, s32 flag) {
     }
 }
 
-typedef struct VT_28AC4 {
-    char pad0[8];
-    s16 offset8;
-    char padA[2];
-    void (*funcC)(s32, s32);
-} VT_28AC4;
 
-typedef struct VT_28CC8 {
-    char pad0[0x20];
-    s16 offset20;
-    char pad22[2];
-    void (*func24)(s32);
-    s16 offset28;
-    char pad2A[2];
-    void (*func2C)(s32, s32);
-} VT_28CC8;
 
-typedef struct Container_28CC8 {
-    s32 count;
-    Item_28D6C *items[10];
-    char pad28[4];
-    VT_28CC8 *vtmain;
-} Container_28CC8;
 
 void func_80028CC8(Container_28CC8 *arg0, s32 arg1) {
     s32 i;
@@ -191,27 +170,9 @@ void func_80028CC8(Container_28CC8 *arg0, s32 arg1) {
     }
 }
 
-typedef struct VT_28D6C {
-    char pad[0x20];
-    s16 offset20;
-    void (*func24)(s32);
-} VT_28D6C;
 
-typedef struct VT_28E74 {
-    char pad[0x10];
-    s16 offset10;
-    void (*func14)(s32, s32);
-} VT_28E74;
 
-typedef struct Item_28D6C {
-    char pad[8];
-    void *vt;
-} Item_28D6C;
 
-typedef struct Container_28D6C {
-    s32 count;
-    Item_28D6C *items[1];
-} Container_28D6C;
 
 void func_80028D6C(Container_28D6C *arg0) {
     s32 i;
@@ -226,12 +187,6 @@ void func_80028D6C(Container_28D6C *arg0) {
     }
 }
 
-typedef struct VT_28DE4 {
-    char pad[0x18];
-    s16 offset18;
-    char pad1A[2];
-    void *(*func1C)(s32);
-} VT_28DE4;
 
 s32 func_80028DE4(Container_28D6C *arg0) {
     s32 ok = 1;
@@ -345,16 +300,7 @@ void func_80028F98(s32 idx, Pos_290DC *p, s32 dx, s32 dy) {
     }
 }
 
-typedef struct Bounds_290DC {
-    s32 maxX;
-    s32 maxY;
-} Bounds_290DC;
 
-typedef struct Pos_290DC {
-    s32 x;
-    s32 y;
-    Bounds_290DC *bounds;
-} Pos_290DC;
 
 void func_800290DC(Pos_290DC *p, s32 dx, s32 dy, s32 wrapY, s32 wrapX) {
     s32 nx = p->x + dx;
