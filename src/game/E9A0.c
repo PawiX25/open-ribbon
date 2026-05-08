@@ -1,6 +1,19 @@
 #include "common.h"
 #include "globals.h"
 
+typedef struct VT_28E74 {
+    char pad[0x10];
+    s16 offset10;
+    void (*func14)(s32, s32);
+} VT_28E74;
+
+typedef struct VT_28DE4 {
+    char pad[0x18];
+    s16 offset18;
+    char pad1A[2];
+    void *(*func1C)(s32);
+} VT_28DE4;
+
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800271A0);
 
 void func_80027340(UnkStruct16* arg0, s32 arg1) {
