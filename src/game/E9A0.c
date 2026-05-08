@@ -141,4 +141,38 @@ void func_800278F8(Container_2780C *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800279E4);
+extern s32 AudioSys__UnkFunc09(void);
+
+s32 func_800279E4(Container_2780C *arg0) {
+    s32 i;
+    s32 r;
+    s32 ret;
+    s32 buf[4];
+    if (arg0->unk2C == 0) {
+        if (func_8002990C() != 0) {
+            arg0->unk2C = 1;
+            buf[0] = 1;
+            buf[1] = 0;
+            AudioSys__UnkFunc01(buf, 1, 0x40, -1, 0);
+        }
+    }
+    if (arg0->unk2C != 0 && AudioSys__UnkFunc09() != 0) {
+        return 1;
+    }
+    r = 1;
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            ret = 0;
+            if (r != 0) {
+                Item_2780C *item = arg0->items[i];
+                VT_28DE4 *vt = (VT_28DE4*)item->vt;
+                void *res = vt->func1C((s32)item + (s32)vt->offset18);
+                ret = (res != 0) ? 1 : 0;
+            }
+            r = ret;
+            i++;
+        } while (i < arg0->count);
+    }
+    return r;
+}
