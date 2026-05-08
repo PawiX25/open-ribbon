@@ -197,7 +197,42 @@ void func_8001EC74(UnkStruct03 *arg0) {
 }
 
 #else
-INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);
+extern char D_800190C8[];
+
+void func_8001EC74(s32 *arg0) {
+    s32 buf_local[14];
+    s32 small_buf[2];
+    s32 v;
+    s32 cond;
+    D_80047F64 = arg0;
+    UnkFunc03();
+    D_80047F60 = 0;
+    D_80047F40 = NULL;
+    D_80047F44 = NULL;
+    CdSys__Unk01MemAdd = 0;
+    CdSys__Unk00MemAdd = 0;
+    D_80047F50 = 0;
+    D_80047F54 = 0;
+    D_80047F74 = 0;
+    D_80047F3C = -1;
+    D_80047F38 = 0;
+    D_80047F68 = 0;
+    func_80031E48((UnkStruct03*)buf_local);
+    func_80031374();
+    buf_local[0] = 0;
+    func_80032158((UnkStruct04*)buf_local);
+    VSync(4);
+    v = func_80031C40();
+    cond = (v >> 4) & 1;
+    if (arg0[0] <= 0 && cond != 0) {
+        small_buf[0] = 1;
+        small_buf[1] = 0;
+        arg0[0] = small_buf[0];
+        arg0[1] = small_buf[1];
+        printf(D_800190C8);
+    }
+    D_80047F5C = cond;
+}
 #endif
 
 extern void func_80031B54(void);
