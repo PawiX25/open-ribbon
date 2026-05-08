@@ -54,7 +54,15 @@ void FontHack__UnkFunc00(s32 *arg0, s32 flag) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B01C);
+extern s32 D_800480B8;
+extern s32 D_800480BC;
+extern void func_8002F3CC(void);
+
+void func_8002B01C(s32 a0, s32 a1, s32 a2) {
+    D_800480B8 = a1 & 0x3F;
+    D_800480BC = a2 & 0xFF;
+    func_8002F3CC();
+}
 
 void func_8002B054(UnkStruct07* arg0) {
     if (arg0->unk0 == 0) {
@@ -117,7 +125,14 @@ void func_8002B1A0(void) {
     D_800480F8 = 0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1BC);
+extern s32 D_80048104;
+
+void func_8002B1BC(void) {
+    D_800480E8 = 1;
+    if (D_80048104 == 2) {
+        D_800480EC = 0;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1E0);
 
