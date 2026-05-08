@@ -51,7 +51,36 @@ INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_80019000);
 
 INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_80019028);
 
-INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__Quit);
+extern void func_8002C150(s32);
+extern char D_8001904C[];
+
+typedef struct {
+    s32 *u0;
+    s32 *u4;
+} Pair_DBxx;
+
+extern Pair_DBxx D_8003F964[2];
+
+void VideoSys__Quit(void) {
+    s32 i;
+    s32 *p;
+    func_8002C150(0);
+    printf(D_8001904C, D_8003F964[0].u4[2], D_8003F964[0].u4[0]);
+    for (i = 0; i < 2; i++) {
+        p = D_8003F964[i].u4;
+        if (p != NULL) {
+            if (p[1] != 0) {
+                delete((void*)p[1]);
+            }
+            free(p);
+        }
+        p = D_8003F964[i].u0;
+        if (p != NULL) {
+            free((void*)p[1]);
+            free(p);
+        }
+    }
+}
 
 void VideoSys__Reset()
 {
