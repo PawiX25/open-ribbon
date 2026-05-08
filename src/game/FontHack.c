@@ -10,7 +10,14 @@
 FAInstance FontHack_Instance = {0, 0};
 char D_80047EDC[2] = "\n\n";
 
-INCLUDE_ASM("asm/game/nonmatchings/FontHack", func_8001E658);
+s32* func_8001E658(s32 *start, s32 *end, s32 *target, s32 _unused) {
+    s32 v = *target;
+    while (start < end) {
+        if (*start == v) return start;
+        start++;
+    }
+    return end;
+}
 
 // FontHack::Dtor
 void FontHack__Dtor()
