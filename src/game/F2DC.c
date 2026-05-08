@@ -316,7 +316,34 @@ void func_80029ADC(void) {}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029AE4);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029B0C);
+extern void func_80030644(void *, s32, s32);
+extern void func_8002D268(s32 *, s32 *);
+
+void func_80029B0C(s32 *arg0, s32 arg1) {
+    s32 i;
+    s32 cond_a;
+    s32 buf1[4];
+    s32 buf2[4];
+    s32 *p = (s32*)((char*)arg0 + 8);
+    cond_a = (((u32)arg0[1] >> 3) & 1) == 0 ? 1 : 0;
+    for (i = cond_a; i < 2; i++) {
+        if (arg1 != 0 || cond_a != 1) {
+            func_80030644(buf1, 0, 8);
+            *(u16*)((s8*)buf2 + 8) = ((u16*)p)[2];
+            *(u16*)((s8*)buf2 + 10) = ((u16*)p)[3];
+            *(u16*)((s8*)buf2 + 12) = ((u16*)p)[4];
+            *(u16*)((s8*)buf2 + 14) = ((u16*)p)[5];
+            {
+                u32 t0 = *(u32*)((s8*)buf2 + 8);
+                u32 t1 = *(u32*)((s8*)buf2 + 12);
+                *(u32*)buf1 = t0;
+                *(u32*)((s8*)buf1 + 4) = t1;
+            }
+            func_8002D268(buf1, (s32*)((char*)p + 0xC));
+        }
+        p = (s32*)((char*)p + p[0]);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029BE0);
 
