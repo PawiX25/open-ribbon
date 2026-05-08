@@ -320,7 +320,60 @@ void func_800293B8(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800293DC);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002990C);
+extern char D_800480A0[];
+extern void func_80029ADC(s32 *);
+extern void func_80029A80(s32);
+extern u16 func_8002B0D4(void);
+extern u16 func_8002B0F8(void);
+extern s32* func_800207D0(s32 *);
+
+s32 func_8002990C(void) {
+    char *p = D_800480A0;
+    s32 fd[3];
+    s32 buf16[8];
+    s32 len;
+    char *new_buf;
+    s32 byte_count;
+    s32 *r;
+    u16 v0, v1;
+    fd[0] = 0;
+    fd[1] = 0;
+    fd[2] = 0;
+    len = func_80035C6C(p) + 1;
+    if ((u32)len > (u32)-2) {
+        func_80029ADC(fd);
+    } else if (len == 0) {
+        new_buf = NULL;
+        fd[0] = (s32)new_buf;
+        fd[1] = (s32)new_buf;
+        fd[2] = (s32)((char*)new_buf + len);
+    } else {
+        new_buf = (char*)MemorySys__malloc(len);
+        if (new_buf == NULL) {
+            new_buf = (char*)func_80029A80(len);
+        }
+        fd[0] = (s32)new_buf;
+        fd[1] = (s32)new_buf;
+        fd[2] = (s32)(new_buf + len);
+    }
+    byte_count = (s32)((char*)D_800480A0 - p);     // not used
+    func_80030BF4((void*)fd[0], p, byte_count);
+    fd[1] = fd[0] + byte_count;
+    *(s8*)fd[1] = 0;
+    r = func_800207D0(fd);
+    *((s8*)buf16) = ((s8*)r)[0x12];
+    *((s8*)buf16 + 1) = ((s8*)r)[0x13];
+    {
+        u16 mask_in = *(u16*)buf16;
+        u16 m1;
+        u16 m2;
+        m1 = mask_in & func_8002B0D4();
+        if (m1) return 1;
+        m2 = (*(u16*)buf16) & func_8002B0F8();
+        if (m2) return 2;
+        return 0;
+    }
+}
 
 extern s32 D_80047EEC;
 
