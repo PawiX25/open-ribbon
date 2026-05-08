@@ -394,7 +394,58 @@ void AudioSys__UnkFunc07() // Clears the UnkVar05 values
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__CallBack);
+extern s32 func_800326F4(s32);
+extern void func_80032AE4(s32);
+
+s32 AudioSys__CallBack(void) {
+    s32 mask;
+    s32 status;
+    s32 unkVar7 = UnkVar07;
+    s32 unkVar84 = D_80047F84;
+    s32 i;
+    for (i = 0; i < 24; i++) {
+        mask = 1 << i;
+        if (((unkVar7 | unkVar84) & mask) == 0) continue;
+        status = func_800326F4(mask);
+        if (status >= 3) {
+            if (status == 3) {
+                if ((unkVar84 & mask) != 0) {
+                    s32 vid = UnkVar05[i];
+                    if (vid >= 0) {
+                        UnkVar05[i] = -1;
+                        UnkVar06 = UnkVar06 | (1 << vid);
+                    }
+                }
+                unkVar84 = unkVar84 & ~mask;
+            }
+            continue;
+        }
+        if (status > 0) {
+            unkVar7 = unkVar7 & ~mask;
+            unkVar84 = unkVar84 | mask;
+        } else if (status == 0) {
+            if ((unkVar84 & mask) != 0) {
+                s32 vid = UnkVar05[i];
+                if (vid >= 0) {
+                    UnkVar05[i] = -1;
+                    UnkVar06 = UnkVar06 | (1 << vid);
+                }
+            }
+            unkVar84 = unkVar84 & ~mask;
+        }
+    }
+    D_80047F84 = unkVar84;
+    UnkVar07 = unkVar7;
+    if (voice_bit != 0) {
+        func_80032AE4(0);
+        voice_bit = 0;
+    }
+    if (UnkVar06 != 0) {
+        func_80032AE4(1);
+        UnkVar06 = 0;
+    }
+    return 0;
+}
 
 extern s32 D_80047F84;
 
