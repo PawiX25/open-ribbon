@@ -6,7 +6,20 @@
 #include <psyq/STDIO.H>
 
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Init);
+extern char D_80019244[];
+extern char D_8001926C[];
+extern s32 D_80047FCC;
+extern void func_8003428C(void);
+
+void MemorySys__Init(s32 arg0, s32 arg1) {
+    D_80047FCC = arg1 & ~7;
+    if ((arg0 & 3) != 0) {
+        printf(D_80019244, D_8001926C, 0x86);
+        exit(1);
+    }
+    D_80047FD0 = (s32*)arg0;
+    func_8003428C();
+}
 
 void func_80021758(void) {} // MemorySys__Stub [Empty]
 
