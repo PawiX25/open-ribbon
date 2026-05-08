@@ -308,7 +308,15 @@ void func_800290DC(Pos_290DC *p, s32 dx, s32 dy, s32 wrapY, s32 wrapX) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800291FC);
+extern s32 D_80048098;
+extern s32 D_8004809C;
+extern s32 D_800480A8;
+
+void func_800291FC(s32 a0, s32 a1) {
+    D_80048098 = a0;
+    D_8004809C = a1;
+    D_800480A8 = 0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029210);
 
