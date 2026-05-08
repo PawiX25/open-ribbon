@@ -84,7 +84,41 @@ int AudioSys__UnkFunc09()
     return AudioSys__UnkFunc08();
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__ParseVH);
+extern s32 func_80030C74(s32);
+
+void AudioSys__ParseVH(s32 *arg0, s32 *arg1, s32 arg2) {
+    s32 i;
+    s32 v0;
+    s32 *table;
+    arg0[0] = (s32)arg1;
+    arg0[5] = arg2;
+    arg0[1] = (s32)((char*)arg1 + 0x20);
+    arg0[2] = (s32)((char*)arg1 + 0x820);
+    v0 = ((u16*)arg1)[9] << 9;
+    free(arg0[4]);
+    arg0[3] = (s32)((char*)arg1 + 0x820 + v0);
+    {
+        s32 cnt = ((u16*)arg0[0])[0xB] + 1;
+        s32 sz = cnt * 4;
+        arg0[4] = (s32)func_80030C74(sz);
+    }
+    {
+        s32 cnt2;
+        i = 1;
+        cnt2 = ((u16*)arg0[0])[0xB];
+        if (cnt2 != 0) {
+            s32 acc = 0;
+            do {
+                ((s32*)arg0[4])[i] = acc;
+                {
+                    u16 sz_w = ((u16*)arg0[3])[i - 1];
+                    acc += sz_w << 3;
+                }
+                i++;
+            } while (((u16*)arg0[0])[0xB] >= i);
+        }
+    }
+}
 
 typedef struct {
     char pad0[0x10];
