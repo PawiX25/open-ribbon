@@ -210,7 +210,17 @@ void FileSys__DeleteFile(PakFile pf)
         delete(pf.next);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Unknown);
+extern s32 D_80047FF4;
+extern char D_80019448[];
+extern char D_80019470[];
+
+void FileSys__Unknown(s32 arg0) {
+    if (arg0 != 0 && D_80047FF4 != 0) {
+        printf(D_80019448, D_80019470, 0x188);
+        exit(1);
+    }
+    D_80047FF4 = arg0;
+}
 
 typedef struct {
     char *start;
