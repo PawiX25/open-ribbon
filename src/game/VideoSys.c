@@ -71,7 +71,26 @@ void VideoSys__DisplayFnt()
 
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__GetOT);
 
-INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__AddVSyncCB);
+extern char D_80019000[];
+extern char D_80019028[];
+extern void func_8001E4E4(struct VSyncCbList *, s32, VSyncCb*);
+
+void VideoSys__AddVSyncCB(VSyncCb cb) {
+    s32 count = ((s32)vsync.tail - (s32)vsync.cb) >> 2;
+    s32 cap = (vsync.unk8 - (s32)vsync.cb) >> 2;
+    if ((u32)count >= (u32)cap) {
+        printf(D_80019000, D_80019028, 0x23E);
+        exit(1);
+    }
+    SwEnterCriticalSection();
+    if ((s32)vsync.tail == vsync.unk8) {
+        func_8001E4E4(&vsync, (s32)vsync.tail, &cb);
+    } else {
+        *(VSyncCb*)vsync.tail = cb;
+        vsync.tail = (VSyncCb)((s32)vsync.tail + 4);
+    }
+    SwExitCriticalSection();
+}
 
 extern s32 func_8001E658(s32, s32, s32*, s32);
 extern void func_80030BF4(s32, s32, s32);
