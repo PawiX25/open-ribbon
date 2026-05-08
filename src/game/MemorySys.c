@@ -204,7 +204,51 @@ u8* func_80022D78(u8* dest, s32 count, u8* value) {
     return ptr;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022D9C);
+extern void func_80022C80(s32);
+extern void func_80022D78(s32, s32, s8 *);
+
+void func_80022D9C(void) {
+    s8 buf[16];
+    s8 *p;
+    buf[0] = 0x20;
+
+    D_8003FE44.next = NULL;
+    D_8003FE44.unk4 = 0;
+    D_8003FE44.size = 0;
+    p = (s8*)MemorySys__malloc(0x41);
+    if (p == NULL) p = (s8*)func_80022C80(0x41);
+    D_8003FE44.next = (PakFile*)p;
+    D_8003FE44.unk4 = (s32)p;
+    D_8003FE44.size = (s32)(p + 0x41);
+    func_80022D78((s32)p, 0x40, buf);
+    *(s8*)D_8003FE44.unk4 = 0;
+
+    buf[0] = 0x20;
+    D_8003FE50.next = NULL;
+    D_8003FE50.unk4 = 0;
+    D_8003FE50.size = 0;
+    p = (s8*)MemorySys__malloc(0x41);
+    if (p == NULL) p = (s8*)func_80022C80(0x41);
+    D_8003FE50.next = (PakFile*)p;
+    D_8003FE50.unk4 = (s32)p;
+    D_8003FE50.size = (s32)(p + 0x41);
+    func_80022D78((s32)p, 0x40, buf);
+    *(s8*)D_8003FE50.unk4 = 0;
+
+    buf[0] = 0x20;
+    D_8003FE5C.next = NULL;
+    D_8003FE5C.unk4 = 0;
+    D_8003FE5C.size = 0;
+    p = (s8*)MemorySys__malloc(0x41);
+    if (p == NULL) p = (s8*)func_80022C80(0x41);
+    D_8003FE5C.next = (PakFile*)p;
+    D_8003FE5C.unk4 = (s32)p;
+    D_8003FE5C.size = (s32)(p + 0x41);
+    func_80022D78((s32)p, 0x40, buf);
+    *(s8*)D_8003FE5C.unk4 = 0;
+
+    D_8003FE68.next = NULL;
+}
 
 void VideoSys__SetProjection(s32 h)
 {
