@@ -65,7 +65,43 @@ INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", D_8001913C);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F1D8);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F42C);
+void func_8001F42C(void) {
+    s32 *p;
+    s32 *q;
+    PakFile pf;
+    s32 fd[2];
+    s32 *base;
+    AudioSys__Unk04(UnkVar04);
+    fd[0] = 0;
+    fd[1] = 0;
+    if (D_8003FC9C[1] != fd[1]) {
+        p = (s32*)D_8003FC9C[0];
+        if (p != NULL) {
+            *p = *p - 1;
+            if (*p == 0) {
+                pf = *(PakFile*)&D_8003FC9C[1];
+                FileSys__DeleteFile(pf);
+                free((void*)D_8003FC9C[0]);
+            }
+        }
+        D_8003FC9C[1] = fd[1];
+        D_8003FC9C[2] = fd[2];
+        D_8003FC9C[3] = fd[3];
+        D_8003FC9C[0] = fd[0];
+        if (fd[0] != 0) {
+            *(s32*)fd[0] = *(s32*)fd[0] + 1;
+        }
+    }
+    p = (s32*)fd[0];
+    if (p != NULL) {
+        *p = *p - 1;
+        if (*p == 0) {
+            pf = *(PakFile*)&fd[1];
+            FileSys__DeleteFile(pf);
+            free((void*)fd[0]);
+        }
+    }
+}
 
 // This function seems to be configuring the audio settings (By the AudioSys__Unk06)
 void AudioSys__UnkFunc01(UnkStruct02* arg0, s16 arg1, s16 arg2, s16 arg3)
