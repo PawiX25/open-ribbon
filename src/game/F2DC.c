@@ -71,7 +71,7 @@ extern void func_80029FA8(s32 *, s32, s32, s32);
 extern s32 D_800480AC;
 extern s32 D_800480B0;
 extern void func_80029A80(s32);
-extern void func_80029ADC(s32 *);
+extern void func_80029ADC();
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", Movie__Ctor);
 
