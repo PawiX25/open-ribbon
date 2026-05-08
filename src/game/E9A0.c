@@ -82,9 +82,9 @@ typedef struct Item_2780C {
 typedef struct Container_2780C {
     s32 count;
     Item_2780C *items[10];
-    char pad28[8];
+    s32 unk2C;
     VT_2780C *vt;
-    char pad34[4];
+    s32 unk34;
     s32 unk38;
 } Container_2780C;
 
@@ -114,6 +114,31 @@ void func_800278EC(UnkStruct11* arg0) {
     arg0->unk2C = 1;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800278F8);
+extern s32 func_8002990C(void);
+
+void func_800278F8(Container_2780C *arg0) {
+    s32 i;
+    if (func_80025EBC(0x335) > arg0->unk38) {
+        arg0->unk34 = 0;
+    }
+    if (arg0->unk34 != 0) {
+        if (func_8002990C() != 0) {
+            VT_2780C *vt = arg0->vt;
+            vt->func2C((s32)arg0 + (s32)vt->offset28, 1);
+        }
+    }
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_2780C *item = arg0->items[i];
+            VT_28E74 *vt2 = (VT_28E74*)item->vt;
+            vt2->func14((s32)item + (s32)vt2->offset10, arg0->unk2C);
+            i++;
+        } while (i < arg0->count);
+    }
+    if (arg0->unk38 < 0xBB8) {
+        arg0->unk38 = arg0->unk38 + 1;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800279E4);
