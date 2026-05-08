@@ -28,4 +28,18 @@ void FontHack__Dtor()
 }
 
 // *FontHack::Ctor
-INCLUDE_ASM("asm/game/nonmatchings/FontHack", FontHack__Ctor);
+extern s32 D_80047EC0;
+extern s32 D_80047EC4;
+extern s32 D_80047EC8;
+extern s32 D_80047ECC;
+
+void FontHack__Ctor(void) {
+    vsync.cb = NULL;
+    D_80047EC0 = 0;
+    D_80047EC4 = 0;
+    D_80047EC8 = 0;
+    D_80047ECC = 0;
+    vsync.tail = NULL;
+    vsync.unk8 = 0;
+    func_8002AEC0(&FontHack_Instance, (s32*)FntFlush);
+}
