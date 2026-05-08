@@ -14,6 +14,14 @@ extern s32 D_80040840_[3];
 extern s32 D_8004084C[3];
 extern void func_8002AE5C(s32 *, u8 *);
 
+typedef struct StructFB00 {
+    s32 unk0;
+    s32 unk4;
+    void *unk8;
+} StructFB00;
+extern StructFB00 D_800481DC;
+extern StructFB00 D_800481CC;
+
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AA50);
 
 extern s32 D_800480B4;
@@ -403,14 +411,6 @@ void func_8002BECC(void) {
 
 void func_8002BEF0(void) {}
 
-typedef struct StructFB00 {
-    s32 unk0;
-    s32 unk4;
-    void *unk8;
-} StructFB00;
-
-extern StructFB00 D_800481DC;
-extern StructFB00 D_800481CC;
 extern u32 D_8001A298;
 extern u32 D_8001A2B0;
 extern s32 D_80040840_[3];
