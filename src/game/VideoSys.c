@@ -62,7 +62,12 @@ void VideoSys__Reset()
 
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__Flip);
 
-INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__WriteFnt);
+extern char D_80047EE0[];
+extern void func_8002FA40(s32, char *, s32);
+
+void VideoSys__WriteFnt(s32 arg0) {
+    func_8002FA40(fntStream, D_80047EE0, arg0);
+}
 
 void VideoSys__DisplayFnt()
 {
