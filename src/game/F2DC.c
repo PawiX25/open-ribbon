@@ -242,7 +242,37 @@ void func_80028F64(F2DC_Object *arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028F98);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800290DC);
+typedef struct Bounds_290DC {
+    s32 maxX;
+    s32 maxY;
+} Bounds_290DC;
+
+typedef struct Pos_290DC {
+    s32 x;
+    s32 y;
+    Bounds_290DC *bounds;
+} Pos_290DC;
+
+void func_800290DC(Pos_290DC *p, s32 dx, s32 dy, s32 wrapY, s32 wrapX) {
+    s32 nx = p->x + dx;
+    s32 ny = p->y + dy;
+    p->x = nx;
+    p->y = ny;
+    if (wrapX) {
+        if (nx < 0) p->x = p->bounds->maxX - 1;
+        if (p->x >= p->bounds->maxX) p->x = 0;
+    } else {
+        if (nx < 0) p->x = 0;
+        if (p->x >= p->bounds->maxX) p->x = p->bounds->maxX - 1;
+    }
+    if (wrapY) {
+        if (p->y < 0) p->y = p->bounds->maxY - 1;
+        if (p->y >= p->bounds->maxY) p->y = 0;
+    } else {
+        if (p->y < 0) p->y = 0;
+        if (p->y >= p->bounds->maxY) p->y = p->bounds->maxY - 1;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800291FC);
 
