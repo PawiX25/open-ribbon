@@ -334,7 +334,11 @@ void AudioSys__UnkFunc07() // Clears the UnkVar05 values
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__CallBack);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc08);
+extern s32 D_80047F84;
+
+s32 AudioSys__UnkFunc08(s32 arg0) {
+    return ((UnkVar07 | D_80047F84) >> arg0) & 1;
+}
 
 extern s32 D_8003FC9C[];
 
