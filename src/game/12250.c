@@ -103,13 +103,29 @@ s32 func_8002B0F8(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B11C);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1A0);
+extern s32 D_800480E8;
+extern s32 D_800480EC;
+extern s32 D_800480F0;
+extern s32 D_800480F4;
+extern s32 D_800480F8;
+
+void func_8002B1A0(void) {
+    D_800480E8 = 0;
+    D_800480EC = 0;
+    D_800480F0 = 0;
+    D_800480F4 = 0;
+    D_800480F8 = 0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1BC);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1E0);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B410);
+void func_8002B410(void) {
+    D_800480E8 = 1;
+    D_800480EC = 0x14;
+    D_800480F8 = 1;
+}
 
 extern void AudioSys__UnkFunc01(s32 *, s32, s32, s32, s32);
 
