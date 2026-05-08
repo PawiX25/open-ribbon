@@ -118,7 +118,6 @@ void AudioSys__UnkFunc01(UnkStruct02* arg0, s16 arg1, s16 arg2, s16 arg3)
     AudioSys__UnkFunc06(arg1, UnkVar04, arg0->unk0, arg0->unk4, (s16) (arg0->unk4 + 1), 0, arg2, arg2, arg3);
 }
 
-extern s32 func_8001FE34(s32);
 
 s32 func_8001F5E4(s16 arg0) {
     return func_8001FE34(arg0);
@@ -208,7 +207,6 @@ s32 func_8001F74C(s32 **arg0, u8 a1, u8 a2, s32 *out_a3, s32 *out_a4) {
     return 1;
 }
 
-extern void AudioSys__ParseVH(void *, s32, s32);
 
 typedef struct {
     s32 *unk0;
@@ -481,7 +479,6 @@ void UnkCtor02(void) {
     D_8003FC9C[1] = 0;
 }
 
-extern void *func_800202C0(void *, s32);
 
 void *func_800200AC(void *arg0) {
     *(u8*)arg0 = 1;
