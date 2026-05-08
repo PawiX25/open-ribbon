@@ -93,7 +93,19 @@ void func_80021AC0(s32 *arg0, char *filename) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbready);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbsync);
+extern void cbready(s32, s32);
+extern s32 D_80048004;
+extern void func_80034D6C(void(*)(s32, s32), s32);
+extern char D_80019414[];
+
+void cbsync(u8 arg0) {
+    if (arg0 == 2) {
+        func_80034D6C(cbready, -1);
+    } else {
+        printf(D_80019414);
+        D_80048004 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
