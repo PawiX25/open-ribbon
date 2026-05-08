@@ -23,10 +23,6 @@ extern char D_80019114[];
 extern char D_8001913C[];
 extern s32 D_8003FC9C[];
 extern s32 D_8003FD8C[];
-extern void AudioSys__ParseVH();
-extern u32 func_8002038C();
-extern void *func_800202C0();
-extern s32 func_8001FE34();
 
 void AudioSys__Init() {
     SpuInit();
