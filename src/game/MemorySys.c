@@ -666,7 +666,48 @@ void func_800245CC(s32 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800246EC);
+void func_800246EC(s32 *arg0) {
+    s32 *u8;
+    s32 *p;
+    s32 *node;
+    s32 *list;
+    s32 *next;
+    u8 = (s32*)arg0[2];
+    if (arg0[3] == u8[2]) {
+        arg0[3] = u8[0];
+    }
+    p = (s32*)arg0[3];
+    if (p[0] != 0) {
+        if (((s32*)p[1])[1] == p) {
+            arg0[3] = ((s32*)p[0])[3];
+            return;
+        }
+    }
+    node = (s32*)arg0[3];
+    if (node[2] != 0) {
+        node = (s32*)node[2];
+        if (node[3] != 0) {
+            do {
+                node = (s32*)node[3];
+            } while (node[3] != 0);
+        }
+        arg0[3] = (s32)node;
+    } else {
+        list = (s32*)node[1];
+        if (((s32*)list[2])[2] == node) {
+            do {
+                arg0[3] = (s32)list;
+                list = (s32*)list[1];
+            } while (((s32*)list[2])[2] == (s32*)arg0[3]);
+        } else {
+            arg0[3] = (s32)list;
+        }
+    }
+    if (arg0[3] == ((s32*)arg0[2])[0]) {
+        printf(D_800196B4, D_800196DC, 0x60);
+        exit(1);
+    }
+}
 
 extern int (*D_80048028)();
 extern char D_80019704[]; // "out of memory\n"
