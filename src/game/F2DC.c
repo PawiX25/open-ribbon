@@ -69,7 +69,24 @@ void func_80028D6C(Container_28D6C *arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028DE4);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028E74);
+typedef struct Container_28E74 {
+    s32 count;
+    Item_28D6C *items[10];
+    s32 unk2C;
+} Container_28E74;
+
+void func_80028E74(Container_28E74 *arg0) {
+    s32 i;
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_28D6C *item = arg0->items[i];
+            VT_28E74 *vt = (VT_28E74 *)item->vt;
+            vt->func14((s32)item + (s32)vt->offset10, arg0->unk2C);
+            i++;
+        } while (i < arg0->count);
+    }
+}
 
 typedef struct {
     s32 count;
