@@ -310,7 +310,6 @@ void func_800214E8(Outer_214E8 *arg0, s32 arg1) {
 
 extern void *D_8003FDD8;
 extern void *D_8003FDCC;
-extern char D_8003FDB4[];
 
 void func_8002157C(void) {
     UnkFunc04(&D_8003FDD8, 2);
