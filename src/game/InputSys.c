@@ -5,6 +5,57 @@
 #include <psyq/STDIO.H>
 
 
+extern void *D_8003FDB4_arr[];
+
+void InputSys__Ctor(void) {
+    s32 *p1;
+    s32 *p2;
+    s32 *p3;
+    s32 i;
+    s32 *r;
+    s32 *r2;
+    s32 *p_dcc;
+    p1 = (s32*)&D_8003FDB4_arr[0];
+    p2 = (s32*)((char*)&D_8003FDB4_arr[0] + 4);
+    p3 = (s32*)((char*)&D_8003FDB4_arr[0] + 8);
+    i = 1;
+    do {
+        *p1 = 0;
+        *p2 = 0;
+        *p3 = 0;
+        r = (s32*)MemorySys__malloc(8);
+        if (r == NULL) r = (s32*)InputSys__alloc(8);
+        *p1 = (s32)r;
+        *p2 = (s32)r;
+        *p3 = (s32)((char*)r + 8);
+        p3 += 3;
+        *(s8*)*p2 = 0;
+        p2 += 3;
+        i--;
+        p1 += 3;
+    } while (i != -1);
+    *(s32**)&D_8003FDCC = NULL;
+    p_dcc = (s32*)&D_8003FDCC;
+    r2 = (s32*)MemorySys__malloc(0x1C);
+    if (r2 == NULL) r2 = (s32*)InputSys__alloc(0x1C);
+    *(s32**)&D_8003FDCC = r2;
+    *(s32*)((char*)p_dcc + 4) = 0;
+    *(s8*)((char*)p_dcc + 8) = 0;
+    r2[0] = 0;
+    {
+        s32 *q = *(s32**)&D_8003FDCC;
+        q[1] = 0;
+    }
+    {
+        s32 *q = *(s32**)&D_8003FDCC;
+        q[2] = (s32)q;
+    }
+    {
+        s32 *q = *(s32**)&D_8003FDCC;
+        q[3] = (s32)func_800200AC(&D_8003FDD8);
+    }
+}
+
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Init);
 
 void InputSys__Quit(void) {
