@@ -102,7 +102,30 @@ void InputSys__alloc(s32 arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020920);
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020AE4);
+extern void *func_8003424C(void *, const void *, s32);
+extern void *func_80030BF4(void *, const void *, s32);
+extern void func_80020920(s32 *, s32, s32, s32);
+
+s32* func_80020AE4(s32 *arg0, s32 arg1, s32 arg2) {
+    s32 sz;
+    s32 v0;
+    s32 *new_end;
+    s32 *old_end;
+    sz = arg2 - arg1;
+    if ((u32)(arg0[1] - arg0[0]) >= (u32)sz) {
+        func_8003424C((void*)arg0[0], (void*)arg1, sz);
+        new_end = (s32*)(arg0[0] + sz);
+        old_end = (s32*)arg0[1];
+        if (new_end != old_end) {
+            func_80030BF4(new_end, old_end, 1);
+            arg0[1] = arg0[1] - ((s32)old_end - (s32)new_end);
+        }
+    } else {
+        func_8003424C((void*)arg0[0], (void*)arg1, arg1);
+        func_80020920(arg0, (arg0[1] - arg0[0]), arg1 + (arg0[1] - arg0[0]), 0);
+    }
+    return arg0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020BA8);
 
