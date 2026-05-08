@@ -6,6 +6,17 @@
 
 
 extern void *D_8003FDB4_arr[];
+extern void D_8003FDCC;
+extern void D_8003FDD8;
+extern char D_8003FDB4[];
+extern s32 *UnkVar03_arr[];
+extern s32 *func_800200AC(void *);
+extern void UnkFunc04(UnkStruct10*, s32);
+extern void func_8002146C(s32, void *);
+extern void MemorySys__free(s32);
+extern s32 InputSys__Unk00(s32);
+extern s32 *func_80020AE4(s32 *, s32, s32);
+extern void InputSys__alloc(s32);
 
 void InputSys__Ctor(void) {
     s32 *p1;
