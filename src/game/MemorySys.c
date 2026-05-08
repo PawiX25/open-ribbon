@@ -237,7 +237,57 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022660);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022824);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022968);
+s32 func_80022968(s32 *arg0, s32 arg1, s32 arg2) {
+    s8 b1 = (s8)arg1;
+    s32 sz_orig;
+    s32 limit;
+    s32 *fd_a3 = &arg2;
+    s32 fd1[8];
+    s32 fd2[8];
+    s32 saved_arg2;
+    s8 buf3[4];
+    s32 v0;
+    s32 v1;
+    s32 *p;
+    sz_orig = arg0[1] - arg0[0];
+    if (sz_orig == 0) return -1;
+    limit = sz_orig - 1;
+    saved_arg2 = arg2;
+    if ((u32)arg2 < (u32)limit) {
+        fd_a3 = &saved_arg2;
+    } else {
+        fd_a3 = &limit;
+    }
+    {
+        v1 = arg0[0];
+        fd1[0] = v1;
+        fd1[1] = v1 + (*fd_a3) + 1;
+        fd1[2] = arg0[2];
+        buf3[0] = 0;
+        buf3[2] = b1;
+        buf3[1] = 0;
+    }
+    {
+        u8 b_a = buf3[0];
+        u8 b_b = buf3[1];
+        u8 b_c = buf3[2];
+        u32 packed;
+        b_a |= b_b << 8;
+        b_a |= b_c << 16;
+        b_a <<= 0;
+        packed = (u32)(((u8)buf3[0]) | ((u8)buf3[1] << 8) | ((u8)buf3[2] << 16));
+        packed = packed << 8;
+        fd2[0] = v1;
+        fd2[2] = v1 + (*fd_a3) + 1;
+        func_80022824(arg0, fd1, fd2, packed);
+    }
+    {
+        s32 result = fd1[0];
+        s32 v0_p = arg0[0];
+        if (result == v0_p) return -1;
+        return result - v0_p - 1;
+    }
+}
 
 void func_80022A58(void) {}
 
