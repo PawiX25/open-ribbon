@@ -1,6 +1,12 @@
 #include "common.h"
 #include "globals.h"
 
+extern s32 D_800480B8;
+extern s32 D_800480BC;
+extern char D_8001A13C[];
+extern char D_8001A164[];
+extern s32 D_80040858[7];
+
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AA50);
 
 extern s32 D_800480B4;
@@ -54,8 +60,6 @@ void func_8002AE5C(s32 *out, u8 *p) {
     *(s32*)p = (*(s32*)p & 0xFF000000) | (out[0] & 0xFFFFFF);
     out[0] = (out[0] & 0xFF000000) | (*(s32*)p & 0xFFFFFF);
 }
-
-extern void func_8002AE5C(void);
 
 typedef struct OutAEC0 {
     s32 unk0;
