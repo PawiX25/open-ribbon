@@ -35,7 +35,37 @@ void MemorySys__free(s32 address) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__CountHeapFree);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021AC0);
+extern char D_80047FE4[];
+extern char D_80047FE8[];
+extern void FileSys__Unk00(s32 *, char *, s32);
+extern void func_80022660(s32 *, char *, s32, s32);
+
+void func_80021AC0(s32 *arg0, char *filename) {
+    s32 r;
+    s32 byte_off;
+    s32 c;
+    s8 *p;
+    r = func_80035C6C(D_80047FE4);
+    FileSys__Unk00(arg0, D_80047FE4, r + (s32)D_80047FE4);
+    func_80022660(arg0, (char*)D_8003FE5C.next, (s32)D_8003FE5C.next + D_8003FE5C.unk4, 0);
+    r = func_80035C6C(filename);
+    func_80022660(arg0, filename, r + (s32)filename, 0);
+    r = func_80035C6C(D_80047FE8);
+    func_80022660(arg0, D_80047FE8, r + (s32)D_80047FE8, 0);
+    if (arg0[1] != arg0[0]) {
+        byte_off = 0;
+        do {
+            p = (s8*)((char*)arg0[0] + byte_off);
+            c = *p;
+            if (c >= 'a' && c < '{') {
+                *p = c - 0x20;
+            } else {
+                if (*p == '/') *p = '\\';
+            }
+            byte_off++;
+        } while ((u32)byte_off < (u32)(arg0[1] - arg0[0]));
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbready);
 
