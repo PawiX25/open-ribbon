@@ -66,15 +66,37 @@ void func_8002B054(UnkStruct07* arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B078);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B0A0);
+extern UnkStruct07 *D_800480C0;
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B0B4);
+s32 func_8002B0A0(void) {
+    return D_800480C0->unk4;
+}
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B0C8);
+s32 func_8002B0B4(void) {
+    return D_800480C0->unk8;
+}
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B0D4);
+void func_8002B0C8(s32 arg0) {
+    D_800480C0->unk8 = arg0;
+}
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B0F8);
+s32 func_8002B0D4(void) {
+    s32 v;
+    v = 0x4000;
+    if (D_800480C0->unk4 == 0) {
+        v = 0x2000;
+    }
+    return v;
+}
+
+s32 func_8002B0F8(void) {
+    s32 v;
+    v = 0x1000;
+    if (D_800480C0->unk4 == 0) {
+        v = 0x4000;
+    }
+    return v;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B11C);
 
