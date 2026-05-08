@@ -409,7 +409,18 @@ void func_80029A80(s32 arg0) {
 
 void func_80029ADC(void) {}
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029AE4);
+extern s32 D_80040834;
+extern s32 D_80042968;
+
+void func_80029AE4(void) {
+    s32 *p = &D_80040834;
+    s32 v = D_80042968;
+    D_80048098 = 0;
+    D_8004809C = 0;
+    p[1] = 0;
+    p[2] = 0;
+    p[0] = v;
+}
 
 extern void func_80030644(void *, s32, s32);
 extern void func_8002D268(s32 *, s32 *);
