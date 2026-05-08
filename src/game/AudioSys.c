@@ -408,7 +408,42 @@ end:
     arg0[8] = r;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800202C0);
+void *func_800202C0(s32 *arg0, u16 arg1) {
+    u16 v;
+    s32 a0_val;
+    u16 v0_h, v1_h;
+    *((s8*)arg0 + 4) = *((s8*)arg0 + 2);
+    *((s8*)arg0 + 5) = *((s8*)arg0 + 3);
+    *(u16*)((s8*)arg0 + 2) = arg1;
+    a0_val = arg0[0];
+    if ((a0_val & 0x500000) == 0x500000 || (a0_val & 0xA00000) == 0xA00000) {
+        *(u16*)((s8*)arg0 + 2) = arg1 & 0xFF0F;
+    }
+    v0_h = *(u16*)((s8*)arg0 + 4);
+    v1_h = *(u16*)((s8*)arg0 + 2);
+    {
+        u16 x = v0_h ^ v1_h;
+        u16 y = v1_h & x;
+        u16 z = x & ~v1_h;
+        *(u16*)((s8*)arg0 + 6) = x;
+        *(u16*)((s8*)arg0 + 8) = y;
+        *(u16*)((s8*)arg0 + 0xA) = z;
+    }
+    *((s8*)arg0 + 0xE) = *((s8*)arg0 + 0xC);
+    *((s8*)arg0 + 0xF) = *((s8*)arg0 + 0xD);
+    {
+        u16 r = (u16)func_8002038C((s32)arg0, *(u16*)((s8*)arg0 + 2));
+        u16 prev_e = *(u16*)((s8*)arg0 + 0xE);
+        u16 d = (prev_e ^ r) & 0xFFFF;
+        u16 a = r & d;
+        u16 b = d & ~r;
+        *(u16*)((s8*)arg0 + 0xC) = r;
+        *(u16*)((s8*)arg0 + 0x10) = d;
+        *(u16*)((s8*)arg0 + 0x12) = a;
+        *(u16*)((s8*)arg0 + 0x14) = b;
+    }
+    return NULL;
+}
 
 u32 func_8002038C(s32 a0, u16 a1) {
     u32 v = a1 & 0xFFFF;
