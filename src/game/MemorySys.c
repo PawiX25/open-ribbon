@@ -767,7 +767,44 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800262B4);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002663C);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
+extern void func_800262B4(s32 *, s32);
+extern void func_80025954(s32 *);
+
+void func_80026834(s32 *arg0, s32 arg1) {
+    s32 cond = 0;
+    s32 idx;
+    s32 *table;
+    s32 *entry;
+    s32 *q;
+    s32 entry_key;
+    if (arg0[0] == 0) {
+        arg0[26] = 0;
+        arg0[27] = 1;
+    }
+    func_800262B4(arg0, arg0[0]);
+    idx = arg0[1];
+    table = (s32*)arg0[23];
+    entry = (s32*)((char*)table + idx * 20);
+    entry_key = entry[4];
+    if (entry_key == -0x62) return;
+    if (arg0[0] < entry_key) cond = 1;
+    if (entry[9] == arg0[0]) {
+        arg0[1] = idx + 1;
+    }
+    {
+        s32 ni = arg0[1];
+        s32 *e2 = (s32*)((char*)arg0[23] + ni * 20);
+        if (e2[9] != -0x62) goto next;
+        q = (s32*)arg0[ni + 3];
+        if (q[4] != 0) return;
+    }
+next:
+    if (cond != 0) {
+        q = (s32*)arg0[arg0[1] + 3];
+        func_80025954(q);
+    }
+    arg0[0] = arg0[0] + 1;
+}
 
 s32 func_80026940(s32 *arg0) {
     s32 a1 = arg0[28];
