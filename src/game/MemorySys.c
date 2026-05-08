@@ -910,7 +910,11 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024F8C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025330);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025584);
+extern s32 D_80048044;
+
+void func_80025584(void) {
+    D_80048044 = 0;
+}
 
 extern void UnkFunc05(s32 *, s32);
 
