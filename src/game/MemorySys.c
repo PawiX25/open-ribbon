@@ -503,7 +503,39 @@ void func_80025590(s32 *arg0, s32 a1, s32 a2, s32 a3) {
     UnkFunc05(arg0, 0x8000);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025604);
+void func_80025604(s32 *arg0) {
+    s32 v;
+    s32 lim;
+    if (arg0[5] != 0) {
+        v = arg0[6] + arg0[1];
+        arg0[6] = v;
+        if (v < 0) {
+            v = (arg0[0] << 16) + v;
+            arg0[6] = v;
+        }
+        lim = arg0[0] << 16;
+        if (v >= lim) {
+            arg0[6] = v - lim;
+        }
+        arg0[4] = 0;
+    } else {
+        v = arg0[6] + arg0[1];
+        if (v < 0) {
+            v = 0;
+        } else {
+            lim = arg0[0] << 16;
+            if (v >= lim) {
+                v = lim - 1;
+            }
+        }
+        if (v != arg0[6]) {
+            arg0[6] = v;
+            arg0[4] = 0;
+        } else {
+            arg0[4] = 1;
+        }
+    }
+}
 
 void UnkFunc05(UnkStruct00 *arg0, s32 arg1)
 {
