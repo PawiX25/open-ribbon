@@ -585,7 +585,51 @@ void func_80023C2C(s32 *arg0, s32 flag) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023D38);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800245CC);
+extern char D_800196B4[];
+extern char D_800196DC[];
+
+void func_800245CC(s32 *arg0) {
+    s32 *node;
+    s32 *next;
+    s32 *parent;
+    s32 *list;
+    node = (s32*)arg0[3];
+    if (node[3] != 0) {
+        arg0[3] = node[3];
+        next = (s32*)node[2];
+        if (next != NULL) {
+            do {
+                arg0[3] = (s32)((s32**)arg0[3])[2];
+                next = (s32*)((s32*)arg0[3])[2];
+            } while (next != NULL);
+        }
+    } else {
+        list = (s32*)node[1];
+        if (list[3] != node) {
+            do {
+                arg0[3] = (s32)list;
+                list = (s32*)list[1];
+            } while (((s32*)arg0[3])[3] == list);
+        } else {
+            if (((s32*)arg0[3])[3] != list) {
+                arg0[3] = (s32)list;
+            }
+        }
+    }
+    {
+        s32 *u8 = (s32*)arg0[2];
+        if (u8[0] == arg0[3]) {
+            arg0[3] = ((s32*)((s32*)arg0[2])[0])[2];
+        }
+    }
+    {
+        s32 *u8b = (s32*)arg0[2];
+        if (u8b[0] == arg0[3]) {
+            printf(D_800196B4, D_800196DC, 0x57);
+            exit(1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800246EC);
 
