@@ -897,7 +897,47 @@ void func_80025D1C(s32 *arg0, s32 flag) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
+extern s32 D_800481AC[];
+extern s32 D_8003FE8C;
+extern void VideoSys__SetProjection(s32);
+extern s32 func_80036994(s32 *);
+
+void func_80025DC0(s32 *arg0, s32 negate) {
+    s16 *vt = (s16*)((s32*)arg0[0xC])[1];
+    s16 idx = ((s16*)arg0)[0xD];
+    s16 *e = (s16*)((char*)vt + idx * 16);
+    s32 v;
+    if (negate) {
+        v = -(s32)e[0];
+    } else {
+        v = e[0];
+    }
+    D_800481AC[0] = v;
+    D_800481AC[1] = e[1];
+    D_800481AC[2] = e[2];
+    if (negate) {
+        v = -(s32)e[3];
+    } else {
+        v = e[3];
+    }
+    D_800481AC[3] = v;
+    D_800481AC[4] = e[4];
+    D_800481AC[5] = e[5];
+    D_800481AC[6] = e[6];
+    {
+        s32 *u2C = (s32*)arg0[0xB];
+        s32 *r = NULL;
+        if (u2C != &D_8003FE8C) r = u2C;
+        D_800481AC[7] = (s32)r;
+    }
+    {
+        s32 v_proj = e[7];
+        s32 c = v_proj * 47 * 8;
+        VideoSys__SetProjection(c);
+    }
+    func_80036994(D_800481AC);
+    func_80025604(arg0);
+}
 
 extern s32 D_80047EC8;
 extern s32 D_80047EFC;
