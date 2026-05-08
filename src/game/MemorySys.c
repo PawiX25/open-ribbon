@@ -137,7 +137,30 @@ void func_80021AC0(s32 *arg0, char *filename) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbready);
+extern s32 D_80047FF8;
+extern s32 D_80047FFC;
+extern s32 D_80048000;
+extern void func_800324D8(s32, s32);
+extern void func_80034DF0(void);
+extern char D_80019400[];
+
+void cbready(u8 arg0) {
+    s32 sz;
+    if (arg0 == 1) {
+        sz = D_80047FFC;
+        if (sz > 0x200) sz = 0x200;
+        func_800324D8(D_80047FF8, sz);
+        D_80047FFC = D_80047FFC - sz;
+        D_80047FF8 = D_80047FF8 + sz * 4;
+        if (D_80047FFC == 0) {
+            func_80034DF0();
+            D_80048000 = arg0;
+        }
+    } else {
+        printf(D_80019400);
+        D_80048004 = 0;
+    }
+}
 
 extern void cbready(s32, s32);
 extern s32 D_80048004;

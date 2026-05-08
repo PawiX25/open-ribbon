@@ -115,7 +115,27 @@ s32 func_8002B0F8(void) {
     return v;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B11C);
+extern void *D_80048110;
+extern s32 func_80029A38(s32, s32);
+
+void func_8002B11C(s32 arg0) {
+    s32 i;
+    s32 r;
+    s32 v;
+    s32 *vt;
+    r = func_80029A38(0x78, arg0);
+    v = r * r;
+    v = (v * 7) + 10;
+    if (((s32*)D_80048110)[4] > 0) {
+        i = 0;
+        do {
+            vt = (s32*)((s32*)((char*)((s32*)D_80048110)[5] + i * 4))[0];
+            vt[0x12] = v << 16;
+            vt[0x11] = 1;
+            i++;
+        } while (i < ((s32*)D_80048110)[4]);
+    }
+}
 
 extern s32 D_800480E8;
 extern s32 D_800480EC;

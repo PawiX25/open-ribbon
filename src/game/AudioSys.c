@@ -331,7 +331,16 @@ void AudioSys__Unk04(s16 arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc06);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001FE34);
+s32 func_8001FE34(s16 arg0) {
+    s32 idx = (s32)arg0;
+    s32 mask;
+    UnkVar05[idx] = -1;
+    mask = 1 << idx;
+    voice_bit = voice_bit | mask;
+    UnkVar07 = UnkVar07 & ~mask;
+    UnkVar06 = UnkVar06 & ~mask;
+    return 0;
+}
 
 void AudioSys__UnkFunc07() // Clears the UnkVar05 values
 {
