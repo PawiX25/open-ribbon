@@ -31,7 +31,34 @@ void InputSys__Quit(void) {
     } while (i < 2);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk03);
+extern void func_800201C4(s32 *, s8 *);
+
+void InputSys__Unk03(void) {
+    s32 i;
+    s32 j;
+    s32 *q;
+    u8 *u10;
+    s32 *m;
+    s32 ofs;
+    for (i = 0; i < 2; i++) {
+        q = (s32*)UnkVar03_arr[i];
+        u10 = (u8*)q[4];
+        if ((u10[1] & 0xF0) == 0x80) {
+            m = q;
+            ofs = 2;
+            for (j = 0; j < 4; j++) {
+                u10 = (u8*)q[4];
+                if (u10[j * 8 + 2] == 0) {
+                    func_800201C4((s32*)*m, (s8*)((u8*)q[4] + ofs));
+                }
+                m++;
+                ofs += 8;
+            }
+        } else {
+            func_800201C4((s32*)*q, (s8*)q[4]);
+        }
+    }
+}
 
 extern char D_800191E8[];
 extern char D_80019210[];
