@@ -43,7 +43,32 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbsync);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Read);
+extern char D_80019424[];
+extern char D_80019438[];
+extern s32 func_8003530C(s32);
+extern void func_80021CD0(s32, s32, s32);
+
+s32 FileSys__Read(char *filename, s32 *out) {
+    PakFile pf;
+    s32 r;
+    func_80021AC0(&D_8003FE44, filename);
+    pf = D_8003FE44;
+    r = func_8003530C((s32)&pf);
+    if (r == 0) return 0;
+    if (r == -1) {
+        printf(D_80019424, filename);
+        return 0;
+    }
+    out[2] = 1;
+    out[1] = pf.unk4;
+    out[0] = (s32)func_80030C74((pf.unk4 + 3) & ~3);
+    while (1) {
+        if (func_80021CD0((s32)&pf, out[1], out[0]) != 0) {
+            return 1;
+        }
+        printf(D_80019438, filename);
+    }
+}
 
 s32 func_80021E6C(s32 a0_in, s32 *arg1, s32 *arg2) {
     extern s32* func_80023388(s32, s32);
