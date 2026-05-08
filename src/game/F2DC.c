@@ -24,18 +24,18 @@ void UnkFunc01(UnkStruct00* a1, s32 a2)
 }
 // INCLUDE_ASM("asm/game/nonmatchings/F2DC", UnkFunc01);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028AC4); // < - This retard is pointing to UnkFunc01 memory address too
+extern u32 D_80019F08;
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028B70);
+typedef struct Item_28CC8 Item_28CC8;
+typedef struct VT_28CC8 VT_28CC8;
+typedef struct Container_28CC8 Container_28CC8;
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028C1C);
-
-typedef struct Item_28CC8 {
+struct Item_28CC8 {
     char pad[8];
     void *vt;
-} Item_28CC8;
+};
 
-typedef struct VT_28CC8 {
+struct VT_28CC8 {
     char pad0[0x20];
     s16 offset20;
     char pad22[2];
@@ -43,14 +43,75 @@ typedef struct VT_28CC8 {
     s16 offset28;
     char pad2A[2];
     void (*func2C)(s32, s32);
-} VT_28CC8;
+};
 
-typedef struct Container_28CC8 {
+struct Container_28CC8 {
     s32 count;
     Item_28CC8 *items[10];
     char pad2C[4];
     VT_28CC8 *vtmain;
-} Container_28CC8;
+};
+
+typedef struct VT_28AC4 {
+    char pad0[8];
+    s16 offset8;
+    char padA[2];
+    void (*funcC)(s32, s32);
+} VT_28AC4;
+
+void func_80028AC4(Container_28CC8 *arg0, s32 flag) {
+    s32 i = 0;
+    arg0->vtmain = (VT_28CC8*)&D_80019F08;
+    if (arg0->count > 0) {
+        do {
+            Item_28CC8 *item = arg0->items[i];
+            if (item != NULL) {
+                VT_28AC4 *vt = (VT_28AC4*)item->vt;
+                vt->funcC((s32)item + (s32)vt->offset8, 3);
+            }
+            i++;
+        } while (i < arg0->count);
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
+
+void func_80028B70(Container_28CC8 *arg0, s32 flag) {
+    s32 i = 0;
+    arg0->vtmain = (VT_28CC8*)&D_80019F08;
+    if (arg0->count > 0) {
+        do {
+            Item_28CC8 *item = arg0->items[i];
+            if (item != NULL) {
+                VT_28AC4 *vt = (VT_28AC4*)item->vt;
+                vt->funcC((s32)item + (s32)vt->offset8, 3);
+            }
+            i++;
+        } while (i < arg0->count);
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
+
+void func_80028C1C(Container_28CC8 *arg0, s32 flag) {
+    s32 i = 0;
+    arg0->vtmain = (VT_28CC8*)&D_80019F08;
+    if (arg0->count > 0) {
+        do {
+            Item_28CC8 *item = arg0->items[i];
+            if (item != NULL) {
+                VT_28AC4 *vt = (VT_28AC4*)item->vt;
+                vt->funcC((s32)item + (s32)vt->offset8, 3);
+            }
+            i++;
+        } while (i < arg0->count);
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
 void func_80028CC8(Container_28CC8 *arg0, s32 arg1) {
     s32 i;
