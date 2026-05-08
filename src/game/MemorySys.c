@@ -469,7 +469,27 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800269A4);
+typedef struct Entry14 {
+    char *name;
+    char pad4[8];
+    s32 key;
+    s32 val;
+} Entry14;
+
+void func_800269A4(s32 *arg0, s32 arg1) {
+    Entry14 *table = (Entry14*)arg0[23];
+    s32 i;
+    if (*table->name == 0) return;
+    i = 0;
+    do {
+        if (table[i].key == arg1) {
+            arg0[1] = i;
+            arg0[0] = table[i].val;
+            return;
+        }
+        i++;
+    } while (*table[i].name != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026A10);
 
@@ -481,7 +501,27 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026D78);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E08);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E64);
+typedef struct Entry10 {
+    char *name;
+    char pad4[4];
+    s32 key;
+    s32 val;
+} Entry10;
+
+void func_80026E64(s32 *arg0, s32 arg1) {
+    Entry10 *table = (Entry10*)arg0[13];
+    s32 i;
+    if (*table->name == 0) return;
+    i = 0;
+    do {
+        if (table[i].key == arg1) {
+            arg0[1] = i;
+            arg0[0] = table[i].val;
+            return;
+        }
+        i++;
+    } while (*table[i].name != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026ED0);
 

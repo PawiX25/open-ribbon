@@ -197,7 +197,26 @@ void *func_800200AC(void *arg0) {
     return arg0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800200E4);
+extern void func_800341A8(void *, s32, s32);
+
+s32* func_800200E4(s32 *arg0, s32 arg1) {
+    s32 i;
+    arg0[6] = arg1;
+    arg0[7] = 1;
+    arg0[8] = -1;
+    *(s8*)arg0 = 1;
+    *(s16*)((char*)arg0 + 2) = 0;
+    func_800202C0(arg0, 0);
+    i = 0;
+    do {
+        ((s8*)arg0)[0x24 + i] = 0;
+        i++;
+    } while (i < 2);
+    if ((arg1 & 3) == 0) {
+        func_800341A8(arg0, 0, 2);
+    }
+    return arg0;
+}
 
 void UnkFunc04(UnkStruct10* arg0, s32 arg1) {
     s32 temp_a0;
