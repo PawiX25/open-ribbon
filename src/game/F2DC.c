@@ -2,6 +2,75 @@
 
 #include "globals.h"
 
+typedef struct VT_28AC4 {
+    char pad0[8];
+    s16 offset8;
+    char padA[2];
+    void (*funcC)(s32, s32);
+} VT_28AC4;
+
+typedef struct VT_28CC8 {
+    char pad0[0x20];
+    s16 offset20;
+    char pad22[2];
+    void (*func24)(s32);
+    s16 offset28;
+    char pad2A[2];
+    void (*func2C)(s32, s32);
+} VT_28CC8;
+
+typedef struct VT_28D6C {
+    char pad[0x20];
+    s16 offset20;
+    void (*func24)(s32);
+} VT_28D6C;
+
+typedef struct VT_28E74 {
+    char pad[0x10];
+    s16 offset10;
+    void (*func14)(s32, s32);
+} VT_28E74;
+
+typedef struct VT_28DE4 {
+    char pad[0x18];
+    s16 offset18;
+    char pad1A[2];
+    void *(*func1C)(s32);
+} VT_28DE4;
+
+typedef struct Item_28D6C {
+    char pad[8];
+    void *vt;
+} Item_28D6C;
+
+typedef struct Container_28D6C {
+    s32 count;
+    Item_28D6C *items[1];
+} Container_28D6C;
+
+typedef struct Container_28CC8 {
+    s32 count;
+    Item_28D6C *items[10];
+    char pad28[4];
+    VT_28CC8 *vtmain;
+} Container_28CC8;
+
+typedef struct Bounds_290DC {
+    s32 maxX;
+    s32 maxY;
+} Bounds_290DC;
+
+typedef struct Pos_290DC {
+    s32 x;
+    s32 y;
+    Bounds_290DC *bounds;
+} Pos_290DC;
+
+extern void func_80025DC0(s32 *, s32);
+extern void func_80029FA8(s32 *, s32, s32, s32);
+extern s32 D_800480AC;
+extern s32 D_800480B0;
+
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", Movie__Ctor);
 
 typedef struct {
