@@ -124,7 +124,12 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800293DC);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002990C);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029A38);
+extern s32 D_80047EEC;
+
+s32 func_80029A38(s32 arg0, s32 arg1) {
+    s32 t = arg1 * arg0;
+    return t / D_80047EEC;
+}
 
 extern int (*D_80048028)();
 extern char D_80019FBC[]; // "out of memory\n"
