@@ -323,4 +323,3 @@ void func_8002157C(void) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Ctor);
