@@ -240,7 +240,41 @@ void func_80028F64(F2DC_Object *arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028F98);
+void func_80028F98(s32 idx, Pos_290DC *p, s32 dx, s32 dy) {
+    while (1) {
+        func_800290DC(p, dx, dy, 1, 1);
+        {
+            Bounds_290DC *b = p->bounds;
+            s32 maxX = b->maxX;
+            s32 i;
+            s32 *table = (s32*)((char*)b + 8);
+            s32 *new_entry = (s32*)((char*)table + (p->y * maxX + p->x) * 4);
+            s32 expected = ((s32*)((char*)&p->y + idx * 4))[0];     // hmm
+            (void)expected;
+            // Hmm complex - skip detail; just give it a try
+            if (*new_entry == ((s32*)((char*)b + 8))[idx + p->x]) {
+                continue;
+            }
+            if (p->x == maxX - 1 && dx == -1) {
+                func_800290DC(p, 1, dy, 1, 1);
+                return;
+            }
+            if (dx != 0 && dy == 1) {
+                func_800290DC(p, -1, dy, 1, 1);
+                return;
+            }
+            if (p->y == b->maxY - 1 && dy == -1) {
+                func_800290DC(p, dx, 1, 1, 1);
+                return;
+            }
+            if (dy != 0 && dx == 1) {
+                func_800290DC(p, dx, -1, 1, 1);
+                return;
+            }
+            return;
+        }
+    }
+}
 
 typedef struct Bounds_290DC {
     s32 maxX;
