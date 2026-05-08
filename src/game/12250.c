@@ -289,7 +289,45 @@ void func_8002B5F0(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B6E0);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BADC);
+extern void func_800293B8(void);
+extern s32 D_8004810C[2];
+extern s32 D_80048114_arr[2];
+extern s32 D_8004811C_[2];
+
+void func_8002BADC(void) {
+    s32 i;
+    PakFile tmp;
+    func_800293B8();
+    func_8002B1A0();
+    D_80048104 = 3;
+    D_80048100 = 3;
+    D_800480FC = 0;
+    D_80048108 = 0;
+    i = 0;
+    do {
+        D_8004810C[i] = 0;
+        i++;
+    } while (i < 2);
+    i = 0;
+    do {
+        D_80048114_arr[i] = 0;
+        i++;
+    } while (i < 2);
+    i = 0;
+    do {
+        D_8004811C_[i] = 0;
+        i++;
+    } while (i < 2);
+    func_8002B6E0();
+    tmp.next = NULL;
+    tmp.unk4 = 0;
+    tmp.size = (s32)&D_800481DC;
+    *(PakFile*)&D_80040840_[0] = tmp;
+    tmp.next = NULL;
+    tmp.unk4 = 0;
+    tmp.size = (s32)&D_800481CC;
+    *(PakFile*)&D_8004084C[0] = tmp;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BC00);
 
