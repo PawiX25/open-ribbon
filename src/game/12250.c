@@ -135,7 +135,33 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BECC);
 
 void func_8002BEF0(void) {}
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BF00);
+typedef struct StructFB00 {
+    s32 unk0;
+    s32 unk4;
+    void *unk8;
+} StructFB00;
+
+extern StructFB00 D_800481DC;
+extern StructFB00 D_800481CC;
+extern u32 D_8001A298;
+extern u32 D_8001A2B0;
+extern s32 D_80040840_[3];
+extern s32 D_8004084C[3];
+
+void func_8002BF00(void) {
+    D_800481DC.unk0 = 3;
+    D_800481DC.unk4 = 2;
+    D_800481DC.unk8 = &D_8001A298;
+    D_80040840_[0] = 0;
+    D_80040840_[1] = 0;
+    D_80040840_[2] = 0;
+    D_800481CC.unk0 = 1;
+    D_800481CC.unk8 = &D_8001A2B0;
+    D_800481CC.unk4 = 3;
+    D_8004084C[0] = 0;
+    D_8004084C[1] = 0;
+    D_8004084C[2] = 0;
+}
 
 void func_8002BF70(UnkStruct00* arg0, s32 arg1) {
     arg0->unk18 = arg1;
