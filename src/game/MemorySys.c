@@ -235,7 +235,88 @@ void func_80022658(void) {}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022660);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022824);
+s32* func_80022824(s32 *out, s32 *end_pp, s32 *start_pp, s32 byte) {
+    s8 b = (s8)(byte >> 8);
+    s32 *end = (s32*)end_pp[0];
+    s32 *start = (s32*)start_pp[0];
+    s32 grp = (s32)((char*)end - (char*)start) >> 4;
+    s32 *e;
+    s32 rem;
+    s32 *p;
+    s32 *res;
+    if (grp > 0) {
+        do {
+            e = (s32*)end_pp[0];
+            p = e;
+            if (((s8*)p)[-1] == b) {
+                end_pp[0] = (s32)((char*)p - 1);
+                out[0] = (s32)p;
+                return out;
+            }
+            end_pp[0] = (s32)((char*)p - 1);
+            if (((s8*)p)[-2] == b) {
+                end_pp[0] = (s32)((char*)p - 2);
+                out[0] = (s32)((char*)p - 1);
+                return out;
+            }
+            end_pp[0] = (s32)((char*)p - 2);
+            if (((s8*)p)[-3] == b) {
+                end_pp[0] = (s32)((char*)p - 3);
+                out[0] = (s32)((char*)p - 1);
+                return out;
+            }
+            end_pp[0] = (s32)((char*)p - 3);
+            if (((s8*)p)[-4] == b) {
+                end_pp[0] = (s32)((char*)p - 4);
+                out[0] = (s32)((char*)p - 2);
+                return out;
+            }
+            end_pp[0] = (s32)((char*)p - 4);
+            grp--;
+        } while (grp > 0);
+    }
+    {
+        s32 *t8 = (s32*)end_pp[0];
+        rem = ((s32)t8 - (s32)start_pp[0]) >> 2;
+    }
+    if (rem == 1) goto L20;
+    if (rem < 2) goto Lret_start;
+    if (rem == 2) goto L08;
+    if (rem != 3) goto Lret_start;
+    {
+        s32 *t8 = (s32*)end_pp[0];
+        s8 v = ((s8*)t8)[-1];
+        s8 vv = b;
+        if (v == vv) {
+            end_pp[0] = (s32)((char*)t8 - 1);
+            out[0] = (s32)t8;
+            return out;
+        }
+        end_pp[0] = (s32)((char*)t8 - 1);
+    }
+L08:
+    {
+        s32 *t = (s32*)end_pp[0];
+        if (((s8*)t)[-1] == b) {
+            end_pp[0] = (s32)((char*)t - 1);
+            out[0] = (s32)t;
+            return out;
+        }
+        end_pp[0] = (s32)((char*)t - 1);
+    }
+L20:
+    {
+        s32 *t = (s32*)end_pp[0];
+        if (((s8*)t)[-1] == b) {
+            out[0] = (s32)t;
+            return out;
+        }
+        end_pp[0] = (s32)((char*)t - 1);
+    }
+Lret_start:
+    out[0] = start_pp[0];
+    return out;
+}
 
 s32 func_80022968(s32 *arg0, s32 arg1, s32 arg2) {
     s8 b1 = (s8)arg1;
