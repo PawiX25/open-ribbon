@@ -15,7 +15,6 @@ extern void UnkFunc04(UnkStruct10*, s32);
 extern void func_8002146C();
 extern void func_800214E8();
 extern s32 InputSys__Unk00(s32);
-extern void func_80020AE4();
 extern void InputSys__alloc(s32);
 
 void InputSys__Ctor(void) {
@@ -35,7 +34,7 @@ void InputSys__Ctor(void) {
         *p2 = 0;
         *p3 = 0;
         r = (s32*)MemorySys__malloc(8);
-        if (r == NULL) r = (s32*)InputSys__alloc(8);
+        if (r == NULL) { InputSys__alloc(8); r = NULL; }
         *p1 = (s32)r;
         *p2 = (s32)r;
         *p3 = (s32)((char*)r + 8);
@@ -48,7 +47,7 @@ void InputSys__Ctor(void) {
     *(s32**)&D_8003FDCC = NULL;
     p_dcc = (s32*)&D_8003FDCC;
     r2 = (s32*)MemorySys__malloc(0x1C);
-    if (r2 == NULL) r2 = (s32*)InputSys__alloc(0x1C);
+    if (r2 == NULL) { InputSys__alloc(0x1C); r2 = NULL; }
     *(s32**)&D_8003FDCC = r2;
     *(s32*)((char*)p_dcc + 4) = 0;
     *(s8*)((char*)p_dcc + 8) = 0;
