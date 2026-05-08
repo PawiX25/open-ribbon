@@ -482,7 +482,49 @@ void func_80029FA8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", VideoSys__LoadLogos);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A7E4);
+void func_8002A7E4(void) {
+    s32 *p;
+    s32 *items;
+    s32 cnt;
+    s32 *end;
+    s32 *cur;
+    p = (s32*)D_800480AC;
+    if (p != NULL) {
+        items = (s32*)p[1];
+        if (items != NULL) {
+            cnt = ((s32*)items)[-2];
+            end = (s32*)((char*)items + cnt * 0x18);
+            if (items != end) {
+                cur = (s32*)((char*)end - 0x18);
+                do {
+                    func_8002A960(cur, 2);
+                    items = (s32*)p[1];
+                    cur = (s32*)((char*)cur - 0x18);
+                } while (items != cur);
+            }
+            delete((void*)((char*)items - 8));
+        }
+        free(p);
+    }
+    p = (s32*)D_800480B0;
+    if (p != NULL) {
+        items = (s32*)p[1];
+        if (items != NULL) {
+            cnt = ((s32*)items)[-2];
+            end = (s32*)((char*)items + cnt * 0x18);
+            if (items != end) {
+                cur = (s32*)((char*)end - 0x18);
+                do {
+                    func_8002A960(cur, 2);
+                    items = (s32*)p[1];
+                    cur = (s32*)((char*)cur - 0x18);
+                } while (items != cur);
+            }
+            delete((void*)((char*)items - 8));
+        }
+        free(p);
+    }
+}
 
 extern s32 D_800480AC;
 
