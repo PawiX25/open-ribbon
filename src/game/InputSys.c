@@ -16,6 +16,7 @@ extern void func_8002146C();
 extern void func_800214E8();
 extern s32 InputSys__Unk00(s32);
 extern void InputSys__alloc(s32);
+extern s32 *func_80020AE4(s32 *, s32, s32);
 
 void InputSys__Ctor(void) {
     s32 *p1;
