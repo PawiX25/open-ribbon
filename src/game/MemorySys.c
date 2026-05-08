@@ -200,7 +200,12 @@ void func_8002317C(UnkStruct09* arg0, int arg1) {
     arg0->unk48 = func_800231F4(arg1);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800231A8);
+void func_800231A8(s32 *arg0, s32 a1, s32 a2, s32 a3) {
+    s32 *p = (s32*)arg0[20];
+    p[5] = a1;
+    p[6] = a2;
+    p[7] = a3;
+}
 
 typedef struct {
     char pad0[0x50];

@@ -61,13 +61,19 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE00);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE44);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE50);
+typedef struct { s32 a; s32 b; } Pair_BE50;
+extern Pair_BE50 D_8001A270[];
+extern Pair_BE50 D_80040840;
+
+void func_8002BE50(s32 arg0) {
+    D_80040840 = D_8001A270[arg0 - 1];
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE84);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BECC);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BEF0);
+void func_8002BEF0(void) {}
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BF00);
 
