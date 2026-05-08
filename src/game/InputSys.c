@@ -100,7 +100,40 @@ void* func_800207C4(void) {
     return &D_8003FDCC;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800207D0);
+extern void func_800211D4(s32 *, void *, s32 *);
+extern s32 func_800341FC(void *, void *, s32);
+
+s32 func_800207D0(s32 *arg0) {
+    s32 byte_off = 0;
+    s32 i = 0;
+    s32 a3;
+    s32 fd[3];
+    s32 ret;
+    s32 buf_end;
+    s32 buf;
+    func_800211D4(fd, &D_8003FDCC, arg0);
+    do {
+        s32 *p = (s32*)((char*)&D_8003FDB4 + byte_off);
+        a3 = 0;
+        if ((p[1] - p[0]) == (arg0[1] - arg0[0])) {
+            a3 = func_800341FC((void*)p[0], (void*)arg0[0], arg0[1] - arg0[0]) == 0;
+        }
+        if (a3 != 0) {
+            ret = InputSys__Unk00(i);
+            goto end;
+        }
+        i++;
+        byte_off += 0xC;
+    } while (i < 2);
+    ret = (s32)&D_8003FDD8;
+end:
+    buf_end = arg0[2];
+    buf = arg0[0];
+    if (buf != 0 && (buf_end - buf) == 0) {
+        MemorySys__free(buf);
+    }
+    return ret;
+}
 
 void func_800208BC(void) {}
 
