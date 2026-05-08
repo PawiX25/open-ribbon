@@ -6,6 +6,16 @@ extern s32 D_800480BC;
 extern char D_8001A13C[];
 extern char D_8001A164[];
 extern s32 D_80040858[7];
+extern UnkStruct07 *D_800480C0;
+extern s32 D_80048100;
+extern s32 D_80048108;
+extern s32 D_800480FC;
+extern s32 D_80040840_[3];
+extern s32 D_8004084C[3];
+extern s32 D_800481DC;
+extern s32 D_800481CC;
+extern void func_8002AE5C(s32 *, u8 *);
+extern void FontHack__UnkFunc00(s32 *, s32);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AA50);
 
