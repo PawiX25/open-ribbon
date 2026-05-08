@@ -134,8 +134,6 @@ s32 InputSys__Unk00(s32 arg0) {
     return *UnkVar03_arr[arg0];
 }
 
-extern void func_80020AE4(s32 *, s32, s32);
-extern s32 D_8003FDB4;
 
 void InputSys__Unk01(s32 *arg0, s32 idx) {
     s32 *expected;
@@ -156,7 +154,6 @@ void InputSys__Unk01(s32 *arg0, s32 idx) {
     }
 }
 
-extern void D_8003FDCC;
 
 void* func_800207C4(void) {
     return &D_8003FDCC;
