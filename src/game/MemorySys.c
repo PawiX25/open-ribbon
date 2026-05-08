@@ -448,7 +448,48 @@ s32* func_80023B14(s32* arg0) {
     return arg0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023B20);
+extern s32 func_80024820(s32);
+extern void func_8002487C(s32 *);
+
+s32* func_80023B20(s32 *out, char *str) {
+    s32 fd[3];
+    s32 len;
+    s32 sz;
+    s32 *new_buf;
+    s32 *base;
+    s32 byte_count;
+    out[0] = 0;
+    out[1] = (s32)func_800207C4();
+    out[2] = (s32)func_800207C4();
+    fd[0] = 0;
+    fd[1] = 0;
+    fd[2] = 0;
+    out[3] = func_80035C6C(str);
+    len = out[3] + 1;
+    if ((u32)len > (u32)-2) {
+        func_8002487C(fd);
+    } else if (len == 0) {
+        new_buf = NULL;
+        fd[0] = (s32)new_buf;
+        fd[1] = (s32)new_buf;
+        fd[2] = (s32)((char*)new_buf + len);
+    } else {
+        new_buf = (s32*)MemorySys__malloc(len);
+        if (new_buf == NULL) {
+            new_buf = (s32*)func_80024820(len);
+        }
+        fd[0] = (s32)new_buf;
+        fd[1] = (s32)new_buf;
+        fd[2] = (s32)((char*)new_buf + len);
+    }
+    byte_count = (s32)((char*)out[3] + (s32)str - (s32)str);   // simplified: out[3]
+    func_80030BF4((void*)fd[0], str, out[3]);
+    base = (s32*)fd[0];
+    fd[1] = (s32)((char*)base + out[3]);
+    *(s8*)((char*)base + out[3]) = 0;
+    InputSys__Unk01((s32*)out + 1, (s32)fd);
+    return out;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023C2C);
 
