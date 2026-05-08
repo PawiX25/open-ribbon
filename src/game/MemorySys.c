@@ -45,7 +45,23 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Read);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021E6C);
+s32 func_80021E6C(s32 a0_in, s32 *arg1, s32 *arg2) {
+    extern s32* func_80023388(s32, s32);
+    s32 *r;
+    s32 ret = 1;
+    r = func_80023388(a0_in, arg1[0]);
+    if (r != NULL) {
+        arg2[2] = 0;
+        arg2[0] = (s32)(r + 1);
+        arg2[1] = r[0];
+    } else {
+        ret = 0;
+    }
+    if (arg1[0] != 0 && arg1[2] - arg1[0] == 0) {
+        MemorySys__free(arg1[0]);
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021EF4);
 
@@ -451,7 +467,22 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025330);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025584);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025590);
+extern void UnkFunc05(s32 *, s32);
+
+void func_80025590(s32 *arg0, s32 a1, s32 a2, s32 a3) {
+    s32 v;
+    arg0[0] = a1;
+    arg0[1] = 0;
+    arg0[2] = a2;
+    arg0[3] = 0;
+    arg0[6] = 0;
+    arg0[3] = 0x10000;
+    arg0[5] = a3;
+    arg0[4] = 0;
+    v = (a2 << 16) | (((u32)a2) >> 16);
+    arg0[1] = v;
+    UnkFunc05(arg0, 0x8000);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025604);
 

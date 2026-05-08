@@ -109,7 +109,28 @@ void AudioSys__UnkFunc00(AudioSysUnkStruct02 *arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F74C);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__new);
+extern void AudioSys__ParseVH(void *, s32, s32);
+
+typedef struct {
+    s32 *unk0;
+    char pad4[8];
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    void *unk18;
+    char pad1C[4];
+    s32 unk20;
+} AudioObj_New;
+
+AudioObj_New *AudioSys__new(AudioObj_New *arg0, s32 arg1) {
+    arg0->unk18 = (void*)&D_8001918C;
+    arg0->unk10 = 0;
+    arg0->unk18 = (void*)&AudioSys__UnknownVar;
+    AudioSys__ParseVH(arg0, arg1, -1);
+    arg0->unk14 = -1;
+    arg0->unk20 = arg0->unk0[3] - (arg0->unkC + 0x200 - arg1);
+    return arg0;
+}
 
 extern s32 func_80032CA4(s32);
 extern void func_80032944(s32);
