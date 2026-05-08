@@ -144,7 +144,11 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BDA8);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE00);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE44);
+extern s32 D_800480FC;
+
+s32 func_8002BE44(void) {
+    return D_800480FC;
+}
 
 typedef struct { s32 a; s32 b; } Pair_BE50;
 extern Pair_BE50 D_8001A270[];
