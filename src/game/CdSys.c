@@ -132,8 +132,6 @@ s32 func_8001EBD4(void) {
 }
 
 extern void UnkFunc03(void);
-extern void func_8001E9B0(void);
-extern void func_8001EA5C(void);
 extern void func_800314D8(s32, void *, void *, s32);
 extern s32 D_80047F70;
 extern s8 D_80048138;
