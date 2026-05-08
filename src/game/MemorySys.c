@@ -236,7 +236,26 @@ void cbsync(u8 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
+s32 func_80021CD0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 ret = -1;
+    s32 v;
+    D_80047FF8 = arg2;
+    if (arg1 + 3 < 0) {
+        D_80047FFC = (arg1 + 6) >> 2;
+    } else {
+        D_80047FFC = (arg1 + 3) >> 2;
+    }
+    D_80048000 = 0;
+    D_80048004 = 1;
+    func_800314D8(0xE, (void*)((s32)&D_80047FE8 + 3), NULL, -1);
+    func_800314D8(0x6, (void*)arg0, cbsync, -1);
+    while (D_80048004 != 0 && D_80048000 == 0) {
+        if (D_80047FF4 != 0 && D_80047FFC != ret) {
+            ret = ((s32(*)(void))D_80047FF4)();
+        }
+    }
+    return D_80048004;
+}
 
 extern char D_80019424[];
 extern char D_80019438[];
