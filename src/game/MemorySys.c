@@ -46,7 +46,34 @@ void MemorySys__DumpUsage(void) {
     printf(D_80019398, acc);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpHead);
+extern char D_800193A8[];
+extern char D_80047FB0[];
+extern char D_80047FB8[];
+extern char D_80047FC0[];
+
+void MemorySys__DumpHead(void) {
+    s32 *p;
+    s32 sz;
+    char *fmt;
+    printf(D_800193A8);
+    p = D_80047FD0;
+    if (p[1] != 0) {
+        sz = p[1] << 3;
+        do {
+            if (sz < 0x400) {
+                fmt = D_80047FB0;
+                if (sz < 0) sz = sz + 0x3FF;
+                sz = sz >> 10;
+            } else {
+                fmt = D_80047FB8;
+            }
+            printf(fmt, sz);
+            p = (s32*)p[0];
+            sz = p[1] << 3;
+        } while (p[1] != 0);
+    }
+    printf(D_80047FC0);
+}
 
 void MemorySys__Init01(void) {
     MemorySys__Init();
@@ -228,7 +255,28 @@ s32 PackedFiles__Unk00(s32 arg0, s32 *arg1, s32 arg2) {
     return arg0 | v;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Init);
+extern PakFile D_8003FE74;
+extern s32 D_8003FE74_arr[];
+
+void PackedFiles__Init(char *filename) {
+    s32 r;
+    PakFile pf;
+    s32 *p;
+    r = func_80035C6C(filename);
+    FileSys__Unk00(&D_8003FE5C, filename, (s32)filename + r);
+    pf.next = NULL;
+    pf.unk4 = 0;
+    pf.size = 0;
+    D_8003FE68 = pf;
+    p = (s32*)&D_8003FE74;
+    p[5] = 1;
+    p[1] = 2;
+    p[0] = 4;
+    p[2] = 8;
+    p[3] = 0x10;
+    D_80047FF4 = 0;
+    p[4] = 0x20;
+}
 
 extern PakFile D_8003FE68;
 
