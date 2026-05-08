@@ -131,7 +131,13 @@ void func_8002BE50(s32 arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE84);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BECC);
+extern s32 D_80048100;
+extern void func_8002B410(void);
+
+void func_8002BECC(void) {
+    func_8002B410();
+    D_80048100 = 1;
+}
 
 void func_8002BEF0(void) {}
 
