@@ -31,7 +31,33 @@ void AudioSys__QuitSpu() {
     SpuQuit();
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__SetVolume);
+extern s32 func_80032F74(s32, s32);
+extern s32 func_80032784(s32);
+extern s32 func_80032A04(s32, s32, s32, s32);
+extern void func_8002CCA8(s32, s32);
+extern s16 func_80030864(s32);
+extern void func_80033014(s32, s32);
+
+void AudioSys__SetVolume(s32 arg0) {
+    s32 r = func_80032F74(arg0, 0);
+    s32 r2;
+    if (r < 0) {
+        printf(D_80019114, D_8001913C, 0x3D);
+        exit(1);
+    }
+    r2 = func_80032784(arg0);
+    r = func_80032A04(r2, r, 0, 0x3FF00000);
+    if (r > 0) {
+        printf(D_80019114, D_8001913C, 0x3D);
+        exit(1);
+    }
+    func_8002CCA8(arg0, 0x467FFC00);
+    r2 = func_80030864(r);
+    {
+        s16 r3 = (s16)r2;
+        func_80033014(r3, r3);
+    }
+}
 
 INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", D_80019114);
 
@@ -85,7 +111,31 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F74C);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__new);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk01);
+extern s32 func_80032CA4(s32);
+extern void func_80032944(s32);
+extern void func_800329A4(s32, s32);
+extern char D_80019114[];
+extern char D_8001913C[];
+
+typedef struct {
+    char pad0[0x14];
+    s32 unk14;
+    char pad18[4];
+    s32 unk1C;
+    s32 unk20;
+} AudioSysUnkStruct02_Ext;
+
+void AudioSys__Unk01(AudioSysUnkStruct02_Ext *arg0, s32 arg1) {
+    s32 r = func_80032CA4(arg0->unk20);
+    arg0->unk14 = r;
+    if (r < 0) {
+        printf(D_80019114, D_8001913C, 0x128);
+        exit(1);
+    }
+    func_80032944(r);
+    func_800329A4(arg0->unk1C, arg0->unk20);
+    AudioSys__IsTransferCompleted(arg1);
+}
 
 typedef struct {
     char unk0[0x1c];
@@ -143,7 +193,29 @@ void AudioSys__Unk05(s16 arg0, void* data, s16 flag)
 	AudioSys__Unk02(D_8003FD8C[arg0], data, flag == 1);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk04);
+typedef struct VT_Unk04 {
+    char pad0[8];
+    s16 offset8;
+    char padA[2];
+    void (*funcC)(s32, s32);
+} VT_Unk04;
+
+void AudioSys__Unk04(s16 arg0) {
+    s32 idx = arg0;
+    s32 *slot;
+    s32 *item;
+    if (idx >= 10) {
+        printf(D_80019114, D_8001913C, 0x17A);
+        exit(1);
+    }
+    slot = &D_8003FD8C[idx];
+    item = (s32*)*slot;
+    if (item != NULL) {
+        VT_Unk04 *vt = (VT_Unk04*)item[6];
+        vt->funcC((s32)item + vt->offset8, 3);
+    }
+    *slot = 0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc06);
 

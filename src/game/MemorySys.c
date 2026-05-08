@@ -76,7 +76,14 @@ void PackedFiles__Quit(void) {
     FileSys__DeleteFile(pf);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Load);
+extern PakFile FileSys__LoadFile(char *);
+
+void PackedFiles__Load(char *filename) {
+    PakFile pf = D_8003FE68;
+    FileSys__DeleteFile(pf);
+    pf = FileSys__LoadFile(filename);
+    D_8003FE68 = pf;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__LoadFile);
 
@@ -243,15 +250,10 @@ s32 func_80023210(s32 value) {
     return (value + 3) & ~3;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023220);
-#else
 s32 func_80023220(s8* first_string, s8* second_string) {
-    // https://decomp.me/scratch/MVnJF
     s8 current_character = *first_string;
     s8 other_character = *second_string;
 
-    // uppercase to lowercase (A-Z)
     if ((u32)(current_character - 65) < 26) {
         current_character += 0x20;
     }
@@ -259,21 +261,19 @@ s32 func_80023220(s8* first_string, s8* second_string) {
         other_character += 0x20;
     }
 
-    // compare characters?
     if (current_character < other_character) {
         return -1;
     }
     if (other_character < current_character) {
         return 1;
     }
-    
+
     if (current_character != 0) {
         return func_80023220(first_string + 1, second_string + 1);
     }
-    
+
     return 0;
 }
-#endif
 
 s32 func_800232A0(s32 arg0) {
     return arg0 + func_80023210(func_80035C6C() + 1);
@@ -457,7 +457,17 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025D1C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025EBC);
+extern s32 D_80047EC8;
+extern s32 D_80047EFC;
+
+s32 func_80025EBC(s32 a0) {
+    s32 v1, v3;
+    if (a0 == -0x61 || a0 == -0x62) return a0;
+    v1 = D_80047EC8 / 30;
+    v3 = ((v1 * a0) >> 16) - D_80047EFC;
+    if (v3 < 0) v3 = 0;
+    return v3;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025F44);
 
@@ -523,7 +533,23 @@ void func_80026E64(s32 *arg0, s32 arg1) {
     } while (*table[i].name != 0);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026ED0);
+void func_80026ED0(s32 *arg0) {
+    Entry10 *table;
+    s32 i;
+    s32 *item;
+
+    arg0[1] = 0;
+    arg0[0] = 0;
+    table = (Entry10*)arg0[13];
+    if (*table->name == 0) return;
+    i = 0;
+    do {
+        item = (s32*)arg0[3 + i];
+        item[4] = 0;
+        UnkFunc01((UnkStruct00*)item, 0x8000);
+        i++;
+    } while (*table[i].name != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026F5C);
 
