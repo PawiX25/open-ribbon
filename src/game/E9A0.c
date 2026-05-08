@@ -1,19 +1,6 @@
 #include "common.h"
 #include "globals.h"
 
-typedef struct VT_28E74 {
-    char pad[0x10];
-    s16 offset10;
-    void (*func14)(s32, s32);
-} VT_28E74;
-
-typedef struct VT_28DE4 {
-    char pad[0x18];
-    s16 offset18;
-    char pad1A[2];
-    void *(*func1C)(s32);
-} VT_28DE4;
-
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800271A0);
 
 void func_80027340(UnkStruct16* arg0, s32 arg1) {
@@ -77,47 +64,7 @@ void func_8002758C(UnkStruct14* arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800275BC);
 
-typedef struct VT_2780C {
-    char pad0[0x20];
-    s16 offset20;
-    char pad22[2];
-    void (*func24)(s32);
-    s16 offset28;
-    char pad2A[2];
-    void (*func2C)(s32, s32);
-} VT_2780C;
-
-typedef struct Item_2780C {
-    char pad8[8];
-    void *vt;
-} Item_2780C;
-
-typedef struct Container_2780C {
-    s32 count;
-    Item_2780C *items[10];
-    s32 unk2C;
-    VT_2780C *vt;
-    s32 unk34;
-    s32 unk38;
-} Container_2780C;
-
-extern s32 func_80025EBC(s32);
-
-void func_8002780C(Container_2780C *arg0, s32 arg1) {
-    s32 i;
-    VT_2780C *vt = arg0->vt;
-    vt->func24((s32)arg0 + (s32)vt->offset20);
-    if (arg0->count > 0) {
-        i = 0;
-        do {
-            Item_2780C *item = arg0->items[i];
-            VT_2780C *vt2 = (VT_2780C*)item->vt;
-            vt2->func2C((s32)item + (s32)vt2->offset28, arg1);
-            i++;
-        } while (i < arg0->count);
-    }
-    arg0->unk38 = func_80025EBC(0x335);
-}
+INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_8002780C);
 
 s32 func_800278BC(UnkStruct13* arg0) {
     return func_80025EBC(0x335) < arg0->unk38;
@@ -127,65 +74,6 @@ void func_800278EC(UnkStruct11* arg0) {
     arg0->unk2C = 1;
 }
 
-extern s32 func_8002990C(void);
+INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800278F8);
 
-void func_800278F8(Container_2780C *arg0) {
-    s32 i;
-    if (func_80025EBC(0x335) > arg0->unk38) {
-        arg0->unk34 = 0;
-    }
-    if (arg0->unk34 != 0) {
-        if (func_8002990C() != 0) {
-            VT_2780C *vt = arg0->vt;
-            vt->func2C((s32)arg0 + (s32)vt->offset28, 1);
-        }
-    }
-    if (arg0->count > 0) {
-        i = 0;
-        do {
-            Item_2780C *item = arg0->items[i];
-            VT_28E74 *vt2 = (VT_28E74*)item->vt;
-            vt2->func14((s32)item + (s32)vt2->offset10, arg0->unk2C);
-            i++;
-        } while (i < arg0->count);
-    }
-    if (arg0->unk38 < 0xBB8) {
-        arg0->unk38 = arg0->unk38 + 1;
-    }
-}
-
-extern s32 AudioSys__UnkFunc09(void);
-
-s32 func_800279E4(Container_2780C *arg0) {
-    s32 i;
-    s32 r;
-    s32 ret;
-    s32 buf[4];
-    if (arg0->unk2C == 0) {
-        if (func_8002990C() != 0) {
-            arg0->unk2C = 1;
-            buf[0] = 1;
-            buf[1] = 0;
-            AudioSys__UnkFunc01(buf, 1, 0x40, -1, 0);
-        }
-    }
-    if (arg0->unk2C != 0 && AudioSys__UnkFunc09() != 0) {
-        return 1;
-    }
-    r = 1;
-    if (arg0->count > 0) {
-        i = 0;
-        do {
-            ret = 0;
-            if (r != 0) {
-                Item_2780C *item = arg0->items[i];
-                VT_28DE4 *vt = (VT_28DE4*)item->vt;
-                void *res = vt->func1C((s32)item + (s32)vt->offset18);
-                ret = (res != 0) ? 1 : 0;
-            }
-            r = ret;
-            i++;
-        } while (i < arg0->count);
-    }
-    return r;
-}
+INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800279E4);

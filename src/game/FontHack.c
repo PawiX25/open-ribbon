@@ -10,14 +10,7 @@
 FAInstance FontHack_Instance = {0, 0};
 char D_80047EDC[2] = "\n\n";
 
-s32* func_8001E658(s32 *start, s32 *end, s32 *target, s32 _unused) {
-    s32 v = *target;
-    while (start < end) {
-        if (*start == v) return start;
-        start++;
-    }
-    return end;
-}
+INCLUDE_ASM("asm/game/nonmatchings/FontHack", func_8001E658);
 
 // FontHack::Dtor
 void FontHack__Dtor()
@@ -28,18 +21,4 @@ void FontHack__Dtor()
 }
 
 // *FontHack::Ctor
-extern s32 D_80047EC0;
-extern s32 D_80047EC4;
-extern s32 D_80047EC8;
-extern s32 D_80047ECC;
-
-void FontHack__Ctor(void) {
-    vsync.cb = NULL;
-    D_80047EC0 = 0;
-    D_80047EC4 = 0;
-    D_80047EC8 = 0;
-    D_80047ECC = 0;
-    vsync.tail = NULL;
-    vsync.unk8 = 0;
-    func_8002AEC0(&FontHack_Instance, (s32*)FntFlush);
-}
+INCLUDE_ASM("asm/game/nonmatchings/FontHack", FontHack__Ctor);

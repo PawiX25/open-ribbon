@@ -114,7 +114,6 @@ void func_8001E9FC(u8 arg0) {
     }
 }
 
-extern void func_8001EA5C(u8, void *);
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EA5C);
 
 void UnkFunc03()
@@ -124,29 +123,9 @@ void UnkFunc03()
     UnkVar02 = 0;
 }
 
-s32 func_8001EBD4(void) {
-    s32 v = 0;
-    if (UnkVar01 >= 0 && UnkVar00 >= 0) {
-        v = (UnkVar02 != 0) ? 1 : 0;
-    }
-    return v;
-}
+INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EBD4);
 
-extern void UnkFunc03(void);
-extern void func_800314D8(s32, void *, void *, s32);
-extern s32 D_80047F70;
-extern s8 D_80048138;
-
-void func_8001EC08(void) {
-    UnkFunc03();
-    func_800314D8(0x13, NULL, func_8001E9B0, 0);
-    D_80047F70 = 1;
-    if (D_80047F24 == 0) {
-        D_80047F24 = 1;
-        D_80048138 = 1;
-    }
-    func_800314D8(0x14, &D_80048138, func_8001EA5C, 0);
-}
+INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC08);
 
 INCLUDE_RODATA("asm/game/nonmatchings/CdSys", D_8001907C);
 
@@ -196,42 +175,7 @@ void func_8001EC74(UnkStruct03 *arg0) {
 }
 
 #else
-extern char D_800190C8[];
-
-void func_8001EC74(s32 *arg0) {
-    s32 buf_local[14];
-    s32 small_buf[2];
-    s32 v;
-    s32 cond;
-    D_80047F64 = arg0;
-    UnkFunc03();
-    D_80047F60 = 0;
-    D_80047F40 = NULL;
-    D_80047F44 = NULL;
-    CdSys__Unk01MemAdd = 0;
-    CdSys__Unk00MemAdd = 0;
-    D_80047F50 = 0;
-    D_80047F54 = 0;
-    D_80047F74 = 0;
-    D_80047F3C = -1;
-    D_80047F38 = 0;
-    D_80047F68 = 0;
-    func_80031E48((UnkStruct03*)buf_local);
-    func_80031374();
-    buf_local[0] = 0;
-    func_80032158((UnkStruct04*)buf_local);
-    VSync(4);
-    v = func_80031C40();
-    cond = (v >> 4) & 1;
-    if (arg0[0] <= 0 && cond != 0) {
-        small_buf[0] = 1;
-        small_buf[1] = 0;
-        arg0[0] = small_buf[0];
-        arg0[1] = small_buf[1];
-        printf(D_800190C8);
-    }
-    D_80047F5C = cond;
-}
+INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);
 #endif
 
 extern void func_80031B54(void);

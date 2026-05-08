@@ -51,36 +51,7 @@ INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_80019000);
 
 INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_80019028);
 
-extern void func_8002C150(s32);
-extern char D_8001904C[];
-
-typedef struct {
-    s32 *u0;
-    s32 *u4;
-} Pair_DBxx;
-
-extern Pair_DBxx D_8003F964[2];
-
-void VideoSys__Quit(void) {
-    s32 i;
-    s32 *p;
-    func_8002C150(0);
-    printf(D_8001904C, D_8003F964[0].u4[2], D_8003F964[0].u4[0]);
-    for (i = 0; i < 2; i++) {
-        p = D_8003F964[i].u4;
-        if (p != NULL) {
-            if (p[1] != 0) {
-                delete((void*)p[1]);
-            }
-            free(p);
-        }
-        p = D_8003F964[i].u0;
-        if (p != NULL) {
-            free((void*)p[1]);
-            free(p);
-        }
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__Quit);
 
 void VideoSys__Reset()
 {
@@ -91,45 +62,16 @@ void VideoSys__Reset()
 
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__Flip);
 
-extern s32 fntStream;
-extern char D_80047EE0[];
-extern void func_8002FA40(s32, char *, s32);
-
-void VideoSys__WriteFnt(s32 arg0) {
-    func_8002FA40(fntStream, D_80047EE0, arg0);
-}
+INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__WriteFnt);
 
 void VideoSys__DisplayFnt()
 {
 	FntFlush(fntStream);
 }
 
-extern s32 buffer_i;
+INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__GetOT);
 
-s32* VideoSys__GetOT(void) {
-    return D_8003F964[buffer_i].u4;
-}
-
-extern char D_80019000[];
-extern char D_80019028[];
-extern void func_8001E4E4(struct VSyncCbList *, s32, VSyncCb*);
-
-void VideoSys__AddVSyncCB(VSyncCb cb) {
-    s32 count = ((s32)vsync.tail - (s32)vsync.cb) >> 2;
-    s32 cap = (vsync.unk8 - (s32)vsync.cb) >> 2;
-    if ((u32)count >= (u32)cap) {
-        printf(D_80019000, D_80019028, 0x23E);
-        exit(1);
-    }
-    SwEnterCriticalSection();
-    if ((s32)vsync.tail == vsync.unk8) {
-        func_8001E4E4(&vsync, (s32)vsync.tail, &cb);
-    } else {
-        *(VSyncCb*)vsync.tail = cb;
-        vsync.tail = (VSyncCb)((s32)vsync.tail + 4);
-    }
-    SwExitCriticalSection();
-}
+INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__AddVSyncCB);
 
 extern s32 func_8001E658(s32, s32, s32*, s32);
 extern void func_80030BF4(s32, s32, s32);

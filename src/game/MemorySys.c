@@ -6,363 +6,48 @@
 #include <psyq/STDIO.H>
 
 
-extern char D_80019244[];
-extern char D_8001926C[];
-extern s32 D_80047FCC;
-extern s32 *D_80047FD0;
-extern PakFile D_8003FE44;
-extern PakFile D_8003FE50;
-extern PakFile D_8003FE5C;
-extern PakFile D_8003FE68;
-extern s32 D_80048004;
-extern s32 D_80047FF4;
-extern void func_8003428C(void);
-extern void cbready(u8);
-extern void cbsync(u8);
-extern void func_8003439C(void);
-extern void MemorySys__free(s32);
-extern s32 MemorySys__malloc(s32);
-extern void MemorySys__DumpHead(void);
-extern s32 func_80035C6C(char *);
-extern void *func_80030C74(s32);
-extern void *func_80030BF4(void *, void *, s32);
-extern PakFile FileSys__LoadFile(char *);
-extern void FileSys__DeleteFile(PakFile);
-extern s32 func_800232D0(s32 *, s8 *);
-extern void FileSys__Unk00(void *, char *, s32);
-extern void func_800231A8();
-extern void *func_80022660();
-extern s32 func_80023220(s8 *, s8 *);
-extern s32 func_8002317C();
-extern void func_80023174();
-
-void MemorySys__Init(s32 arg0, s32 arg1) {
-    D_80047FCC = arg1 & ~7;
-    if ((arg0 & 3) != 0) {
-        printf(D_80019244, D_8001926C, 0x86);
-        exit(1);
-    }
-    D_80047FD0 = (s32*)arg0;
-    func_8003428C();
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Init);
 
 void func_80021758(void) {} // MemorySys__Stub [Empty]
 
-extern char D_80019300[];
-extern char D_80019314[];
-extern char D_80019324[];
-extern char D_80019338[];
-extern char D_80019348[];
-extern char D_80019358[];
-extern char D_80019368[];
-extern char D_80019378[];
-extern s32 D_80047FA8;
-extern s32 D_80047FAC;
-extern s32 D_8004087C;
-extern s32 D_223C4;
-extern s32 D_8D98;
-extern s32 D_8560;
-extern s32 D_270;
-extern s32 D_4557;
-extern s32 D_48;
-extern s32 D_28;
-extern s32 D_14;
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Info);
 
-void MemorySys__Info(void) {
-    s32 sum;
-    sum = (s32)&D_8D98 + (s32)&D_48 + (s32)&D_8560 + (s32)&D_270 + (s32)&D_4557 + (s32)&D_28 + (s32)&D_14;
-    printf(D_80019300);
-    printf(D_80019314, D_80047FA8);
-    printf(D_80019324);
-    printf(D_80019338, 0x10000);
-    printf(D_80019348, D_80047FAC);
-    printf(D_80019358, &D_223C4);
-    printf(D_80019368, sum);
-    printf(D_80019378, D_8004087C);
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpUsage);
 
-extern char D_80019388[];
-extern char D_80019398[];
-
-void MemorySys__DumpUsage(void) {
-    s32 sz = D_80047FCC - 8;
-    s32 free_bytes = MemorySys__CountHeapFree();
-    s32 *p;
-    s32 acc;
-    printf(D_80019388, sz - free_bytes);
-    p = D_80047FD0;
-    acc = 0;
-    if (p[1] != 0) {
-        do {
-            s32 v = p[1];
-            p = (s32*)p[0];
-            acc += v << 3;
-        } while (p[1] != 0);
-    }
-    printf(D_80019398, acc);
-}
-
-extern char D_800193A8[];
-extern char D_80047FB0[];
-extern char D_80047FB8[];
-extern char D_80047FC0[];
-
-void MemorySys__DumpHead(void) {
-    s32 *p;
-    s32 sz;
-    char *fmt;
-    printf(D_800193A8);
-    p = D_80047FD0;
-    if (p[1] != 0) {
-        sz = p[1] << 3;
-        do {
-            if (sz < 0x400) {
-                fmt = D_80047FB0;
-                if (sz < 0) sz = sz + 0x3FF;
-                sz = sz >> 10;
-            } else {
-                fmt = D_80047FB8;
-            }
-            printf(fmt, sz);
-            p = (s32*)p[0];
-            sz = p[1] << 3;
-        } while (p[1] != 0);
-    }
-    printf(D_80047FC0);
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpHead);
 
 void MemorySys__Init01(void) {
     MemorySys__Init();
 }
 
-extern s32 D_80047FC4;
-extern char D_800192C4[];
-extern char D_800192E0[];
-extern s32 func_800342EC(s32);
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__malloc);
 
-s32 MemorySys__malloc(s32 size) {
-    s32 r;
-    s32 *p;
-    s32 acc;
-    if (size == 0) return 0;
-    r = func_800342EC(size);
-    if (r != 0) {
-        D_80047FC4 = D_80047FC4 + 1;
-        return r;
-    }
-    printf(D_800192C4);
-    p = D_80047FD0;
-    acc = 0;
-    if (p[1] != 0) {
-        do {
-            s32 v = p[1];
-            p = (s32*)p[0];
-            acc += v << 3;
-        } while (p[1] != 0);
-    }
-    printf(D_800192E0, acc, size);
-    MemorySys__DumpHead();
-    printf(D_80019244, D_8001926C, 0x140);
-    exit(1);
-}
-
-extern s32 D_80047FC8;
-
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__free);
+#else
 void MemorySys__free(s32 address) {
     if (address != 0) {
         func_8003439C();
-        D_80047FC8 = D_80047FC8 + 1;
+        freeAmount += 1;
     }
 }
+#endif
 
-extern s32 *D_80047FD0;
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__CountHeapFree);
 
-s32 MemorySys__CountHeapFree(void) {
-    s32 *p = D_80047FD0;
-    s32 acc = 0;
-    if (p[1] != 0) {
-        do {
-            s32 v = p[1];
-            p = (s32*)p[0];
-            acc += v << 3;
-        } while (p[1] != 0);
-    }
-    return acc;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021AC0);
 
-extern char D_80047FE4[];
-extern char D_80047FE8[];
-extern void FileSys__Unk00(s32 *, char *, s32);
-extern void func_80022660(s32 *, char *, s32, s32);
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbready);
 
-void func_80021AC0(s32 *arg0, char *filename) {
-    s32 r;
-    s32 byte_off;
-    s32 c;
-    s8 *p;
-    r = func_80035C6C(D_80047FE4);
-    FileSys__Unk00(arg0, D_80047FE4, r + (s32)D_80047FE4);
-    func_80022660(arg0, (char*)D_8003FE5C.next, (s32)D_8003FE5C.next + D_8003FE5C.unk4, 0);
-    r = func_80035C6C(filename);
-    func_80022660(arg0, filename, r + (s32)filename, 0);
-    r = func_80035C6C(D_80047FE8);
-    func_80022660(arg0, D_80047FE8, r + (s32)D_80047FE8, 0);
-    if (arg0[1] != arg0[0]) {
-        byte_off = 0;
-        do {
-            p = (s8*)((char*)arg0[0] + byte_off);
-            c = *p;
-            if (c >= 'a' && c < '{') {
-                *p = c - 0x20;
-            } else {
-                if (*p == '/') *p = '\\';
-            }
-            byte_off++;
-        } while ((u32)byte_off < (u32)(arg0[1] - arg0[0]));
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbsync);
 
-extern s32 D_80047FF8;
-extern s32 D_80047FFC;
-extern s32 D_80048000;
-extern void func_800324D8(s32, s32);
-extern void func_80034DF0(void);
-extern char D_80019400[];
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
-void cbready(u8 arg0) {
-    s32 sz;
-    if (arg0 == 1) {
-        sz = D_80047FFC;
-        if (sz > 0x200) sz = 0x200;
-        func_800324D8(D_80047FF8, sz);
-        D_80047FFC = D_80047FFC - sz;
-        D_80047FF8 = D_80047FF8 + sz * 4;
-        if (D_80047FFC == 0) {
-            func_80034DF0();
-            D_80048000 = arg0;
-        }
-    } else {
-        printf(D_80019400);
-        D_80048004 = 0;
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Read);
 
-extern void cbready(s32, s32);
-extern s32 D_80048004;
-extern void func_80034D6C(void(*)(s32, s32), s32);
-extern char D_80019414[];
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021E6C);
 
-void cbsync(u8 arg0) {
-    if (arg0 == 2) {
-        func_80034D6C(cbready, -1);
-    } else {
-        printf(D_80019414);
-        D_80048004 = 0;
-    }
-}
-
-s32 func_80021CD0(s32 arg0, s32 arg1, s32 arg2) {
-    s32 ret = -1;
-    s32 v;
-    D_80047FF8 = arg2;
-    if (arg1 + 3 < 0) {
-        D_80047FFC = (arg1 + 6) >> 2;
-    } else {
-        D_80047FFC = (arg1 + 3) >> 2;
-    }
-    D_80048000 = 0;
-    D_80048004 = 1;
-    func_800314D8(0xE, (void*)((s32)&D_80047FE8 + 3), NULL, -1);
-    func_800314D8(0x6, (void*)arg0, cbsync, -1);
-    while (D_80048004 != 0 && D_80048000 == 0) {
-        if (D_80047FF4 != 0 && D_80047FFC != ret) {
-            ret = ((s32(*)(void))D_80047FF4)();
-        }
-    }
-    return D_80048004;
-}
-
-extern char D_80019424[];
-extern char D_80019438[];
-extern s32 func_8003530C(s32);
-extern void func_80021CD0(s32, s32, s32);
-
-s32 FileSys__Read(char *filename, s32 *out) {
-    PakFile pf;
-    s32 r;
-    func_80021AC0(&D_8003FE44, filename);
-    pf = D_8003FE44;
-    r = func_8003530C((s32)&pf);
-    if (r == 0) return 0;
-    if (r == -1) {
-        printf(D_80019424, filename);
-        return 0;
-    }
-    out[2] = 1;
-    out[1] = pf.unk4;
-    out[0] = (s32)func_80030C74((pf.unk4 + 3) & ~3);
-    while (1) {
-        if (func_80021CD0((s32)&pf, out[1], out[0]) != 0) {
-            return 1;
-        }
-        printf(D_80019438, filename);
-    }
-}
-
-s32 func_80021E6C(s32 a0_in, s32 *arg1, s32 *arg2) {
-    extern s32* func_80023388(s32, s32);
-    s32 *r;
-    s32 ret = 1;
-    r = func_80023388(a0_in, arg1[0]);
-    if (r != NULL) {
-        arg2[2] = 0;
-        arg2[0] = (s32)(r + 1);
-        arg2[1] = r[0];
-    } else {
-        ret = 0;
-    }
-    if (arg1[0] != 0 && arg1[2] - arg1[0] == 0) {
-        MemorySys__free(arg1[0]);
-    }
-    return ret;
-}
-
-extern char D_80048144[];
-extern char D_80047FEC[];
-extern void func_800344EC(char *, char *, s32, s32);
-extern void func_80022A58(s32 *);
-extern void func_80022658(s32 *);
-extern void func_80022A60(s32 *, s32, s32, s32);
-
-void func_80021EF4(s32 *arg0, s32 arg1, s32 arg2, s32 *arg3) {
-    s32 mask;
-    s32 v0;
-    s32 r;
-    s32 sz;
-    mask = (1 << (arg2 * 4)) - 1;
-    if (arg0 != arg3) {
-        FileSys__Unk00(arg3, (char*)arg0[0], arg0[1]);
-    }
-    if (arg1 != mask) {
-        func_800344EC(D_80048144, D_80047FEC, arg2, arg1);
-        r = func_80022968(arg3, 0x2F, -1);
-        mask = 0;
-        if (r != -1) {
-            mask = r + 1;
-        }
-        if ((u32)(arg3[1] - arg3[0]) < (u32)mask) {
-            func_80022A58(arg3);
-        }
-        sz = func_80035C6C(D_80048144);
-        if ((u32)(-2 - sz) < (u32)(arg3[1] - arg3[0])) {
-            func_80022658(arg3);
-        }
-        func_80022A60(arg3, arg3[0] + mask, sz + (s32)D_80048144, 0);
-    }
-    if (arg3[0] != 0 && (arg3[2] - arg3[0]) == 0) {
-        MemorySys__free(arg3[0]);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021EF4);
 
 extern s32 D_800194A4[];
 
@@ -382,28 +67,7 @@ s32 PackedFiles__Unk00(s32 arg0, s32 *arg1, s32 arg2) {
     return arg0 | v;
 }
 
-extern PakFile D_8003FE74;
-extern s32 D_8003FE74_arr[];
-
-void PackedFiles__Init(char *filename) {
-    s32 r;
-    PakFile pf;
-    s32 *p;
-    r = func_80035C6C(filename);
-    FileSys__Unk00(&D_8003FE5C, filename, (s32)filename + r);
-    pf.next = NULL;
-    pf.unk4 = 0;
-    pf.size = 0;
-    D_8003FE68 = pf;
-    p = (s32*)&D_8003FE74;
-    p[5] = 1;
-    p[1] = 2;
-    p[0] = 4;
-    p[2] = 8;
-    p[3] = 0x10;
-    D_80047FF4 = 0;
-    p[4] = 0x20;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Init);
 
 extern PakFile D_8003FE68;
 
@@ -412,14 +76,7 @@ void PackedFiles__Quit(void) {
     FileSys__DeleteFile(pf);
 }
 
-extern PakFile FileSys__LoadFile(char *);
-
-void PackedFiles__Load(char *filename) {
-    PakFile pf = D_8003FE68;
-    FileSys__DeleteFile(pf);
-    pf = FileSys__LoadFile(filename);
-    D_8003FE68 = pf;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Load);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__LoadFile);
 
@@ -429,17 +86,7 @@ void FileSys__DeleteFile(PakFile pf)
         delete(pf.next);
 }
 
-extern s32 D_80047FF4;
-extern char D_80019448[];
-extern char D_80019470[];
-
-void FileSys__Unknown(s32 arg0) {
-    if (arg0 != 0 && D_80047FF4 != 0) {
-        printf(D_80019448, D_80019470, 0x188);
-        exit(1);
-    }
-    D_80047FF4 = arg0;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Unknown);
 
 typedef struct {
     char *start;
@@ -475,140 +122,9 @@ void func_80022658(void) {}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022660);
 
-s32* func_80022824(s32 *out, s32 *end_pp, s32 *start_pp, s32 byte) {
-    s8 b = (s8)(byte >> 8);
-    s32 *end = (s32*)end_pp[0];
-    s32 *start = (s32*)start_pp[0];
-    s32 grp = (s32)((char*)end - (char*)start) >> 4;
-    s32 *e;
-    s32 rem;
-    s32 *p;
-    s32 *res;
-    if (grp > 0) {
-        do {
-            e = (s32*)end_pp[0];
-            p = e;
-            if (((s8*)p)[-1] == b) {
-                end_pp[0] = (s32)((char*)p - 1);
-                out[0] = (s32)p;
-                return out;
-            }
-            end_pp[0] = (s32)((char*)p - 1);
-            if (((s8*)p)[-2] == b) {
-                end_pp[0] = (s32)((char*)p - 2);
-                out[0] = (s32)((char*)p - 1);
-                return out;
-            }
-            end_pp[0] = (s32)((char*)p - 2);
-            if (((s8*)p)[-3] == b) {
-                end_pp[0] = (s32)((char*)p - 3);
-                out[0] = (s32)((char*)p - 1);
-                return out;
-            }
-            end_pp[0] = (s32)((char*)p - 3);
-            if (((s8*)p)[-4] == b) {
-                end_pp[0] = (s32)((char*)p - 4);
-                out[0] = (s32)((char*)p - 2);
-                return out;
-            }
-            end_pp[0] = (s32)((char*)p - 4);
-            grp--;
-        } while (grp > 0);
-    }
-    {
-        s32 *t8 = (s32*)end_pp[0];
-        rem = ((s32)t8 - (s32)start_pp[0]) >> 2;
-    }
-    if (rem == 1) goto L20;
-    if (rem < 2) goto Lret_start;
-    if (rem == 2) goto L08;
-    if (rem != 3) goto Lret_start;
-    {
-        s32 *t8 = (s32*)end_pp[0];
-        s8 v = ((s8*)t8)[-1];
-        s8 vv = b;
-        if (v == vv) {
-            end_pp[0] = (s32)((char*)t8 - 1);
-            out[0] = (s32)t8;
-            return out;
-        }
-        end_pp[0] = (s32)((char*)t8 - 1);
-    }
-L08:
-    {
-        s32 *t = (s32*)end_pp[0];
-        if (((s8*)t)[-1] == b) {
-            end_pp[0] = (s32)((char*)t - 1);
-            out[0] = (s32)t;
-            return out;
-        }
-        end_pp[0] = (s32)((char*)t - 1);
-    }
-L20:
-    {
-        s32 *t = (s32*)end_pp[0];
-        if (((s8*)t)[-1] == b) {
-            out[0] = (s32)t;
-            return out;
-        }
-        end_pp[0] = (s32)((char*)t - 1);
-    }
-Lret_start:
-    out[0] = start_pp[0];
-    return out;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022824);
 
-s32 func_80022968(s32 *arg0, s32 arg1, s32 arg2) {
-    s8 b1 = (s8)arg1;
-    s32 sz_orig;
-    s32 limit;
-    s32 *fd_a3 = &arg2;
-    s32 fd1[8];
-    s32 fd2[8];
-    s32 saved_arg2;
-    s8 buf3[4];
-    s32 v0;
-    s32 v1;
-    s32 *p;
-    sz_orig = arg0[1] - arg0[0];
-    if (sz_orig == 0) return -1;
-    limit = sz_orig - 1;
-    saved_arg2 = arg2;
-    if ((u32)arg2 < (u32)limit) {
-        fd_a3 = &saved_arg2;
-    } else {
-        fd_a3 = &limit;
-    }
-    {
-        v1 = arg0[0];
-        fd1[0] = v1;
-        fd1[1] = v1 + (*fd_a3) + 1;
-        fd1[2] = arg0[2];
-        buf3[0] = 0;
-        buf3[2] = b1;
-        buf3[1] = 0;
-    }
-    {
-        u8 b_a = buf3[0];
-        u8 b_b = buf3[1];
-        u8 b_c = buf3[2];
-        u32 packed;
-        b_a |= b_b << 8;
-        b_a |= b_c << 16;
-        b_a <<= 0;
-        packed = (u32)(((u8)buf3[0]) | ((u8)buf3[1] << 8) | ((u8)buf3[2] << 16));
-        packed = packed << 8;
-        fd2[0] = v1;
-        fd2[2] = v1 + (*fd_a3) + 1;
-        func_80022824(arg0, fd1, fd2, packed);
-    }
-    {
-        s32 result = fd1[0];
-        s32 v0_p = arg0[0];
-        if (result == v0_p) return -1;
-        return result - v0_p - 1;
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022968);
 
 void func_80022A58(void) {}
 
@@ -630,28 +146,7 @@ void func_80022C80(s32 arg0) {
     } while (MemorySys__malloc(arg0) == 0);
 }
 
-extern PakFile D_8003FE5C;
-extern PakFile D_8003FE50;
-extern PakFile D_8003FE44;
-
-void func_80022CDC(void) {
-    s32 buf, end;
-    buf = (s32)D_8003FE5C.next;
-    end = D_8003FE5C.size;
-    if (buf != 0 && (end - buf) == 0) {
-        MemorySys__free(buf);
-    }
-    buf = (s32)D_8003FE50.next;
-    end = D_8003FE50.size;
-    if (buf != 0 && (end - buf) == 0) {
-        MemorySys__free(buf);
-    }
-    buf = (s32)D_8003FE44.next;
-    end = D_8003FE44.size;
-    if (buf != 0 && (end - buf) == 0) {
-        MemorySys__free(buf);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
 
 u8* func_80022D78(u8* dest, s32 count, u8* value) {
     // memset-like function
@@ -665,51 +160,7 @@ u8* func_80022D78(u8* dest, s32 count, u8* value) {
     return ptr;
 }
 
-extern void func_80022C80(s32);
-extern void func_80022D78(s32, s32, s8 *);
-
-void func_80022D9C(void) {
-    s8 buf[16];
-    s8 *p;
-    buf[0] = 0x20;
-
-    D_8003FE44.next = NULL;
-    D_8003FE44.unk4 = 0;
-    D_8003FE44.size = 0;
-    p = (s8*)MemorySys__malloc(0x41);
-    if (p == NULL) p = (s8*)func_80022C80(0x41);
-    D_8003FE44.next = (PakFile*)p;
-    D_8003FE44.unk4 = (s32)p;
-    D_8003FE44.size = (s32)(p + 0x41);
-    func_80022D78((s32)p, 0x40, buf);
-    *(s8*)D_8003FE44.unk4 = 0;
-
-    buf[0] = 0x20;
-    D_8003FE50.next = NULL;
-    D_8003FE50.unk4 = 0;
-    D_8003FE50.size = 0;
-    p = (s8*)MemorySys__malloc(0x41);
-    if (p == NULL) p = (s8*)func_80022C80(0x41);
-    D_8003FE50.next = (PakFile*)p;
-    D_8003FE50.unk4 = (s32)p;
-    D_8003FE50.size = (s32)(p + 0x41);
-    func_80022D78((s32)p, 0x40, buf);
-    *(s8*)D_8003FE50.unk4 = 0;
-
-    buf[0] = 0x20;
-    D_8003FE5C.next = NULL;
-    D_8003FE5C.unk4 = 0;
-    D_8003FE5C.size = 0;
-    p = (s8*)MemorySys__malloc(0x41);
-    if (p == NULL) p = (s8*)func_80022C80(0x41);
-    D_8003FE5C.next = (PakFile*)p;
-    D_8003FE5C.unk4 = (s32)p;
-    D_8003FE5C.size = (s32)(p + 0x41);
-    func_80022D78((s32)p, 0x40, buf);
-    *(s8*)D_8003FE5C.unk4 = 0;
-
-    D_8003FE68.next = NULL;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022D9C);
 
 void VideoSys__SetProjection(s32 h)
 {
@@ -739,19 +190,7 @@ s32 func_80023060(SVECTOR* vec1, SVECTOR* vec2)
     return 0;
 }
 
-extern s32 D_8003FE8C[];
-extern void func_800231C4(s32*, s32, s32, s32);
-extern void func_8002317C(s32*, s32*);
-extern void func_80023174(s32*);
-
-void func_8002310C(void) {
-    s32 *p = D_8003FE8C;
-    p[20] = (s32)(p + 1);
-    func_800231C4(p, 0x1000, 0x1000, 0x1000);
-    func_800231A8(p, 0, 0, 0);
-    func_8002317C(p, p);
-    func_80023174(p);
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002310C);
 
 void func_80023174(s32* arg0) {
     *arg0 = 0;
@@ -761,12 +200,7 @@ void func_8002317C(UnkStruct09* arg0, int arg1) {
     arg0->unk48 = func_800231F4(arg1);
 }
 
-void func_800231A8(s32 *arg0, s32 a1, s32 a2, s32 a3) {
-    s32 *p = (s32*)arg0[20];
-    p[5] = a1;
-    p[6] = a2;
-    p[7] = a3;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800231A8);
 
 typedef struct {
     char pad0[0x50];
@@ -804,10 +238,15 @@ s32 func_80023210(s32 value) {
     return (value + 3) & ~3;
 }
 
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023220);
+#else
 s32 func_80023220(s8* first_string, s8* second_string) {
+    // https://decomp.me/scratch/MVnJF
     s8 current_character = *first_string;
     s8 other_character = *second_string;
 
+    // uppercase to lowercase (A-Z)
     if ((u32)(current_character - 65) < 26) {
         current_character += 0x20;
     }
@@ -815,44 +254,27 @@ s32 func_80023220(s8* first_string, s8* second_string) {
         other_character += 0x20;
     }
 
+    // compare characters?
     if (current_character < other_character) {
         return -1;
     }
     if (other_character < current_character) {
         return 1;
     }
-
+    
     if (current_character != 0) {
         return func_80023220(first_string + 1, second_string + 1);
     }
-
+    
     return 0;
 }
+#endif
 
 s32 func_800232A0(s32 arg0) {
     return arg0 + func_80023210(func_80035C6C() + 1);
 }
 
-s32 func_800232D0(s32 *table, s8 *needle) {
-    s32 lo = 0;
-    s32 hi = table[0];
-    s32 mid;
-    s32 cmp;
-    s32 *entry;
-    while (lo < hi) {
-        mid = (lo + hi) / 2;
-        entry = (s32*)((char*)table + table[mid + 1]);
-        cmp = func_80023220(needle, (s8*)entry);
-        if (cmp < 0) {
-            hi = mid;
-        } else if (cmp == 0) {
-            return (s32)entry;
-        } else {
-            lo = mid + 1;
-        }
-    }
-    return 0;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800232D0);
 
 s32 func_80023388(void) {
     s32 temp_return_value;
@@ -909,176 +331,15 @@ s32* func_80023B14(s32* arg0) {
     return arg0;
 }
 
-extern s32 func_80024820(s32);
-extern void func_8002487C(s32 *);
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023B20);
 
-s32* func_80023B20(s32 *out, char *str) {
-    s32 fd[3];
-    s32 len;
-    s32 sz;
-    s32 *new_buf;
-    s32 *base;
-    s32 byte_count;
-    out[0] = 0;
-    out[1] = (s32)func_800207C4();
-    out[2] = (s32)func_800207C4();
-    fd[0] = 0;
-    fd[1] = 0;
-    fd[2] = 0;
-    out[3] = func_80035C6C(str);
-    len = out[3] + 1;
-    if ((u32)len > (u32)-2) {
-        func_8002487C(fd);
-    } else if (len == 0) {
-        new_buf = NULL;
-        fd[0] = (s32)new_buf;
-        fd[1] = (s32)new_buf;
-        fd[2] = (s32)((char*)new_buf + len);
-    } else {
-        new_buf = (s32*)MemorySys__malloc(len);
-        if (new_buf == NULL) {
-            new_buf = (s32*)func_80024820(len);
-        }
-        fd[0] = (s32)new_buf;
-        fd[1] = (s32)new_buf;
-        fd[2] = (s32)((char*)new_buf + len);
-    }
-    byte_count = (s32)((char*)out[3] + (s32)str - (s32)str);   // simplified: out[3]
-    func_80030BF4((void*)fd[0], str, out[3]);
-    base = (s32*)fd[0];
-    fd[1] = (s32)((char*)base + out[3]);
-    *(s8*)((char*)base + out[3]) = 0;
-    InputSys__Unk01((s32*)out + 1, (s32)fd);
-    return out;
-}
-
-extern char D_80048034[];
-
-void func_80023C2C(s32 *arg0, s32 flag) {
-    s32 fd[3];
-    s32 len;
-    s32 *new_buf;
-    s32 *base;
-    fd[0] = 0;
-    fd[1] = 0;
-    fd[2] = 0;
-    len = func_80035C6C(D_80048034) + 1;
-    if ((u32)len > (u32)-2) {
-        func_8002487C(fd);
-    } else if (len == 0) {
-        new_buf = NULL;
-        fd[0] = (s32)new_buf;
-        fd[1] = (s32)new_buf;
-        fd[2] = (s32)((char*)new_buf + len);
-    } else {
-        new_buf = (s32*)MemorySys__malloc(len);
-        if (new_buf == NULL) {
-            new_buf = (s32*)func_80024820(len);
-        }
-        fd[0] = (s32)new_buf;
-        fd[1] = (s32)new_buf;
-        fd[2] = (s32)((char*)new_buf + len);
-    }
-    func_80030BF4((void*)fd[0], D_80048034, (s32)((char*)D_80048034 + len - 1 - (s32)D_80048034));
-    base = (s32*)fd[0];
-    fd[1] = (s32)((char*)base + (len - 1));
-    *(s8*)((char*)base + (len - 1)) = 0;
-    InputSys__Unk01((s32*)fd, 0);
-    if ((flag & 1) != 0) {
-        free(arg0);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023C2C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023D38);
 
-extern char D_800196B4[];
-extern char D_800196DC[];
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800245CC);
 
-void func_800245CC(s32 *arg0) {
-    s32 *node;
-    s32 *next;
-    s32 *parent;
-    s32 *list;
-    node = (s32*)arg0[3];
-    if (node[3] != 0) {
-        arg0[3] = node[3];
-        next = (s32*)node[2];
-        if (next != NULL) {
-            do {
-                arg0[3] = (s32)((s32**)arg0[3])[2];
-                next = (s32*)((s32*)arg0[3])[2];
-            } while (next != NULL);
-        }
-    } else {
-        list = (s32*)node[1];
-        if (list[3] != node) {
-            do {
-                arg0[3] = (s32)list;
-                list = (s32*)list[1];
-            } while (((s32*)arg0[3])[3] == list);
-        } else {
-            if (((s32*)arg0[3])[3] != list) {
-                arg0[3] = (s32)list;
-            }
-        }
-    }
-    {
-        s32 *u8 = (s32*)arg0[2];
-        if (u8[0] == arg0[3]) {
-            arg0[3] = ((s32*)((s32*)arg0[2])[0])[2];
-        }
-    }
-    {
-        s32 *u8b = (s32*)arg0[2];
-        if (u8b[0] == arg0[3]) {
-            printf(D_800196B4, D_800196DC, 0x57);
-            exit(1);
-        }
-    }
-}
-
-void func_800246EC(s32 *arg0) {
-    s32 *u8;
-    s32 *p;
-    s32 *node;
-    s32 *list;
-    s32 *next;
-    u8 = (s32*)arg0[2];
-    if (arg0[3] == u8[2]) {
-        arg0[3] = u8[0];
-    }
-    p = (s32*)arg0[3];
-    if (p[0] != 0) {
-        if (((s32*)p[1])[1] == p) {
-            arg0[3] = ((s32*)p[0])[3];
-            return;
-        }
-    }
-    node = (s32*)arg0[3];
-    if (node[2] != 0) {
-        node = (s32*)node[2];
-        if (node[3] != 0) {
-            do {
-                node = (s32*)node[3];
-            } while (node[3] != 0);
-        }
-        arg0[3] = (s32)node;
-    } else {
-        list = (s32*)node[1];
-        if (((s32*)list[2])[2] == node) {
-            do {
-                arg0[3] = (s32)list;
-                list = (s32*)list[1];
-            } while (((s32*)list[2])[2] == (s32*)arg0[3]);
-        } else {
-            arg0[3] = (s32)list;
-        }
-    }
-    if (arg0[3] == ((s32*)arg0[2])[0]) {
-        printf(D_800196B4, D_800196DC, 0x60);
-        exit(1);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800246EC);
 
 extern int (*D_80048028)();
 extern char D_80019704[]; // "out of memory\n"
@@ -1150,62 +411,11 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024F8C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025330);
 
-extern s32 D_80048044;
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025584);
 
-void func_80025584(void) {
-    D_80048044 = 0;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025590);
 
-extern void UnkFunc05(s32 *, s32);
-
-void func_80025590(s32 *arg0, s32 a1, s32 a2, s32 a3) {
-    s32 v;
-    arg0[0] = a1;
-    arg0[1] = 0;
-    arg0[2] = a2;
-    arg0[3] = 0;
-    arg0[6] = 0;
-    arg0[3] = 0x10000;
-    arg0[5] = a3;
-    arg0[4] = 0;
-    v = (a2 << 16) | (((u32)a2) >> 16);
-    arg0[1] = v;
-    UnkFunc05(arg0, 0x8000);
-}
-
-void func_80025604(s32 *arg0) {
-    s32 v;
-    s32 lim;
-    if (arg0[5] != 0) {
-        v = arg0[6] + arg0[1];
-        arg0[6] = v;
-        if (v < 0) {
-            v = (arg0[0] << 16) + v;
-            arg0[6] = v;
-        }
-        lim = arg0[0] << 16;
-        if (v >= lim) {
-            arg0[6] = v - lim;
-        }
-        arg0[4] = 0;
-    } else {
-        v = arg0[6] + arg0[1];
-        if (v < 0) {
-            v = 0;
-        } else {
-            lim = arg0[0] << 16;
-            if (v >= lim) {
-                v = lim - 1;
-            }
-        }
-        if (v != arg0[6]) {
-            arg0[6] = v;
-            arg0[4] = 0;
-        } else {
-            arg0[4] = 1;
-        }
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025604);
 
 void UnkFunc05(UnkStruct00 *arg0, s32 arg1)
 {
@@ -1214,23 +424,7 @@ void UnkFunc05(UnkStruct00 *arg0, s32 arg1)
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800256CC);
 
-void func_800258B0(s32 *arg0, s32 flag) {
-    s32 *p;
-    PakFile pf;
-    free((void*)arg0[13]);
-    p = (s32*)arg0[8];
-    if (p != NULL) {
-        *p = *p - 1;
-        if (*p == 0) {
-            pf = *(PakFile *)&arg0[9];
-            FileSys__DeleteFile(pf);
-            free((void*)arg0[8]);
-        }
-    }
-    if ((flag & 1) != 0) {
-        free(arg0);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800258B0);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025954);
 
@@ -1254,77 +448,11 @@ void func_80025B3C(UnkStruct09* arg0, int arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025B68);
 
-void func_80025D1C(s32 *arg0, s32 flag) {
-    s32 *p;
-    PakFile pf;
-    free((void*)arg0[12]);
-    p = (s32*)arg0[7];
-    if (p != NULL) {
-        *p = *p - 1;
-        if (*p == 0) {
-            pf = *(PakFile *)&arg0[8];
-            FileSys__DeleteFile(pf);
-            free((void*)arg0[7]);
-        }
-    }
-    if ((flag & 1) != 0) {
-        free(arg0);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025D1C);
 
-extern s32 D_800481AC[];
-extern s32 D_8003FE8C;
-extern void VideoSys__SetProjection(s32);
-extern s32 func_80036994(s32 *);
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
 
-void func_80025DC0(s32 *arg0, s32 negate) {
-    s16 *vt = (s16*)((s32*)arg0[0xC])[1];
-    s16 idx = ((s16*)arg0)[0xD];
-    s16 *e = (s16*)((char*)vt + idx * 16);
-    s32 v;
-    if (negate) {
-        v = -(s32)e[0];
-    } else {
-        v = e[0];
-    }
-    D_800481AC[0] = v;
-    D_800481AC[1] = e[1];
-    D_800481AC[2] = e[2];
-    if (negate) {
-        v = -(s32)e[3];
-    } else {
-        v = e[3];
-    }
-    D_800481AC[3] = v;
-    D_800481AC[4] = e[4];
-    D_800481AC[5] = e[5];
-    D_800481AC[6] = e[6];
-    {
-        s32 *u2C = (s32*)arg0[0xB];
-        s32 *r = NULL;
-        if (u2C != &D_8003FE8C) r = u2C;
-        D_800481AC[7] = (s32)r;
-    }
-    {
-        s32 v_proj = e[7];
-        s32 c = v_proj * 47 * 8;
-        VideoSys__SetProjection(c);
-    }
-    func_80036994(D_800481AC);
-    func_80025604(arg0);
-}
-
-extern s32 D_80047EC8;
-extern s32 D_80047EFC;
-
-s32 func_80025EBC(s32 a0) {
-    s32 v1, v3;
-    if (a0 == -0x61 || a0 == -0x62) return a0;
-    v1 = D_80047EC8 / 30;
-    v3 = ((v1 * a0) >> 16) - D_80047EFC;
-    if (v3 < 0) v3 = 0;
-    return v3;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025EBC);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025F44);
 
@@ -1332,249 +460,29 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800262B4);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002663C);
 
-extern void func_800262B4(s32 *, s32);
-extern void func_80025954(s32 *);
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
 
-void func_80026834(s32 *arg0, s32 arg1) {
-    s32 cond = 0;
-    s32 idx;
-    s32 *table;
-    s32 *entry;
-    s32 *q;
-    s32 entry_key;
-    if (arg0[0] == 0) {
-        arg0[26] = 0;
-        arg0[27] = 1;
-    }
-    func_800262B4(arg0, arg0[0]);
-    idx = arg0[1];
-    table = (s32*)arg0[23];
-    entry = (s32*)((char*)table + idx * 20);
-    entry_key = entry[4];
-    if (entry_key == -0x62) return;
-    if (arg0[0] < entry_key) cond = 1;
-    if (entry[9] == arg0[0]) {
-        arg0[1] = idx + 1;
-    }
-    {
-        s32 ni = arg0[1];
-        s32 *e2 = (s32*)((char*)arg0[23] + ni * 20);
-        if (e2[9] != -0x62) goto next;
-        q = (s32*)arg0[ni + 3];
-        if (q[4] != 0) return;
-    }
-next:
-    if (cond != 0) {
-        q = (s32*)arg0[arg0[1] + 3];
-        func_80025954(q);
-    }
-    arg0[0] = arg0[0] + 1;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
 
-s32 func_80026940(s32 *arg0) {
-    s32 a1 = arg0[28];
-    s32 *entry = (s32*)((char*)arg0[23] + a1 * 20);
-    s32 v1 = entry[4];
-    s32 a2;
-    if (v1 == -0x61) return 0;
-    a2 = 0;
-    if (arg0[1] == a1 - 1) {
-        s32 *p = (s32*)arg0[arg0[1] + 3];
-        s32 v = p[4];
-        a2 = (v != 0) ? 1 : 0;
-    }
-    return a2;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800269A4);
 
-typedef struct Entry14 {
-    char *name;
-    char pad4[8];
-    s32 key;
-    s32 val;
-} Entry14;
-
-void func_800269A4(s32 *arg0, s32 arg1) {
-    Entry14 *table = (Entry14*)arg0[23];
-    s32 i;
-    if (*table->name == 0) return;
-    i = 0;
-    do {
-        if (table[i].key == arg1) {
-            arg0[1] = i;
-            arg0[0] = table[i].val;
-            return;
-        }
-        i++;
-    } while (*table[i].name != 0);
-}
-
-void func_80026A10(s32 *arg0) {
-    Entry14 *table;
-    s32 i;
-    s32 *item;
-
-    arg0[1] = 0;
-    arg0[0] = 0;
-    table = (Entry14*)arg0[23];
-    if (*table->name == 0) return;
-    i = 0;
-    do {
-        item = (s32*)arg0[3 + i];
-        item[4] = 0;
-        UnkFunc01((UnkStruct00*)item, 0x8000);
-        i++;
-    } while (*table[i].name != 0);
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026A10);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026AA0);
 
-extern u32 D_80019E38;
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026CB8);
 
-void func_80026CB8(s32 *arg0, s32 flag) {
-    Entry10 *table;
-    s32 i;
-    s32 *p;
-    arg0[2] = (s32)&D_80019E38;
-    table = (Entry10*)arg0[13];
-    if (*table->name != 0) {
-        i = 0;
-        do {
-            p = (s32*)arg0[3 + i];
-            if (p != NULL) {
-                func_80025D1C(p, 3);
-            }
-            i++;
-        } while (*table[i].name != 0);
-    }
-    arg0[2] = (s32)&D_80019F40;
-    if ((flag & 1) != 0) {
-        free(arg0);
-    }
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026D78);
 
-extern void func_80025DC0(s32 *, s32);
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E08);
 
-void func_80026D78(s32 *arg0) {
-    s32 idx = arg0[1];
-    s32 *base = (s32*)arg0[13];
-    s32 *entry = (s32*)((char*)base + idx * 16);
-    s32 v1 = entry[3];
-    s32 cmp;
-    s32 *p;
-    if (v1 == -0x62) return;
-    cmp = (arg0[0] < v1) ? 1 : 0;
-    if (entry[7] == arg0[0]) {
-        cmp ^= 1;
-        arg0[1] = idx + 1;
-    }
-    if (cmp != 0) {
-        p = (s32*)arg0[arg0[1] + 3];
-        func_80025DC0(p, 0);
-    }
-    arg0[0] = arg0[0] + 1;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E64);
 
-s32 func_80026E08(s32 *arg0) {
-    s32 a2 = arg0[14];
-    s32 v1 = ((s32*)((char*)arg0[13] + a2 * 16))[3];
-    s32 a1;
-    if (v1 == -0x61) return 0;
-    a1 = 0;
-    if (arg0[1] == a2 - 1) {
-        s32 *p = (s32*)arg0[arg0[1] + 3];
-        s32 v = p[4];
-        a1 = (v != 0) ? 1 : 0;
-    }
-    return a1;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026ED0);
 
-typedef struct Entry10 {
-    char *name;
-    char pad4[4];
-    s32 key;
-    s32 val;
-} Entry10;
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026F5C);
 
-void func_80026E64(s32 *arg0, s32 arg1) {
-    Entry10 *table = (Entry10*)arg0[13];
-    s32 i;
-    if (*table->name == 0) return;
-    i = 0;
-    do {
-        if (table[i].key == arg1) {
-            arg0[1] = i;
-            arg0[0] = table[i].val;
-            return;
-        }
-        i++;
-    } while (*table[i].name != 0);
-}
-
-void func_80026ED0(s32 *arg0) {
-    Entry10 *table;
-    s32 i;
-    s32 *item;
-
-    arg0[1] = 0;
-    arg0[0] = 0;
-    table = (Entry10*)arg0[13];
-    if (*table->name == 0) return;
-    i = 0;
-    do {
-        item = (s32*)arg0[3 + i];
-        item[4] = 0;
-        UnkFunc01((UnkStruct00*)item, 0x8000);
-        i++;
-    } while (*table[i].name != 0);
-}
-
-extern u32 D_80019F40;
-extern u32 D_80019E08;
-
-s32* func_80026F5C(s32 *arg0, s32 *arg1) {
-    s32 i;
-    arg0[2] = (s32)&D_80019F40;
-    arg0[0] = 0;
-    arg0[1] = 0;
-    arg0[2] = (s32)&D_80019E08;
-    arg0[3] = (s32)arg1;
-    if (arg1[0] == -1) return arg0;
-    i = 0;
-    do {
-        s32 *e = (s32*)((char*)arg0[3] + i);
-        s32 r = func_80025EBC(e[1]);
-        e = (s32*)((char*)arg0[3] + i);
-        e[3] = r;
-        i += 0x10;
-    } while (*(s32*)((char*)arg0[3] + i) != -1);
-    return arg0;
-}
-
-extern void AudioSys__UnkFunc01(s32 *, s32, s32, s32, s32);
-
-void func_80027000(s32 *arg0) {
-    s32 idx = arg0[1];
-    s32 *base = (s32*)arg0[3];
-    s32 *entry = (s32*)((char*)base + idx * 16);
-    s32 v = entry[3];
-    s32 v0;
-    if (v == -0x61) return;
-    if (v != arg0[0]) {
-        arg0[0] = arg0[0] + 1;
-        return;
-    }
-    {
-        s32 raw = entry[0];
-        s32 hi = raw >> 4;
-        s32 lo = raw & 0xF;
-        s32 buf[3];
-        buf[0] = hi;
-        buf[1] = lo;
-        AudioSys__UnkFunc01(buf, 0, 0x40, -1, 0);
-    }
-    arg0[1] = idx + 1;
-    arg0[0] = arg0[0] + 1;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027000);
 
 typedef struct {
     char pad0[0xC];
@@ -1605,35 +513,4 @@ void func_800270DC(s32 *arg0) {
     func_8001F5E4(0);
 }
 
-void func_80027104(s32 *arg0, s32 arg1) {
-    s32 *table = (s32*)arg0[3];
-    s32 idx;
-    s32 i;
-    s32 *entry;
-    s32 *p;
-    if (table[0] <= 0) {
-        arg0[1] = 0;
-        return;
-    }
-    idx = 0;
-    i = 0;
-    do {
-        entry = (s32*)((char*)table + i);
-        i += 0x10;
-        if (entry[2] == arg1) {
-            s32 raw = entry[0];
-            s32 hi = raw >> 4;
-            s32 lo = raw & 0xF;
-            s32 buf[3];
-            arg0[1] = idx;
-            arg0[0] = entry[3];
-            buf[0] = hi;
-            buf[1] = lo;
-            AudioSys__UnkFunc01(buf, 0, 0x40, -1, 0);
-            return;
-        }
-        p = (s32*)((char*)table + i);
-        idx++;
-    } while (p[0] > 0);
-    arg0[1] = idx;
-}
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027104);
