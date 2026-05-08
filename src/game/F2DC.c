@@ -70,8 +70,8 @@ extern void func_80025DC0(s32 *, s32);
 extern void func_80029FA8(s32 *, s32, s32, s32);
 extern s32 D_800480AC;
 extern s32 D_800480B0;
-extern void *func_80029A80(s32);
-extern void func_80029ADC();
+extern void func_80029A80(s32);
+extern void func_80029ADC(s32 *);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", Movie__Ctor);
 
@@ -346,8 +346,6 @@ void func_800293B8(void) {
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800293DC);
 
 extern char D_800480A0[];
-extern void func_80029ADC(s32 *);
-extern void func_80029A80(s32);
 extern u16 func_8002B0D4(void);
 extern u16 func_8002B0F8(void);
 extern s32* func_800207D0(s32 *);
@@ -375,7 +373,8 @@ s32 func_8002990C(void) {
     } else {
         new_buf = (char*)MemorySys__malloc(len);
         if (new_buf == NULL) {
-            new_buf = (char*)func_80029A80(len);
+            func_80029A80(len);
+            new_buf = NULL;
         }
         fd[0] = (s32)new_buf;
         fd[1] = (s32)new_buf;
