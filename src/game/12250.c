@@ -5,7 +5,13 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AA50);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AD0C);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AE5C);
+void func_8002AE5C(s32 *out, u8 *p) {
+    p[0xC] = p[0xC] + (u8)D_800480B8;
+    p[0xD] = p[0xD] + (u8)D_800480BC;
+    *(u16*)(p + 0xE) = *(u16*)(p + 0xE);
+    *(s32*)p = (*(s32*)p & 0xFF000000) | (out[0] & 0xFFFFFF);
+    out[0] = (out[0] & 0xFF000000) | (*(s32*)p & 0xFFFFFF);
+}
 
 extern void func_8002AE5C(void);
 

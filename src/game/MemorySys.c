@@ -25,7 +25,26 @@ void func_80021758(void) {} // MemorySys__Stub [Empty]
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Info);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpUsage);
+extern char D_80019388[];
+extern char D_80019398[];
+
+void MemorySys__DumpUsage(void) {
+    s32 sz = D_80047FCC - 8;
+    s32 free_bytes = MemorySys__CountHeapFree();
+    s32 *p;
+    s32 acc;
+    printf(D_80019388, sz - free_bytes);
+    p = D_80047FD0;
+    acc = 0;
+    if (p[1] != 0) {
+        do {
+            s32 v = p[1];
+            p = (s32*)p[0];
+            acc += v << 3;
+        } while (p[1] != 0);
+    }
+    printf(D_80019398, acc);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpHead);
 
