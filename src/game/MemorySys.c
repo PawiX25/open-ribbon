@@ -153,7 +153,28 @@ void func_80022C80(s32 arg0) {
     } while (MemorySys__malloc(arg0) == 0);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
+extern PakFile D_8003FE5C;
+extern PakFile D_8003FE50;
+extern PakFile D_8003FE44;
+
+void func_80022CDC(void) {
+    s32 buf, end;
+    buf = (s32)D_8003FE5C.next;
+    end = D_8003FE5C.size;
+    if (buf != 0 && (end - buf) == 0) {
+        MemorySys__free(buf);
+    }
+    buf = (s32)D_8003FE50.next;
+    end = D_8003FE50.size;
+    if (buf != 0 && (end - buf) == 0) {
+        MemorySys__free(buf);
+    }
+    buf = (s32)D_8003FE44.next;
+    end = D_8003FE44.size;
+    if (buf != 0 && (end - buf) == 0) {
+        MemorySys__free(buf);
+    }
+}
 
 u8* func_80022D78(u8* dest, s32 count, u8* value) {
     // memset-like function
@@ -197,7 +218,19 @@ s32 func_80023060(SVECTOR* vec1, SVECTOR* vec2)
     return 0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002310C);
+extern s32 D_8003FE8C[];
+extern void func_800231C4(s32*, s32, s32, s32);
+extern void func_8002317C(s32*, s32*);
+extern void func_80023174(s32*);
+
+void func_8002310C(void) {
+    s32 *p = D_8003FE8C;
+    p[20] = (s32)(p + 1);
+    func_800231C4(p, 0x1000, 0x1000, 0x1000);
+    func_800231A8(p, 0, 0, 0);
+    func_8002317C(p, p);
+    func_80023174(p);
+}
 
 void func_80023174(s32* arg0) {
     *arg0 = 0;
@@ -429,7 +462,23 @@ void UnkFunc05(UnkStruct00 *arg0, s32 arg1)
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800256CC);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800258B0);
+void func_800258B0(s32 *arg0, s32 flag) {
+    s32 *p;
+    PakFile pf;
+    free((void*)arg0[13]);
+    p = (s32*)arg0[8];
+    if (p != NULL) {
+        *p = *p - 1;
+        if (*p == 0) {
+            pf = *(PakFile *)&arg0[9];
+            FileSys__DeleteFile(pf);
+            free((void*)arg0[8]);
+        }
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025954);
 
@@ -453,7 +502,23 @@ void func_80025B3C(UnkStruct09* arg0, int arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025B68);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025D1C);
+void func_80025D1C(s32 *arg0, s32 flag) {
+    s32 *p;
+    PakFile pf;
+    free((void*)arg0[12]);
+    p = (s32*)arg0[7];
+    if (p != NULL) {
+        *p = *p - 1;
+        if (*p == 0) {
+            pf = *(PakFile *)&arg0[8];
+            FileSys__DeleteFile(pf);
+            free((void*)arg0[7]);
+        }
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
 
@@ -477,7 +542,20 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002663C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
+s32 func_80026940(s32 *arg0) {
+    s32 a1 = arg0[28];
+    s32 *entry = (s32*)((char*)arg0[23] + a1 * 20);
+    s32 v1 = entry[4];
+    s32 a2;
+    if (v1 == -0x61) return 0;
+    a2 = 0;
+    if (arg0[1] == a1 - 1) {
+        s32 *p = (s32*)arg0[arg0[1] + 3];
+        s32 v = p[4];
+        a2 = (v != 0) ? 1 : 0;
+    }
+    return a2;
+}
 
 typedef struct Entry14 {
     char *name;
@@ -509,7 +587,19 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026CB8);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026D78);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E08);
+s32 func_80026E08(s32 *arg0) {
+    s32 a2 = arg0[14];
+    s32 v1 = ((s32*)((char*)arg0[13] + a2 * 16))[3];
+    s32 a1;
+    if (v1 == -0x61) return 0;
+    a1 = 0;
+    if (arg0[1] == a2 - 1) {
+        s32 *p = (s32*)arg0[arg0[1] + 3];
+        s32 v = p[4];
+        a1 = (v != 0) ? 1 : 0;
+    }
+    return a1;
+}
 
 typedef struct Entry10 {
     char *name;
