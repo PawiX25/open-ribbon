@@ -166,7 +166,22 @@ s32 func_80029D88(s32 arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029DB8);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029FA8);
+extern void func_80029DB8(s32 *, s32, s32, s32);
+
+void func_80029FA8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 r;
+    s32 mode;
+    func_80029DB8(arg0, 0, 0xF7, arg1);
+    r = func_80029D88(arg2);
+    if (r != 0) {
+        mode = 0;
+        if (r != 1) {
+            mode = r;
+        }
+        VSync(mode);
+    }
+    func_80029DB8(arg0, 0xF7, 0, arg3);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", VideoSys__LoadLogos);
 
@@ -182,7 +197,23 @@ s32* func_8002A950(s32 *arg0) {
     return arg0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A960);
+void func_8002A960(s32 *arg0, s32 flag) {
+    s32 *p;
+    PakFile pf;
+
+    p = (s32*)arg0[0];
+    if (p != NULL) {
+        *p = *p - 1;
+        if (*p == 0) {
+            pf = *(PakFile *)&arg0[1];
+            FileSys__DeleteFile(pf);
+            free((void*)arg0[0]);
+        }
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
 s32 func_8002A9F8(UnkStruct08* arg0) {
     return ((u32) arg0->unk4 >> 3) & 1;

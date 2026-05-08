@@ -112,7 +112,27 @@ void AudioSys__Dtor(AudioSysUnkStruct02 *arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__InitSpu);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", UnkFunc00);
+extern s32 D_8003FD8C[];
+
+void UnkFunc00(void) {
+    s32 i;
+    s32 *p;
+    s32 *vt;
+    s16 offset;
+    void (*func)(s32, s32);
+
+    AudioSys__UnkFunc07();
+    AudioSys__CallBack();
+    for (i = 0; i < 10; i++) {
+        p = (s32*)D_8003FD8C[i];
+        if (p != NULL) {
+            vt = (s32*)p[6];
+            offset = ((s16*)vt)[4];
+            func = (void(*)(s32, s32))vt[3];
+            func((s32)p + offset, 3);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk00);
 
