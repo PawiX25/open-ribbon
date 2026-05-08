@@ -118,7 +118,42 @@ s32 func_80021E6C(s32 a0_in, s32 *arg1, s32 *arg2) {
     return ret;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021EF4);
+extern char D_80048144[];
+extern char D_80047FEC[];
+extern void func_800344EC(char *, char *, s32, s32);
+extern void func_80022A58(s32 *);
+extern void func_80022658(s32 *);
+extern void func_80022A60(s32 *, s32, s32, s32);
+
+void func_80021EF4(s32 *arg0, s32 arg1, s32 arg2, s32 *arg3) {
+    s32 mask;
+    s32 v0;
+    s32 r;
+    s32 sz;
+    mask = (1 << (arg2 * 4)) - 1;
+    if (arg0 != arg3) {
+        FileSys__Unk00(arg3, (char*)arg0[0], arg0[1]);
+    }
+    if (arg1 != mask) {
+        func_800344EC(D_80048144, D_80047FEC, arg2, arg1);
+        r = func_80022968(arg3, 0x2F, -1);
+        mask = 0;
+        if (r != -1) {
+            mask = r + 1;
+        }
+        if ((u32)(arg3[1] - arg3[0]) < (u32)mask) {
+            func_80022A58(arg3);
+        }
+        sz = func_80035C6C(D_80048144);
+        if ((u32)(-2 - sz) < (u32)(arg3[1] - arg3[0])) {
+            func_80022658(arg3);
+        }
+        func_80022A60(arg3, arg3[0] + mask, sz + (s32)D_80048144, 0);
+    }
+    if (arg3[0] != 0 && (arg3[2] - arg3[0]) == 0) {
+        MemorySys__free(arg3[0]);
+    }
+}
 
 extern s32 D_800194A4[];
 
