@@ -69,7 +69,16 @@ void VideoSys__DisplayFnt()
 	FntFlush(fntStream);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__GetOT);
+typedef struct {
+    s32 *u0;
+    s32 *u4;
+} VideoSysOT;
+
+extern VideoSysOT D_8003F964[];
+
+s32* VideoSys__GetOT(void) {
+    return D_8003F964[buffer_i].u4;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__AddVSyncCB);
 
