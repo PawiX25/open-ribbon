@@ -23,7 +23,38 @@ void MemorySys__Init(s32 arg0, s32 arg1) {
 
 void func_80021758(void) {} // MemorySys__Stub [Empty]
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Info);
+extern char D_80019300[];
+extern char D_80019314[];
+extern char D_80019324[];
+extern char D_80019338[];
+extern char D_80019348[];
+extern char D_80019358[];
+extern char D_80019368[];
+extern char D_80019378[];
+extern s32 D_80047FA8;
+extern s32 D_80047FAC;
+extern s32 D_8004087C;
+extern s32 D_223C4;
+extern s32 D_8D98;
+extern s32 D_8560;
+extern s32 D_270;
+extern s32 D_4557;
+extern s32 D_48;
+extern s32 D_28;
+extern s32 D_14;
+
+void MemorySys__Info(void) {
+    s32 sum;
+    sum = (s32)&D_8D98 + (s32)&D_48 + (s32)&D_8560 + (s32)&D_270 + (s32)&D_4557 + (s32)&D_28 + (s32)&D_14;
+    printf(D_80019300);
+    printf(D_80019314, D_80047FA8);
+    printf(D_80019324);
+    printf(D_80019338, 0x10000);
+    printf(D_80019348, D_80047FAC);
+    printf(D_80019358, &D_223C4);
+    printf(D_80019368, sum);
+    printf(D_80019378, D_8004087C);
+}
 
 extern char D_80019388[];
 extern char D_80019398[];
@@ -79,7 +110,36 @@ void MemorySys__Init01(void) {
     MemorySys__Init();
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__malloc);
+extern s32 D_80047FC4;
+extern char D_800192C4[];
+extern char D_800192E0[];
+extern s32 func_800342EC(s32);
+
+s32 MemorySys__malloc(s32 size) {
+    s32 r;
+    s32 *p;
+    s32 acc;
+    if (size == 0) return 0;
+    r = func_800342EC(size);
+    if (r != 0) {
+        D_80047FC4 = D_80047FC4 + 1;
+        return r;
+    }
+    printf(D_800192C4);
+    p = D_80047FD0;
+    acc = 0;
+    if (p[1] != 0) {
+        do {
+            s32 v = p[1];
+            p = (s32*)p[0];
+            acc += v << 3;
+        } while (p[1] != 0);
+    }
+    printf(D_800192E0, acc, size);
+    MemorySys__DumpHead();
+    printf(D_80019244, D_8001926C, 0x140);
+    exit(1);
+}
 
 extern s32 D_80047FC8;
 
