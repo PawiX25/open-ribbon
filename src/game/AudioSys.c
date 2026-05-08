@@ -19,6 +19,15 @@ char D_80047F94[2] = "";
 s32 D_80047F98 = 0xFFFF0100;
 s32 D_80047F9C = 0x0000FFFF;
 
+extern char D_80019114[];
+extern char D_8001913C[];
+extern s32 D_8003FC9C[];
+extern s32 D_8003FD8C[];
+extern void AudioSys__ParseVH(s32 *, s32 *, s32);
+extern u32 func_8002038C(s32, u16);
+extern void func_800202C0(s32 *, s32);
+extern s32 func_8001FE34(s16);
+
 void AudioSys__Init() {
     SpuInit();
     AudioSys__InitSpu();
