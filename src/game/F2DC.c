@@ -24,11 +24,71 @@ void UnkFunc01(UnkStruct00* a1, s32 a2)
 }
 // INCLUDE_ASM("asm/game/nonmatchings/F2DC", UnkFunc01);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028AC4); // < - This retard is pointing to UnkFunc01 memory address too
+extern u32 D_80019F08;
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028B70);
+void func_80028AC4(Container_28CC8 *arg0, s32 flag) {
+    s32 i;
+    arg0->vtmain = (VT_28CC8*)&D_80019F08;
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_28D6C *item = arg0->items[i];
+            if (item != NULL) {
+                VT_28AC4 *vt = (VT_28AC4*)item->vt;
+                vt->funcC((s32)item + (s32)vt->offset8, 3);
+            }
+            i++;
+        } while (i < arg0->count);
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028C1C);
+void func_80028B70(Container_28CC8 *arg0, s32 flag) {
+    s32 i;
+    arg0->vtmain = (VT_28CC8*)&D_80019F08;
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_28D6C *item = arg0->items[i];
+            if (item != NULL) {
+                VT_28AC4 *vt = (VT_28AC4*)item->vt;
+                vt->funcC((s32)item + (s32)vt->offset8, 3);
+            }
+            i++;
+        } while (i < arg0->count);
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
+
+void func_80028C1C(Container_28CC8 *arg0, s32 flag) {
+    s32 i;
+    arg0->vtmain = (VT_28CC8*)&D_80019F08;
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_28D6C *item = arg0->items[i];
+            if (item != NULL) {
+                VT_28AC4 *vt = (VT_28AC4*)item->vt;
+                vt->funcC((s32)item + (s32)vt->offset8, 3);
+            }
+            i++;
+        } while (i < arg0->count);
+    }
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
+
+typedef struct VT_28AC4 {
+    char pad0[8];
+    s16 offset8;
+    char padA[2];
+    void (*funcC)(s32, s32);
+} VT_28AC4;
 
 typedef struct VT_28CC8 {
     char pad0[0x20];

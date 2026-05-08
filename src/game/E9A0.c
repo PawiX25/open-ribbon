@@ -64,7 +64,47 @@ void func_8002758C(UnkStruct14* arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800275BC);
 
-INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_8002780C);
+typedef struct VT_2780C {
+    char pad0[0x20];
+    s16 offset20;
+    char pad22[2];
+    void (*func24)(s32);
+    s16 offset28;
+    char pad2A[2];
+    void (*func2C)(s32, s32);
+} VT_2780C;
+
+typedef struct Item_2780C {
+    char pad8[8];
+    void *vt;
+} Item_2780C;
+
+typedef struct Container_2780C {
+    s32 count;
+    Item_2780C *items[10];
+    char pad28[8];
+    VT_2780C *vt;
+    char pad34[4];
+    s32 unk38;
+} Container_2780C;
+
+extern s32 func_80025EBC(s32);
+
+void func_8002780C(Container_2780C *arg0, s32 arg1) {
+    s32 i;
+    VT_2780C *vt = arg0->vt;
+    vt->func24((s32)arg0 + (s32)vt->offset20);
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            Item_2780C *item = arg0->items[i];
+            VT_2780C *vt2 = (VT_2780C*)item->vt;
+            vt2->func2C((s32)item + (s32)vt2->offset28, arg1);
+            i++;
+        } while (i < arg0->count);
+    }
+    arg0->unk38 = func_80025EBC(0x335);
+}
 
 s32 func_800278BC(UnkStruct13* arg0) {
     return func_80025EBC(0x335) < arg0->unk38;
