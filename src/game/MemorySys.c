@@ -22,18 +22,29 @@ void MemorySys__Init01(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__malloc);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__free);
-#else
+extern s32 D_80047FC8;
+
 void MemorySys__free(s32 address) {
     if (address != 0) {
         func_8003439C();
-        freeAmount += 1;
+        D_80047FC8 = D_80047FC8 + 1;
     }
 }
-#endif
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__CountHeapFree);
+extern s32 *D_80047FD0;
+
+s32 MemorySys__CountHeapFree(void) {
+    s32 *p = D_80047FD0;
+    s32 acc = 0;
+    if (p[1] != 0) {
+        do {
+            s32 v = p[1];
+            p = (s32*)p[0];
+            acc += v << 3;
+        } while (p[1] != 0);
+    }
+    return acc;
+}
 
 extern char D_80047FE4[];
 extern char D_80047FE8[];
