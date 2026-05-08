@@ -24,7 +24,27 @@ s32 InputSys__Unk00(s32 arg0) {
     return *UnkVar03_arr[arg0];
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk01);
+extern void func_80020AE4(s32 *, s32, s32);
+extern s32 D_8003FDB4;
+
+void InputSys__Unk01(s32 *arg0, s32 idx) {
+    s32 *expected;
+    s32 buf;
+    s32 buf_end;
+    if (idx >= 2) {
+        printf(D_800191E8, D_80019210, 0x103);
+        exit(1);
+    }
+    expected = (s32*)((char*)&D_8003FDB4 + idx * 0xC);
+    if (arg0 != expected) {
+        func_80020AE4(expected, arg0[0], arg0[1]);
+    }
+    buf_end = arg0[2];
+    buf = arg0[0];
+    if (buf != 0 && (buf_end - buf) == 0) {
+        MemorySys__free(buf);
+    }
+}
 
 extern void D_8003FDCC;
 
@@ -95,8 +115,57 @@ void func_8002146C(s32 arg0, ListNode_2146C *node) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800214E8);
+typedef struct Inner_214E8 {
+    s32 u0;
+    ListNode_2146C *u4;
+    void *u8;
+    void *uC;
+} Inner_214E8;
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_8002157C);
+typedef struct Outer_214E8 {
+    Inner_214E8 *u0;
+    s32 u4;
+} Outer_214E8;
+
+void func_800214E8(Outer_214E8 *arg0, s32 arg1) {
+    Inner_214E8 *p;
+    if (arg0->u4 != 0) {
+        func_8002146C((s32)arg0, arg0->u0->u4);
+        p = arg0->u0;
+        p->u8 = (void*)p;
+        p = arg0->u0;
+        p->u4 = 0;
+        p = arg0->u0;
+        p->uC = (void*)p;
+        arg0->u4 = 0;
+    }
+    MemorySys__free((s32)arg0->u0);
+    if ((arg1 & 1) != 0) {
+        free(arg0);
+    }
+}
+
+extern void *D_8003FDD8;
+extern void *D_8003FDCC;
+extern char D_8003FDB4[];
+
+void func_8002157C(void) {
+    UnkFunc04(&D_8003FDD8, 2);
+    func_800214E8(&D_8003FDCC, 2);
+    {
+        char *base = D_8003FDB4;
+        char *p = base + 0x18 - 0xC;
+        if (base != NULL && p != base - 0xC) {
+            do {
+                s32 buf_end = *(s32*)(p + 8);
+                s32 buf = *(s32*)p;
+                if (buf != 0 && (buf_end - buf) == 0) {
+                    MemorySys__free(buf);
+                }
+                p -= 0xC;
+            } while (p != base - 0xC);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Ctor);
