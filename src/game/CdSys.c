@@ -114,6 +114,7 @@ void func_8001E9FC(u8 arg0) {
     }
 }
 
+extern void func_8001EA5C(u8, void *);
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EA5C);
 
 void UnkFunc03()
