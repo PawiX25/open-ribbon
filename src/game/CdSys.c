@@ -123,7 +123,13 @@ void UnkFunc03()
     UnkVar02 = 0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EBD4);
+s32 func_8001EBD4(void) {
+    s32 v = 0;
+    if (UnkVar01 >= 0 && UnkVar00 >= 0) {
+        v = (UnkVar02 != 0) ? 1 : 0;
+    }
+    return v;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC08);
 
