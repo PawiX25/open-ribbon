@@ -9,7 +9,32 @@
 extern char D_80019244[];
 extern char D_8001926C[];
 extern s32 D_80047FCC;
+extern s32 *D_80047FD0;
+extern PakFile D_8003FE44;
+extern PakFile D_8003FE50;
+extern PakFile D_8003FE5C;
+extern PakFile D_8003FE68;
+extern s32 D_80048004;
+extern s32 D_80047FF4;
 extern void func_8003428C(void);
+extern void cbready(u8);
+extern void cbsync(u8);
+extern void func_8003439C(void);
+extern void MemorySys__free(s32);
+extern s32 MemorySys__malloc(s32);
+extern void MemorySys__DumpHead(void);
+extern s32 func_80035C6C(char *);
+extern void *func_80030C74(s32);
+extern void *func_80030BF4(void *, void *, s32);
+extern PakFile FileSys__LoadFile(char *);
+extern void FileSys__DeleteFile(PakFile);
+extern s32 func_800232D0(s32 *, s8 *);
+extern void FileSys__Unk00(void *, char *, s32);
+extern void func_800231A8();
+extern void *func_80022660();
+extern s32 func_80023220(s8 *, s8 *);
+extern s32 func_8002317C();
+extern void func_80023174();
 
 void MemorySys__Init(s32 arg0, s32 arg1) {
     D_80047FCC = arg1 & ~7;
