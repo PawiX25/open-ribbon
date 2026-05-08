@@ -64,7 +64,10 @@ void func_8002B054(UnkStruct07* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B078);
+void func_8002B078(UnkStruct07 *arg0) {
+    func_8002B054(arg0);
+    D_800480C0 = arg0;
+}
 
 extern UnkStruct07 *D_800480C0;
 
