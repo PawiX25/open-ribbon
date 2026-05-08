@@ -3,7 +3,49 @@
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AA50);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AD0C);
+extern s32 D_800480B4;
+extern void func_80024CC4(s32 *, s32);
+
+void func_8002AD0C(s32 *arg0, s32 flag) {
+    s32 *p;
+    s32 *q;
+    PakFile pf;
+    s32 i;
+    FileSys__Unknown(0);
+    D_800480B4 = 0;
+    p = (s32*)arg0[0];
+    if (p != NULL) {
+        if (p[4] > 0) {
+            i = 0;
+            do {
+                s32 *items = (s32*)p[5];
+                s32 *item = (s32*)items[i];
+                if (item != NULL) {
+                    func_80024CC4(item, 3);
+                }
+                i++;
+            } while (i < p[4]);
+        }
+        if (p[5] != 0) {
+            delete((void*)p[5]);
+        }
+        q = (s32*)p[0];
+        if (q != NULL) {
+            *q = *q - 1;
+            if (*q == 0) {
+                pf = *(PakFile*)&p[1];
+                FileSys__DeleteFile(pf);
+                free((void*)p[0]);
+            }
+        }
+        free(p);
+    }
+    func_80025D1C((s32*)((char*)arg0 + 0x3C), 2);
+    func_800258B0((s32*)((char*)arg0 + 0x4), 2);
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
 void func_8002AE5C(s32 *out, u8 *p) {
     p[0xC] = p[0xC] + (u8)D_800480B8;
