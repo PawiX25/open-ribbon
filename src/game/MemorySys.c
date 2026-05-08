@@ -328,7 +328,26 @@ s32 func_800232A0(s32 arg0) {
     return arg0 + func_80023210(func_80035C6C() + 1);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800232D0);
+s32 func_800232D0(s32 *table, s8 *needle) {
+    s32 lo = 0;
+    s32 hi = table[0];
+    s32 mid;
+    s32 cmp;
+    s32 *entry;
+    while (lo < hi) {
+        mid = (lo + hi) / 2;
+        entry = (s32*)((char*)table + table[mid + 1]);
+        cmp = func_80023220(needle, (s8*)entry);
+        if (cmp < 0) {
+            hi = mid;
+        } else if (cmp == 0) {
+            return (s32)entry;
+        } else {
+            lo = mid + 1;
+        }
+    }
+    return 0;
+}
 
 s32 func_80023388(void) {
     s32 temp_return_value;
@@ -630,7 +649,29 @@ void func_80026A10(s32 *arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026AA0);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026CB8);
+extern u32 D_80019E38;
+
+void func_80026CB8(s32 *arg0, s32 flag) {
+    Entry10 *table;
+    s32 i;
+    s32 *p;
+    arg0[2] = (s32)&D_80019E38;
+    table = (Entry10*)arg0[13];
+    if (*table->name != 0) {
+        i = 0;
+        do {
+            p = (s32*)arg0[3 + i];
+            if (p != NULL) {
+                func_80025D1C(p, 3);
+            }
+            i++;
+        } while (*table[i].name != 0);
+    }
+    arg0[2] = (s32)&D_80019F40;
+    if ((flag & 1) != 0) {
+        free(arg0);
+    }
+}
 
 extern void func_80025DC0(s32 *, s32);
 
