@@ -86,8 +86,8 @@ void func_8002146C(s32 arg0, Node_2146C *node) {
 }
 
 typedef struct Inner_214E8 {
+    s32 unk0;
     Node_2146C *head;
-    s32 unk4;
     struct Inner_214E8 *self_8;
     struct Inner_214E8 *self_C;
 } Inner_214E8;
@@ -107,7 +107,7 @@ void func_800214E8(Container_214E8 *arg0, s32 flag) {
         p = arg0->inner;
         p->self_8 = p;
         p = arg0->inner;
-        p->unk4 = 0;
+        p->head = NULL;
         p = arg0->inner;
         p->self_C = p;
         arg0->unk4 = 0;
