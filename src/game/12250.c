@@ -74,7 +74,9 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BE84);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BECC);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BEF0);
+void func_8002BEF0(void) {
+    char buf[10];
+}
 
 extern s32 D_800481DC[3];
 extern s32 D_800481CC[3];
