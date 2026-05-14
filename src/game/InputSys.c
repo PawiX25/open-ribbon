@@ -57,7 +57,33 @@ INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020BA8);
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800211D4);
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_8002146C);
+typedef struct Node_2146C {
+    char pad0[0x8];
+    struct Node_2146C *next;
+    char padC[4];
+    s32 data;
+    char pad14[4];
+    s32 dataEnd;
+} Node_2146C;
+
+void func_8002146C(s32 arg0, Node_2146C *node) {
+    Node_2146C *next;
+    s32 end, start, diff;
+    if (node != NULL) {
+        do {
+            func_8002146C(arg0, (Node_2146C*)((s32*)node)[3]);
+            end = node->dataEnd;
+            start = node->data;
+            next = node->next;
+            diff = end - start;
+            if (start != 0 && diff != 0) {
+                MemorySys__free((void*)start);
+            }
+            MemorySys__free(node);
+            node = next;
+        } while (node != NULL);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800214E8);
 
