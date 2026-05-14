@@ -51,7 +51,33 @@ void InputSys__alloc(s32 arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020920);
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020AE4);
+typedef struct {
+    char *start;
+    char *end;
+} StrInputSys;
+
+extern void *func_8003424C(void *, const void *, int);
+extern void *func_80030BF4(void *, const void *, int);
+extern void func_80020920(StrInputSys *, char *, char *, s32);
+
+StrInputSys* func_80020AE4(StrInputSys* self, char* new_start, char* new_end) {
+    char *curEnd;
+    char *newEnd;
+
+    if ((unsigned int)(self->end - self->start) >= (unsigned int)(new_end - new_start)) {
+        func_8003424C(self->start, new_start, new_end - new_start);
+        curEnd = self->end;
+        newEnd = self->start + (new_end - new_start);
+        if (newEnd != curEnd) {
+            func_80030BF4(newEnd, curEnd, 1);
+            self->end -= (curEnd - newEnd);
+        }
+    } else {
+        func_8003424C(self->start, new_start, self->end - self->start);
+        func_80020920(self, new_start + (self->end - self->start), new_end, 0);
+    }
+    return self;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020BA8);
 
