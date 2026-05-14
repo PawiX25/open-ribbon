@@ -36,7 +36,18 @@ void InputSys__Quit(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk03);
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk00);
+extern char D_800191E8[];
+extern char D_80019210[];
+
+s32 InputSys__Unk00(s32 arg0) {
+    s32 **new_var;
+    if (arg0 >= 2) {
+        printf(D_800191E8, D_80019210, 0xFD);
+        exit(1);
+    }
+    new_var = &((s32 **)(&UnkVar03))[arg0];
+    return **new_var;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk01);
 
