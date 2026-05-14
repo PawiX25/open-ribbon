@@ -265,7 +265,18 @@ INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800201C4);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800202C0);
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8002038C);
+u32 func_8002038C(s32 arg0, u32 arg1) {
+    s32 a, b;
+    int new_var2;
+    unsigned int new_var;
+    arg1 &= 0xFFFF;
+    new_var2 = arg1 & 0xA0;
+    b = (new_var = (arg1 & 0x50) != 0);
+    a = new_var2;
+    if (a) arg1 &= 0xFFAF;
+    if (b) arg1 &= 0xFF5F;
+    return arg1;
+}
 
 INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", AudioSys__UnknownVar);
 
