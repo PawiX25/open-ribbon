@@ -7,8 +7,32 @@
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Init);
 
-// https://decomp.me/scratch/nhYrY
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Quit);
+extern void PadStartCom(void);
+extern void free(void *);
+
+void InputSys__Quit(void) {
+    s32 outer;
+    s32 **new_var;
+    s32 inner;
+    s32 *ptr;
+    s32 *base;
+    PadStartCom();
+    for (outer = 0; outer < 2; outer++) {
+        new_var = &((s32 **)(&UnkVar03))[outer];
+        base = *new_var;
+        if (base != 0) {
+            inner = 0;
+            ptr = base;
+            for (inner = 0; inner < 4; inner++) {
+                if ((*ptr) != 0) {
+                    UnkFunc04((UnkStruct10 *)(*ptr), 3);
+                }
+                ptr++;
+            }
+            free(base);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk03);
 
