@@ -76,7 +76,28 @@ INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BECC);
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BEF0);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002BF00);
+extern s32 D_800481DC[3];
+extern s32 D_800481CC[3];
+extern s32 D_8001A298;
+extern s32 D_8001A2B0;
+extern s32 D_8004084C[3];
+
+void func_8002BF00(void) {
+    D_800481DC[0] = 3;
+    D_800481DC[1] = 2;
+    D_800481DC[2] = (s32)&D_8001A298;
+    do {
+        D_80040840[0] = 0;
+        D_80040840[1] = 0;
+        D_80040840[2] = 0;
+        D_800481CC[0] = 1;
+        D_800481CC[2] = (s32)&D_8001A2B0;
+        D_800481CC[1] = 3;
+        D_8004084C[0] = 0;
+    } while (0);
+    D_8004084C[1] = 0;
+    D_8004084C[2] = 0;
+}
 
 void func_8002BF70(UnkStruct00* arg0, s32 arg1) {
     arg0->unk18 = arg1;
