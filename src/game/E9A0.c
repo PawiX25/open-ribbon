@@ -64,7 +64,48 @@ void func_8002758C(UnkStruct14* arg0) {
 
 INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800275BC);
 
-INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_8002780C);
+typedef struct VT_E9A0 {
+    char pad0[0x20];
+    s16 offset20;
+    char pad22[2];
+    void (*func24)(s32);
+    s16 offset28;
+    char pad2A[2];
+    void (*func2C)(s32, s32);
+} VT_E9A0;
+
+typedef struct Item_E9A0 {
+    char pad0[8];
+    VT_E9A0 *vt;
+} Item_E9A0;
+
+typedef struct Container_E9A0 {
+    s32 count;
+    Item_E9A0 *items[10];
+    char pad2C[4];
+    VT_E9A0 *vt30;
+    char pad34[4];
+    s32 unk38;
+} Container_E9A0;
+
+void func_8002780C(Container_E9A0 *arg0, s32 arg1) {
+    s32 i;
+    VT_E9A0 *vt = arg0->vt30;
+    Item_E9A0 *item;
+    VT_E9A0 *vt2;
+
+    vt->func24((s32)arg0 + (s32)vt->offset20);
+    if (arg0->count > 0) {
+        i = 0;
+        do {
+            item = arg0->items[i];
+            vt2 = item->vt;
+            vt2->func2C((s32)item + (s32)vt2->offset28, arg1);
+            i++;
+        } while (i < arg0->count);
+    }
+    arg0->unk38 = func_80025EBC(0x335);
+}
 
 s32 func_800278BC(UnkStruct13* arg0) {
     return func_80025EBC(0x335) < arg0->unk38;
