@@ -50,6 +50,7 @@ UnkVar05 = 0x8003FCAC;
 UnkVar06 = 0x80047F7C;
 UnkVar07 = 0x80047F88;
 
+D_8001906C = 0x8001906C;
 VideoSys__FlipBuffer = 0x8001D558;
 VideoSys__OnDrawSync = 0x8001D584;
 VideoSys__OnVSync = 0x8001D58C;
