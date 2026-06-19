@@ -139,46 +139,7 @@ INCLUDE_RODATA("asm/game/nonmatchings/CdSys", D_800190A4);
 
 #if 0
 // addiu in wrong place
-void func_8001EC74(UnkStruct03 *arg0) {
-    UnkStruct04 sp10;  // struct of size 0x30?
-    s32 temp_s0;
-    s32 *tmp;
-
-    D_80047F64 = arg0;
-
-    UnkFunc03();
-    D_80047F60 = 0;
-    D_80047F40 = 0;
-    D_80047F44 = 0;
-    CdSys__Unk01MemAdd = 0;
-    CdSys__Unk00MemAdd = 0;
-    D_80047F50 = 0;
-    D_80047F54 = 0;
-    D_80047F74 = 0;
-    D_80047F3C = -1;
-    D_80047F38 = 0;
-    D_80047F68 = 0;
-
-    func_80031E48(&sp10); // help
-    func_80031374();
-
-    sp10.unk0 = 0;
-    func_80032158(&sp10);
-    VSync(4);
-    temp_s0 = (func_80031C40() >> 4) & 1;
-    if ((D_80047F64->unk0 <= 0) && (temp_s0 != 0)) {
-
-        sp10.unk28.unk0 = 1;
-        sp10.unk28.unk4 = 0;
-
-        *D_80047F64 = sp10.unk28;
-
-        printf("setting null home disk\n");
-
-        (void)"CdSys::PlayTrack(): requested track out of range\n";
-    }
-    D_80047F5C = temp_s0;
-}
+INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);
 
 #else
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);

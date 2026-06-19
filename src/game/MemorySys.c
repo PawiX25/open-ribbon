@@ -5,7 +5,6 @@
 #include <psyq/LIBGTE.H>
 #include <psyq/STDIO.H>
 
-
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Init);
 
 void func_80021758(void) {} // MemorySys__Stub [Empty]
@@ -22,24 +21,50 @@ void MemorySys__Init01(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__malloc);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__free);
-#else
-void MemorySys__free(s32 address) {
+extern void func_8003439C(void);
+extern s32 D_80047FC8;
+
+void MemorySys__free(void *address) {
     if (address != 0) {
         func_8003439C();
-        freeAmount += 1;
+        D_80047FC8 += 1;
     }
 }
-#endif
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__CountHeapFree);
+typedef struct HeapNode {
+    struct HeapNode* unk0;
+    s32 unk4;
+} HeapNode;
+
+extern HeapNode* D_80047FD0;
+
+s32 MemorySys__CountHeapFree(void) {
+    HeapNode* node = D_80047FD0;
+    s32 total = 0;
+    while (node->unk4 != 0) {
+        total += node->unk4 << 3;
+        node = node->unk0;
+    }
+    return total;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021AC0);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbready);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbsync);
+extern void cbready(void);
+extern void func_80034D6C(void* arg0, s32 arg1);
+extern char D_80019414[];
+extern s32 D_80048004;
+
+void cbsync(s32 arg0) {
+    if ((arg0 & 0xFF) == 2) {
+        func_80034D6C(cbready, -1);
+    } else {
+        printf(D_80019414);
+        D_80048004 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
@@ -86,7 +111,19 @@ void FileSys__DeleteFile(PakFile pf)
         delete(pf.next);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Unknown);
+extern char D_80019448[];
+extern char D_80019470[];
+extern s32 D_80047FF4;
+
+void FileSys__Unknown(s32 arg0) {
+    if (arg0 != 0) {
+        if (D_80047FF4 != 0) {
+            printf(D_80019448, D_80019470, 0x188);
+            exit(1);
+        }
+    }
+    D_80047FF4 = arg0;
+}
 
 typedef struct {
     char *start;
@@ -268,11 +305,11 @@ s32 func_80023220(s8* first_string, s8* second_string) {
     if (other_character < current_character) {
         return 1;
     }
-    
+
     if (current_character != 0) {
         return func_80023220(first_string + 1, second_string + 1);
     }
-    
+
     return 0;
 }
 #endif
@@ -289,7 +326,7 @@ s32 func_80023388(void) {
     temp_return_value = func_800232D0();
 
     if (temp_return_value != 0) {
-        return func_800232A0(temp_return_value); 
+        return func_800232A0(temp_return_value);
     }
 
     return 0;
@@ -418,7 +455,11 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80024F8C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025330);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025584);
+extern s32 D_80048044;
+
+void func_80025584(void) {
+    D_80048044 = 0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025590);
 

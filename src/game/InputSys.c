@@ -4,7 +4,6 @@
 
 #include <psyq/STDIO.H>
 
-
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Init);
 
 extern void PadStartCom(void);

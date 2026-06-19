@@ -223,7 +223,15 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028F98);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800290DC);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800291FC);
+extern s32 D_80048098;
+extern s32 D_8004809C;
+extern s32 D_800480A8;
+
+void func_800291FC(s32 arg0, s32 arg1) {
+    D_80048098 = arg0;
+    D_8004809C = arg1;
+    D_800480A8 = 0;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029210);
 
@@ -263,7 +271,16 @@ void func_80029A80(s32 arg0) {
 
 void func_80029ADC(void) {}
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029AE4);
+extern s32 D_80040834[];
+extern s32 D_80042968;
+
+void func_80029AE4(void) {
+    D_80048098 = 0;
+    D_8004809C = 0;
+    D_80040834[1] = 0;
+    D_80040834[2] = 0;
+    D_80040834[0] = D_80042968;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029B0C);
 
@@ -300,9 +317,16 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", VideoSys__LoadLogos);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A7E4);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A8E8);
+extern s32* D_800480AC;
+extern s32* D_800480B0;
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A91C);
+void func_8002A8E8(s32 arg0, s32 arg1, s32 arg2) {
+    func_80029FA8(D_800480AC, arg0, arg1, arg2);
+}
+
+void func_8002A91C(s32 arg0, s32 arg1, s32 arg2) {
+    func_80029FA8(D_800480B0, arg0, arg1, arg2);
+}
 
 s32* func_8002A950(s32 *arg0) {
     arg0[0] = 0;
@@ -336,4 +360,15 @@ s32 func_8002AA0C(s32 arg0) {
     return arg0 + 8;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002AA14);
+extern void VideoSys__Flip(s32 arg0);
+extern void func_80025DC0(u8* arg0, s32 arg1);
+extern void func_80025954(u8* arg0);
+extern u8* D_800480B4;
+
+void func_8002AA14(void) {
+    u8* p;
+    VideoSys__Flip(1);
+    p = D_800480B4;
+    func_80025DC0(p + 0x3C, 0);
+    func_80025954(p + 0x4);
+}
