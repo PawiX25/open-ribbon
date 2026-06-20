@@ -282,37 +282,26 @@ s32 func_80023210(s32 value) {
     return (value + 3) & ~3;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023220);
-#else
 s32 func_80023220(s8* first_string, s8* second_string) {
-    // https://decomp.me/scratch/MVnJF
-    s8 current_character = *first_string;
-    s8 other_character = *second_string;
+    s8 c1 = *first_string;
+    s8 c2;
+    s8 lc1 = ((u32)(c1 - 65) < 26) ? (c1 + 0x20) : c1;
+    s8 lc2;
 
-    // uppercase to lowercase (A-Z)
-    if ((u32)(current_character - 65) < 26) {
-        current_character += 0x20;
-    }
-    if ((u32)(other_character - 65) < 26) {
-        other_character += 0x20;
-    }
+    c2 = *second_string;
+    lc2 = ((u32)(c2 - 65) < 26) ? (c2 + 0x20) : c2;
 
-    // compare characters?
-    if (current_character < other_character) {
+    if (lc1 < lc2) {
         return -1;
     }
-    if (other_character < current_character) {
+    if (lc2 < lc1) {
         return 1;
     }
-
-    if (current_character != 0) {
+    if (lc1 != 0) {
         return func_80023220(first_string + 1, second_string + 1);
     }
-
     return 0;
 }
-#endif
 
 s32 func_800232A0(s32 arg0) {
     return arg0 + func_80023210(func_80035C6C() + 1);

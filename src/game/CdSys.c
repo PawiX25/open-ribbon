@@ -131,7 +131,19 @@ s32 func_8001EBD4(void) {
     return v;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC08);
+extern u8 D_80048138;
+extern void func_8001EA5C();
+
+void func_8001EC08(void) {
+    UnkFunc03();
+    func_800314D8(0x13, 0, func_8001E9B0, 0);
+    D_80047F70 = 1;
+    if (D_80047F24 == 0) {
+        D_80047F24 = 1;
+        D_80048138 = 1;
+    }
+    func_800314D8(0x14, &D_80048138, func_8001EA5C, 0);
+}
 
 INCLUDE_RODATA("asm/game/nonmatchings/CdSys", D_8001907C);
 
