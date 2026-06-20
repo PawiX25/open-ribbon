@@ -310,6 +310,11 @@ typedef struct {
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk04);
 
+extern s32 func_8001F74C(s32* arg0, u8 arg1, u8 arg2, s32* arg3, s32* arg4);
+extern s16 func_80033204(s16, s16, u8, u8);
+extern void func_80033330(void*);
+extern s32 UnkVar05[24];
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc06);
 
 s32 func_8001FE34(s32 arg0) {

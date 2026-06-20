@@ -107,7 +107,29 @@ typedef struct {
 extern StrSlot D_8003FDB4[2];
 extern StrInputSys* func_80020AE4(StrInputSys*, char*, char*);
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk01);
+void InputSys__Unk01(StrSlot* self, s32 arg1) {
+    StrSlot* src;
+
+    if (arg1 >= 2) {
+        printf(D_800191E8, D_80019210, 0x103);
+        exit(1);
+    }
+
+    src = (StrSlot*)((char*)&D_8003FDB4 + arg1 * 12);
+    if (self != src) {
+        func_80020AE4((StrInputSys*)src, self->unk0, self->unk4);
+    }
+    {
+        char* hi = self->unk8;
+        char* lo = self->unk0;
+        s32 d = (s32)hi - (s32)lo;
+        if (lo != 0) {
+            if (d != 0) {
+                MemorySys__free(lo);
+            }
+        }
+    }
+}
 
 extern char D_8003FDCC;
 
@@ -121,6 +143,7 @@ typedef struct {
 
 extern StrInputSys func_800211D4(void*, StrSlot3*);
 extern s32 func_800341FC(char*, char*, s32);
+extern char D_8003FDD8;
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800207D0);
 
@@ -250,7 +273,45 @@ void func_800214E8(Container_214E8 *arg0, s32 flag) {
 typedef struct { char* unk0; char* unk4; char* unk8; } Slot157C;
 extern char D_8003FDD8;
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_8002157C);
+void func_8002157C(void) {
+    char* data;
+    char* p;
+    Slot157C* s;
+
+    UnkFunc04((UnkStruct10*)&D_8003FDD8, 2);
+    func_800214E8((Container_214E8*)&D_8003FDCC, 2);
+
+    data = (char*)&D_8003FDB4;
+    if (data != 0) {
+        p = data + 0x18;
+        if (p != data) {
+            do {
+                char* hi;
+                char* lo;
+                s32 d;
+                p -= 0xC;
+                s = (Slot157C*)p;
+                hi = s->unk8;
+                lo = s->unk0;
+                d = (s32)hi - (s32)lo;
+                if (lo != 0) {
+                    if (d != 0) {
+                        MemorySys__free(lo);
+                    }
+                }
+            } while ((char*)&D_8003FDB4 != p);
+        }
+    }
+}
+
+typedef struct CtorNode {
+    s32 unk0;
+    s32 unk4;
+    struct CtorNode* unk8;
+    struct CtorNode* unkC;
+} CtorNode;
+
+extern void func_800200AC(void*);
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Ctor);
 

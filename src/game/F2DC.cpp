@@ -455,8 +455,8 @@ void func_80029B0C(F29B0C_Self* self, s32 arg1) {
 
 typedef struct {
     s32 unk0;
-    s16 unk4;
-    s16 unk6;
+    u16 unk4;
+    u16 unk6;
     u16 unk8;
     u16 unkA;
 } F29BE0_Tile;

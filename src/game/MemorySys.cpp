@@ -621,6 +621,22 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023C2C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80023D38);
 
+typedef struct RbNode {
+    s32 unk0;
+    struct RbNode* parent; /* +4 */
+    struct RbNode* right;  /* +8 */
+    struct RbNode* left;   /* +0xC */
+} RbNode;
+
+typedef struct {
+    char pad0[8];
+    RbNode** unk8;  /* +8 header holder */
+    RbNode* unkC;   /* +0xC current node */
+} RbIter;
+
+extern char D_800196B4[];
+extern char D_800196DC[];
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800245CC);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800246EC);

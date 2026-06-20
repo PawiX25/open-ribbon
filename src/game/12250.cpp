@@ -121,7 +121,28 @@ typedef struct {
 extern char D_8001A13C[];
 extern char D_8001A164[];
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AEC0);
+ClosureAEC0* func_8002AEC0(ClosureAEC0* arg0, ObjAEC0* arg1) {
+    s32 v3;
+    u32 v4;
+    s32 base = (s32)arg1 + 0x218;
+
+    arg0->unk0 = (s32)arg1;
+    arg0->unk4 = 0;
+    v3 = arg1->unk218;
+    if ((v3 & 0xFC000000) != 0xC000000) {
+        printf(D_8001A13C, D_8001A164, 0x6A);
+        exit(1);
+    }
+    v4 = base & 0xF0000000;
+    arg0->unk4 = v4 + 4 * (v3 & 0x3FFFFFF);
+    if (v4 != ((u32)&func_8002AE5C & 0xF0000000)) {
+        printf(D_8001A13C, D_8001A164, 0x3C);
+        exit(1);
+    }
+    arg1->unk218 = (arg1->unk218 & 0xFC000000) |
+                   ((((u32)&func_8002AE5C & 0xFFFFFFF) >> 2) & 0x3FFFFFF);
+    return arg0;
+}
 
 extern s32 func_80030620(void*);
 
@@ -229,6 +250,14 @@ void func_8002B1BC(void) {
     }
 }
 
+extern s32 AudioSys__UnkFunc09(s32);
+extern s32 D_800480FC;
+extern s32 D_80048100;
+extern void* D_8004811C[];
+struct VarB4EC;
+extern void func_80025954(VarB4EC*);
+extern void func_8002BF70(UnkStruct00* arg0, s32 arg1);
+
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B1E0);
 
 void func_8002B410(void) {
@@ -316,6 +345,12 @@ void func_8002B5F0(void) {
         func_80025954(D_80048118);
     }
 }
+
+extern char D_8001A254[];
+extern char* D_800480D0[];
+extern char* D_800480D8[];
+extern char* D_800480E0[];
+extern ObjAD0C* D_8004810C[];
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B6E0);
 
