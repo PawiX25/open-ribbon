@@ -390,12 +390,38 @@ s32 func_800232A0(s32 arg0) {
     return arg0 + func_80023210(func_80035C6C() + 1);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800232D0);
+typedef struct {
+    s32 count;
+    s32 offsets[1];
+} SearchTable;
+
+s8* func_800232D0(SearchTable* self, s8* key) {
+    s32 lo;
+    s32 hi;
+
+    hi = self->count;
+    lo = 0;
+    if (hi > 0) {
+        do {
+            s32 mid = (lo + hi) / 2;
+            s8* entry = (s8*)((char*)self + self->offsets[mid]);
+            s32 cmp = func_80023220(key, entry);
+            if (cmp < 0) {
+                hi = mid;
+            } else if (cmp == 0) {
+                return entry;
+            } else {
+                lo = mid + 1;
+            }
+        } while (lo < hi);
+    }
+    return 0;
+}
 
 s32 func_80023388(void) {
     s32 temp_return_value;
 
-    temp_return_value = func_800232D0();
+    temp_return_value = (s32)((s8* (*)())func_800232D0)();
 
     if (temp_return_value != 0) {
         return func_800232A0(temp_return_value);
