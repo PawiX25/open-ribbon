@@ -219,9 +219,76 @@ void func_80028F64(F2DC_Object *arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028F98);
+typedef struct {
+    s32 w;
+    s32 h;
+    s32* cells;
+} GridBounds;
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_800290DC);
+typedef struct {
+    s32 x;
+    s32 y;
+    GridBounds* b;
+} GridCursor;
+
+void func_800290DC(GridCursor* c, s32 dx, s32 dy, s32 wrapY, s32 wrapX);
+
+void func_80028F98(s32 startIdx, GridCursor* cur, s32 dx, s32 dy) {
+    s32 w;
+    do {
+        func_800290DC(cur, dx, dy, 1, 1);
+    } while (cur->b->cells[cur->y * cur->b->w + cur->x] == cur->b->cells[startIdx]);
+
+    do {
+        w = cur->b->w;
+        if (cur->x == w - 1 && dx == -1) {
+            func_800290DC(cur, 1, dy, 1, 1);
+        } else if (cur->x == 0 && dx == 1) {
+            func_800290DC(cur, -1, dy, 1, dx);
+        } else if (cur->y == cur->b->h - 1 && dy == -1) {
+            func_800290DC(cur, dx, 1, 1, 1);
+        } else if (cur->y == 0 && dy == 1) {
+            func_800290DC(cur, dx, -1, 1, dy);
+        }
+    } while (0);
+}
+
+void func_800290DC(GridCursor* c, s32 dx, s32 dy, s32 wrapY, s32 wrapX) {
+    s32 nx = c->x + dx;
+    s32 ny = c->y + dy;
+    c->x = nx;
+    c->y = ny;
+    if (wrapX) {
+        if (nx < 0) {
+            c->x = c->b->w - 1;
+        }
+        if (c->x >= c->b->w) {
+            c->x = 0;
+        }
+    } else {
+        if (nx < 0) {
+            c->x = 0;
+        }
+        if (c->x >= c->b->w) {
+            c->x = c->b->w - 1;
+        }
+    }
+    if (wrapY) {
+        if (c->y < 0) {
+            c->y = c->b->h - 1;
+        }
+        if (c->y >= c->b->h) {
+            c->y = 0;
+        }
+    } else {
+        if (c->y < 0) {
+            c->y = 0;
+        }
+        if (c->y >= c->b->h) {
+            c->y = c->b->h - 1;
+        }
+    }
+}
 
 extern s32 D_80048098;
 extern s32 D_8004809C;
