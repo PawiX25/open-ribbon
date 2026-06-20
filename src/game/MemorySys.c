@@ -129,7 +129,32 @@ typedef struct {
     char* unk8;
 } StrBuf;
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021E6C);
+s32 func_80021E6C(s32 arg0, StrBuf* arg1, StrBuf* arg2) {
+    s32 result;
+    s32* r = (s32*)func_80023388(arg0, arg1->unk0);
+
+    if (r != 0) {
+        char* first;
+        result = 1;
+        arg2->unk8 = 0;
+        first = (char*)*r;
+        arg2->unk0 = (char*)(r + 1);
+        arg2->unk4 = first;
+    } else {
+        result = 0;
+    }
+    {
+        char* hi = arg1->unk8;
+        char* lo = arg1->unk0;
+        s32 d = (s32)hi - (s32)lo;
+        if (lo != 0) {
+            if (d != 0) {
+                MemorySys__free(lo);
+            }
+        }
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021EF4);
 
