@@ -151,7 +151,47 @@ s32 PackedFiles__Unk00(s32 arg0, s32 *arg1, s32 arg2) {
     return arg0 | v;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", PackedFiles__Init);
+typedef struct {
+    char* start;
+    char* end;
+} FileSysStr0;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+} D74Struct;
+
+extern PakFile D_8003FE68;
+extern StrBuf D_8003FE5C;
+extern D74Struct D_8003FE74;
+extern s32 D_80047FF4;
+extern s32 func_80035C6C(void);
+extern FileSysStr0* FileSys__Unk00(FileSysStr0*, char*, char*);
+
+void PackedFiles__Init(char* arg0) {
+    PakFile pf;
+    FileSysStr0* fp;
+    s32 len;
+
+    fp = (FileSysStr0*)&D_8003FE5C;
+    len = func_80035C6C();
+    FileSys__Unk00(fp, arg0, arg0 + len);
+
+    pf.next = 0;
+    D_8003FE68 = pf;
+
+    D_8003FE74.unk14 = 1;
+    D_8003FE74.unk4 = 2;
+    D_8003FE74.unk0 = 4;
+    D_8003FE74.unk8 = 8;
+    D_8003FE74.unkC = 0x10;
+    D_80047FF4 = 0;
+    D_8003FE74.unk10 = 0x20;
+}
 
 extern PakFile D_8003FE68;
 
@@ -183,11 +223,6 @@ void FileSys__Unknown(s32 arg0) {
     }
     D_80047FF4 = arg0;
 }
-
-typedef struct {
-    char *start;
-    char *end;
-} FileSysStr0;
 
 extern void *func_8003424C(void *, const void *, int); /* memcpy */
 extern void *func_80030BF4(void *, const void *, int); /* memmove */
