@@ -29,9 +29,9 @@ extern s32 VWD0;
 extern EVECTOR* evmx[];
 extern EVECTOR evbfad;
 
-struct VSyncCb {};
-extern struct VSyncCb vsync_cb;
-extern struct VSyncCb vsync_cb_end;
+struct VSyncCbMark {};
+extern struct VSyncCbMark vsync_cb;
+extern struct VSyncCbMark vsync_cb_end;
 
 typedef void (*VSyncCb)();
 struct VSyncCbList
@@ -71,7 +71,9 @@ struct PakFile {
     s32 unk4;
     s32 size;
 };
+#ifndef __cplusplus
 void delete(void *);
+#endif
 
 
 typedef struct {

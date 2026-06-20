@@ -24,6 +24,11 @@ CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx 
 CC_FLAGS        := -mips1 -mno-abicalls -mel -msplit-addresses -mgpOPT -mgpopt -msoft-float -gcoff
 CC_FLAGS        += $(CPP_FLAGS)
 
+CXX             := ./bin/g++ -c -B./bin/
+CXX_FLAGS       := -mips1 -mno-abicalls -mel -msplit-addresses -mgpOPT -mgpopt -msoft-float -gcoff
+CXX_FLAGS       += -Iinclude -Iinclude/psyq -undef -Wall -fno-builtin -fsigned-char -fno-exceptions -fno-rtti
+CXX_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL
+
 CHECK_WARNINGS  := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
 CC_CHECK        := $(MODERN_GCC) -fsyntax-only -std=gnu90 -m32 $(CHECK_WARNINGS) $(CPP_FLAGS)
 
@@ -77,6 +82,7 @@ define list_src_files
 		$(foreach dir, $(ASM_DIR)/game,         $(wildcard $(dir)/**.s))
 		$(foreach dir, $(ASM_DIR)/game/data,    $(wildcard $(dir)/**.s))
 		$(foreach dir, $(SRC_DIR)/game,         $(wildcard $(dir)/**.c))
+		$(foreach dir, $(SRC_DIR)/game,         $(wildcard $(dir)/**.cpp))
 endef
 
 define list_o_files
@@ -95,7 +101,7 @@ define link
 			-s
 endef
 
-$(BUILD_DIR)/src/game/FontHack.c.o: SDATA_LIMIT := -G0
+$(BUILD_DIR)/src/game/FontHack.cpp.o: SDATA_LIMIT := -G0
 
 # recipes
 all: build check
@@ -168,6 +174,9 @@ $(BUILD_DIR)/%.bin.o: %.bin
 $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP)
 	@$(CC_CHECK) $<
 	$(GCC) $(CC_FLAGS) $(SDATA_LIMIT) $(OPT_FLAGS) $(AS_FLAGS) $< -o $@
+
+$(BUILD_DIR)/%.cpp.o: %.cpp $(MASPSX_APP)
+	$(CXX) $(CXX_FLAGS) $(SDATA_LIMIT) $(OPT_FLAGS) $(AS_FLAGS) $< -o $@
 
 SHELL = /bin/bash -e -o pipefail
 

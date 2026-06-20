@@ -24,8 +24,10 @@ typedef unsigned long long u64;
 typedef float f32;
 typedef double f64;
 
+#ifndef __cplusplus
 typedef int bool;
 enum { false, true };
+#endif
 
 #ifndef NULL
 #define NULL (0)
