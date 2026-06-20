@@ -1,3 +1,7 @@
+extern "C" void deletefn(void*) __asm__("delete");
+#define delete deletefn
+
+extern "C" {
 #include "common.h"
 
 #include "globals.h"
@@ -105,11 +109,9 @@ extern StrInputSys* func_80020AE4(StrInputSys*, char*, char*);
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk01);
 
-extern void D_8003FDCC;
+extern char D_8003FDCC;
 
-void* func_800207C4(void) {
-    return &D_8003FDCC;
-}
+INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800207C4);
 
 typedef struct {
     char* unk0;
@@ -140,7 +142,7 @@ void InputSys__alloc(s32 arg0) {
     do {
         var_v0 = D_80048028;
         if (var_v0 == NULL) {
-            printf(&D_80019234);
+            printf((char*)&D_80019234);
             exit(1);
         }
         var_v0();
@@ -251,3 +253,5 @@ extern char D_8003FDD8;
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_8002157C);
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Ctor);
+
+}

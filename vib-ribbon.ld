@@ -26,7 +26,7 @@ SECTIONS
         build/src/game/VideoSys.c.o(.rodata);
         build/src/game/CdSys.cpp.o(.rodata);
         build/src/game/AudioSys.c.o(.rodata);
-        build/src/game/InputSys.c.o(.rodata);
+        build/src/game/InputSys.cpp.o(.rodata);
         build/asm/game/data/A44.rodata.s.o(.rodata);
         build/asm/game/data/C00.rodata.s.o(.rodata);
         build/asm/game/data/EA4.rodata.s.o(.rodata);
@@ -56,7 +56,7 @@ SECTIONS
         build/src/game/FontHack.cpp.o(.text);
         build/src/game/CdSys.cpp.o(.text);
         build/src/game/AudioSys.c.o(.text);
-        build/src/game/InputSys.c.o(.text);
+        build/src/game/InputSys.cpp.o(.text);
         build/src/game/MemorySys.cpp.o(.text);
         build/src/game/E9A0.cpp.o(.text);
         build/src/game/F2DC.cpp.o(.text);
@@ -177,7 +177,7 @@ SECTIONS
         build/src/game/VideoSys.c.o(.bss);
         build/src/game/CdSys.cpp.o(.bss);
         build/src/game/AudioSys.c.o(.bss);
-        build/src/game/InputSys.c.o(.bss);
+        build/src/game/InputSys.cpp.o(.bss);
         build/asm/game/data/A44.rodata.s.o(.bss);
         build/asm/game/data/C00.rodata.s.o(.bss);
         build/asm/game/data/EA4.rodata.s.o(.bss);
