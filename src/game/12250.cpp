@@ -51,7 +51,42 @@ extern void func_80024CC4(void*, s32);
 extern void func_80025D1C(void*, s32);
 extern void func_800258B0(void*, s32);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AD0C);
+void func_8002AD0C(ParentAD0C* arg0, s32 arg1) {
+    ObjAD0C* obj;
+    ObjAD0C* s3;
+    s32 i;
+
+    FileSys__Unknown(0);
+    D_800480B4 = 0;
+    obj = arg0->unk0;
+    if (obj != 0) {
+        s3 = obj;
+        for (i = 0; i < obj->unk10; i++) {
+            void* p = obj->unk14[i];
+            if (p != 0) {
+                func_80024CC4(p, 3);
+            }
+        }
+        if (obj->unk14 != 0) {
+            delete(obj->unk14);
+        }
+        if (obj->unk0 != 0) {
+            RefAD0C* ref = obj->unk0;
+            s32 rc = ref->unk0 - 1;
+            ref->unk0 = rc;
+            if (rc == 0) {
+                FileSys__DeleteFile(s3->unk4);
+                free(obj->unk0);
+            }
+        }
+        free(obj);
+    }
+    func_80025D1C((char*)arg0 + 0x3C, 2);
+    func_800258B0((char*)arg0 + 0x4, 2);
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 extern s32 D_800480B8;
 extern s32 D_800480BC;
