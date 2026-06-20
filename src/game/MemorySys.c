@@ -868,7 +868,18 @@ typedef struct {
     s32 unk70;
 } NameTableObj;
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
+s32 func_80026940(NameTableObj* self) {
+    s32 result;
+
+    if (self->unk5C[self->unk70].val == -0x61) {
+        return 0;
+    }
+    result = 0;
+    if (self->unk4 == self->unk70 - 1) {
+        result = self->unkC[self->unk4]->unk10 != 0;
+    }
+    return result;
+}
 
 void func_800269A4(NameTableObj* self, s32 key) {
     s32 idx;
