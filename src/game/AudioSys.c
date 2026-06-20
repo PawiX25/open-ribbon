@@ -154,6 +154,10 @@ void AudioSys__Dtor(AudioSysUnkStruct02 *arg0, s32 arg1) {
     AudioSys__UnkFunc00(arg0, arg1);
 }
 
+extern s32 D_8003FD8C[];
+extern s32 D_8003FD0C;
+extern void func_800328E4(s32, void*);
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__InitSpu);
 
 extern s32 D_8003FD8C[];
