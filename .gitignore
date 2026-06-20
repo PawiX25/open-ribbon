@@ -3,6 +3,7 @@ iso/
 ctx.c
 ctx.c.m2c
 *.ld
+!vib-ribbon.ld
 *auto.*.txt
 __pycache__
 

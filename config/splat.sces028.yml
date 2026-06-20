@@ -74,12 +74,12 @@ segments:
       - [0x4C60, rodata]
       # .text
       - [0x4D58, c, VideoSys]
-      - [0x5E58, c, FontHack]
-      - [0x5FE8, c, CdSys]
+      - [0x5E58, cpp, FontHack]
+      - [0x5FE8, cpp, CdSys]
       - [0x68D4, c, AudioSys]
       - [0x7BB8, c, InputSys]
       - [0x8EFC, c, MemorySys]
-      - [0xE9A0, c]
+      - [0xE9A0, cpp]
       - [0xF2DC, c]
       - [0x12250, c]
       - [0x13778, asm, entrypoint]
@@ -88,7 +88,7 @@ segments:
       - [0x14348, asm]
       - [0x14428, asm]
       - [0x144A8, asm]
-      - [0x19648, c]
+      - [0x19648, cpp]
       - [0x19958, asm]
       - [0x19CD8, asm]
       - [0x1A144, asm]
@@ -174,7 +174,7 @@ segments:
       # sbss
       - [0x2F6E0, data, VideoSys] # wtf?
       - [0x2F6E4, .sbss, VideoSys]
-      - [0x2F71C, .sbss, CdSys]
+      - [0x2F71C, .sdata, CdSys]
       - [0x2F778, .sdata, AudioSys] # ???
       - [0x2F7A0, data] # InputSys
       - [0x2F964, data]
