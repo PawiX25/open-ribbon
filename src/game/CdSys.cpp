@@ -1,3 +1,4 @@
+extern "C" {
 #include "common.h"
 
 #include "globals.h"
@@ -207,7 +208,7 @@ void func_8001F0A4(void) {
     s32 *var_v1;
     s32 i;
 
-    var_v1 = &D_8003F974;
+    var_v1 = (s32*)&D_8003F974;
 
     for (i = 100; i != -1; i--) {
         var_v1[0] = 0;
@@ -216,4 +217,6 @@ void func_8001F0A4(void) {
     };
 
     D_80047F1C = 0;
+}
+
 }

@@ -25,8 +25,8 @@ CC_FLAGS        := -mips1 -mno-abicalls -mel -msplit-addresses -mgpOPT -mgpopt -
 CC_FLAGS        += $(CPP_FLAGS)
 
 CXX             := ./bin/g++ -c -B./bin/
-CXX_FLAGS       := -mips1 -mno-abicalls -mel -msplit-addresses -mgpOPT -mgpopt -msoft-float -gcoff
-CXX_FLAGS       += -Iinclude -Iinclude/psyq -undef -Wall -fno-builtin -fsigned-char -fno-exceptions -fno-rtti
+CXX_FLAGS       := -mips1 -mno-abicalls -mel -msplit-addresses -mgpOPT -mgpopt -msoft-float -g0
+CXX_FLAGS       += -Iinclude -Iinclude/psyq -undef -Wall -fno-builtin -fsigned-char -fno-exceptions -fno-rtti -fcommon
 CXX_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL
 
 CHECK_WARNINGS  := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
