@@ -81,7 +81,7 @@ segments:
       - [0x8EFC, c, MemorySys]
       - [0xE9A0, cpp]
       - [0xF2DC, c]
-      - [0x12250, c]
+      - [0x12250, cpp]
       - [0x13778, asm, entrypoint]
       - [0x13868, asm, psyq]
       - [0x13F18, asm]
