@@ -75,6 +75,21 @@ s32 InputSys__Unk00(s32 arg0) {
     return **new_var;
 }
 
+typedef struct {
+    char* start;
+    char* end;
+} StrInputSys;
+
+typedef struct {
+    char* unk0;
+    char* unk4;
+    char* unk8;
+    char pad[8];
+} StrSlot;
+
+extern StrSlot D_8003FDB4[2];
+extern StrInputSys* func_80020AE4(StrInputSys*, char*, char*);
+
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk01);
 
 extern void D_8003FDCC;
@@ -111,11 +126,6 @@ void InputSys__alloc(s32 arg0) {
 }
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020920);
-
-typedef struct {
-    char *start;
-    char *end;
-} StrInputSys;
 
 extern void *func_8003424C(void *, const void *, int);
 extern void *func_80030BF4(void *, const void *, int);
