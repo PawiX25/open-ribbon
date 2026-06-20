@@ -587,7 +587,37 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026D78);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E08);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E64);
+typedef struct {
+    char* name;
+    char pad4[4];
+    s32 key;
+    s32 val;
+} NameEntry2;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[0x2C];
+    NameEntry2* unk34;
+} NameTableObj2;
+
+void func_80026E64(NameTableObj2* self, s32 key) {
+    s32 idx;
+
+    if (self->unk34[0].name[0] == 0) {
+        return;
+    }
+    idx = 0;
+    do {
+        if (self->unk34[idx].key == key) {
+            s32 val = self->unk34[idx].val;
+            self->unk4 = idx;
+            self->unk0 = val;
+            return;
+        }
+        idx++;
+    } while (self->unk34[idx].name[0] != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026ED0);
 
