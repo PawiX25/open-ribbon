@@ -536,7 +536,23 @@ typedef struct {
     NameEntry* unk5C;
 } NameTableObj;
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800269A4);
+void func_800269A4(NameTableObj* self, s32 key) {
+    s32 idx;
+
+    if (self->unk5C[0].name[0] == 0) {
+        return;
+    }
+    idx = 0;
+    do {
+        if (self->unk5C[idx].key == key) {
+            s32 val = self->unk5C[idx].val;
+            self->unk4 = idx;
+            self->unk0 = val;
+            return;
+        }
+        idx++;
+    } while (self->unk5C[idx].name[0] != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026A10);
 
