@@ -602,7 +602,31 @@ void func_80025584(void) {
     D_80048044 = 0;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025590);
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+} Obj5590;
+
+extern void UnkFunc05(UnkStruct00*, s32);
+
+Obj5590* func_80025590(Obj5590* self, s32 arg1, s32 arg2, s32 arg3) {
+    self->unk0 = arg1;
+    self->unk4 = 0;
+    self->unk8 = arg2;
+    self->unkC = 0;
+    self->unk18 = 0;
+    self->unkC = 0x10000;
+    self->unk14 = arg3;
+    self->unk10 = 0;
+    self->unk4 = (s32)(((s64)arg2 * 0x10000) >> 16);
+    UnkFunc05((UnkStruct00*)self, 0x8000U);
+    return self;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025604);
 

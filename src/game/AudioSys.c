@@ -34,6 +34,13 @@ void AudioSys__QuitSpu() {
     SpuQuit();
 }
 
+extern s32 func_80032F74(void*, s32);
+extern double func_80032784(void*);
+extern s32 func_80032A04(double, double);
+extern s32 func_8002CCA8(void*, float);
+extern s32 func_80030864(s32);
+extern void func_80033014(s32, s32);
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__SetVolume);
 
 INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", D_80019114);

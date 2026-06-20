@@ -163,6 +163,23 @@ void func_80028D6C(Container_28D6C *arg0) {
     }
 }
 
+typedef struct {
+    char pad0[0x18];
+    s16 unk18;
+    char pad1A[2];
+    s32 (*unk1C)(void*);
+} F8DE4VTable;
+
+typedef struct {
+    char pad0[8];
+    F8DE4VTable* unk8;
+} F8DE4Obj;
+
+typedef struct {
+    s32 unk0;
+    F8DE4Obj* unk4[1];
+} F8DE4Self;
+
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028DE4);
 
 typedef struct Container_28E74 {

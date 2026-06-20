@@ -215,6 +215,9 @@ void func_800214E8(Container_214E8 *arg0, s32 flag) {
     }
 }
 
+typedef struct { char* unk0; char* unk4; char* unk8; } Slot157C;
+extern char D_8003FDD8;
+
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_8002157C);
 
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Ctor);
