@@ -612,6 +612,9 @@ void func_80025D1C(DtorObj* self, s32 flags) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
 
+extern s32 D_80047EC8;
+extern s32 D_80047EFC;
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025EBC);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025F44);
@@ -682,6 +685,21 @@ void func_80026A10(NameTableObj* self) {
 }
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026AA0);
+
+typedef struct {
+    char* name;
+    char pad4[0xC];
+} TermEntry;
+
+typedef struct {
+    char pad0[8];
+    void* unk8;
+    DtorObj* unkC[10];
+    TermEntry* unk34;
+} DtorTableObj;
+
+extern void* D_80019E38;
+extern void* D_80019F40;
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026CB8);
 
