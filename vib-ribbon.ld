@@ -57,7 +57,7 @@ SECTIONS
         build/src/game/CdSys.cpp.o(.text);
         build/src/game/AudioSys.c.o(.text);
         build/src/game/InputSys.c.o(.text);
-        build/src/game/MemorySys.c.o(.text);
+        build/src/game/MemorySys.cpp.o(.text);
         build/src/game/E9A0.cpp.o(.text);
         build/src/game/F2DC.cpp.o(.text);
         build/src/game/12250.cpp.o(.text);
@@ -200,7 +200,7 @@ SECTIONS
         build/asm/game/data/4C44.rodata.s.o(.bss);
         build/asm/game/data/4C60.rodata.s.o(.bss);
         build/src/game/FontHack.cpp.o(.bss);
-        build/src/game/MemorySys.c.o(.bss);
+        build/src/game/MemorySys.cpp.o(.bss);
         build/src/game/E9A0.cpp.o(.bss);
         build/src/game/F2DC.cpp.o(.bss);
         build/src/game/12250.cpp.o(.bss);

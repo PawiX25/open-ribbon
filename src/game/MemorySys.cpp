@@ -1,3 +1,7 @@
+extern "C" void deletefn(void*) __asm__("delete");
+#define delete deletefn
+
+extern "C" {
 #include "common.h"
 
 #include "globals.h"
@@ -333,7 +337,7 @@ FileSysStr0* FileSys__Unk00(FileSysStr0* self, char* new_start, char* new_end) {
         }
     } else {
         func_8003424C(self->start, new_start, self->end - self->start);
-        func_80022660(self, new_start + (self->end - self->start), new_end, 0);
+        func_80022660((StrBuf*)self, new_start + (self->end - self->start), new_end, 0);
     }
 
     return self;
@@ -360,7 +364,7 @@ void func_80022C80(s32 arg0) {
     do {
         var_v0 = D_80048028;
         if (var_v0 == NULL) {
-            printf(&D_80019494);
+            printf((char*)&D_80019494);
             exit(1);
         }
         var_v0();
@@ -487,7 +491,7 @@ s32 func_800231F4(s32 arg0) {
     s32 var_v1;
 
     var_v1 = 0;
-    if (arg0 != &D_8003FE8C) {
+    if (arg0 != (s32)&D_8003FE8C) {
         var_v1 = arg0;
     }
     return var_v1;
@@ -499,24 +503,29 @@ s32 func_80023210(s32 value) {
 }
 
 s32 func_80023220(s8* first_string, s8* second_string) {
-    s8 c1 = *first_string;
+    s8 c1;
     s8 c2;
-    s8 lc1 = ((u32)(c1 - 65) < 26) ? (c1 + 0x20) : c1;
+    s8 lc1;
     s8 lc2;
 
-    c2 = *second_string;
-    lc2 = ((u32)(c2 - 65) < 26) ? (c2 + 0x20) : c2;
+    for (;;) {
+        c1 = *first_string;
+        lc1 = ((u32)(c1 - 65) < 26) ? (c1 + 0x20) : c1;
+        c2 = *second_string;
+        lc2 = ((u32)(c2 - 65) < 26) ? (c2 + 0x20) : c2;
 
-    if (lc1 < lc2) {
-        return -1;
+        if (lc1 < lc2) {
+            return -1;
+        }
+        if (lc2 < lc1) {
+            return 1;
+        }
+        if (lc1 == 0) {
+            return 0;
+        }
+        first_string++;
+        second_string++;
     }
-    if (lc2 < lc1) {
-        return 1;
-    }
-    if (lc1 != 0) {
-        return func_80023220(first_string + 1, second_string + 1);
-    }
-    return 0;
 }
 
 s32 func_800232A0(s32 arg0) {
@@ -581,7 +590,7 @@ void func_80023A94(s32 arg0) {
     do {
         var_v0 = D_80048028;
         if (var_v0 == NULL) {
-            printf(&D_800195F4);
+            printf((char*)&D_800195F4);
             exit(1);
         }
         var_v0();
@@ -625,7 +634,7 @@ void func_80024820(s32 arg0) {
     do {
         var_v0 = D_80048028;
         if (var_v0 == NULL) {
-            printf(&D_80019704); // "out of memory\n"
+            printf((char*)&D_80019704); // "out of memory\n"
             exit(1);
         }
         var_v0();
@@ -750,8 +759,7 @@ void func_800258B0(DtorObj2* self, s32 flags) {
     free(self->unk34);
     if (self->unk20 != NULL) {
         if (--(*self->unk20) == 0) {
-            PakFile pf = self->unk24;
-            FileSys__DeleteFile(pf);
+            FileSys__DeleteFile(self->unk24);
             free(self->unk20);
         }
     }
@@ -768,7 +776,7 @@ s32 func_80025B18(s32 arg0) {
     s32 var_v1;
 
     var_v1 = 0;
-    if (arg0 != &D_8003FE8C) {
+    if (arg0 != (s32)&D_8003FE8C) {
         var_v1 = arg0;
     }
     return var_v1;
@@ -794,8 +802,7 @@ void func_80025D1C(DtorObj* self, s32 flags) {
     free(self->unk30);
     if (self->unk1C != NULL) {
         if (--(*self->unk1C) == 0) {
-            PakFile pf = self->unk20;
-            FileSys__DeleteFile(pf);
+            FileSys__DeleteFile(self->unk20);
             free(self->unk1C);
         }
     }
@@ -1146,3 +1153,4 @@ typedef struct {
 extern s32 func_8001F57C(s32*, s32, s32, s32);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027104);
+}
