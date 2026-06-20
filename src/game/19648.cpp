@@ -1,3 +1,4 @@
+extern "C" {
 #include "common.h"
 
 #if 0
@@ -47,3 +48,5 @@ INCLUDE_ASM("asm/game/nonmatchings/19648", func_80031E48);
 #else
 INCLUDE_ASM("asm/game/nonmatchings/19648", func_80031E48);
 #endif
+
+}
