@@ -520,8 +520,6 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002663C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
-
 typedef struct {
     char* name;
     char pad4[8];
@@ -540,7 +538,11 @@ typedef struct {
     char pad8[4];
     EntryObj* unkC[20];
     NameEntry* unk5C;
+    char pad60[0x10];
+    s32 unk70;
 } NameTableObj;
+
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
 
 void func_800269A4(NameTableObj* self, s32 key) {
     s32 idx;
