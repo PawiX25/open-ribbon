@@ -597,7 +597,8 @@ typedef struct {
 typedef struct {
     s32 unk0;
     s32 unk4;
-    char pad8[0x2C];
+    char pad8[4];
+    EntryObj* unkC[10];
     NameEntry2* unk34;
 } NameTableObj2;
 
@@ -619,7 +620,22 @@ void func_80026E64(NameTableObj2* self, s32 key) {
     } while (self->unk34[idx].name[0] != 0);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026ED0);
+void func_80026ED0(NameTableObj2* self) {
+    s32 i;
+
+    self->unk4 = 0;
+    self->unk0 = 0;
+    if (self->unk34[0].name[0] == 0) {
+        return;
+    }
+    i = 0;
+    do {
+        EntryObj* o = self->unkC[i];
+        i++;
+        o->unk10 = 0;
+        UnkFunc01(o, 0x8000U);
+    } while (self->unk34[i].name[0] != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026F5C);
 
