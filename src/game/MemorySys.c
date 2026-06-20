@@ -97,6 +97,12 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Read);
 
+typedef struct {
+    char* unk0;
+    char* unk4;
+    char* unk8;
+} StrBuf;
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021E6C);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021EF4);
