@@ -47,6 +47,11 @@ void MemorySys__DumpUsage(void) {
     printf(D_80019398, total);
 }
 
+extern char D_800193A8[];
+extern char D_80047FB0[];
+extern char D_80047FB8[];
+extern char D_80047FC0[];
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpHead);
 
 void MemorySys__Init01(void) {
@@ -1018,5 +1023,21 @@ void func_800270DC(s32 *arg0) {
     arg0[0] = 0;
     func_8001F5E4(0);
 }
+
+typedef struct {
+    s32 unk0;
+    char pad4[4];
+    s32 unk8;
+    s32 unkC;
+} Entry104;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[4];
+    Entry104* unkC;
+} Obj104;
+
+void func_80027104(Obj104* self, s32 key);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027104);
