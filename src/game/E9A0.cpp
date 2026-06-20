@@ -1,3 +1,4 @@
+extern "C" {
 #include "common.h"
 #include "globals.h"
 
@@ -219,4 +220,6 @@ loop:
         result = r;
     }
     return result;
+}
+
 }
