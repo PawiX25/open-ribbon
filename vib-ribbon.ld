@@ -25,7 +25,7 @@ SECTIONS
         vib_ribbon_RODATA_START = .;
         build/src/game/VideoSys.c.o(.rodata);
         build/src/game/CdSys.cpp.o(.rodata);
-        build/src/game/AudioSys.c.o(.rodata);
+        build/src/game/AudioSys.cpp.o(.rodata);
         build/src/game/InputSys.cpp.o(.rodata);
         build/asm/game/data/A44.rodata.s.o(.rodata);
         build/asm/game/data/C00.rodata.s.o(.rodata);
@@ -55,7 +55,7 @@ SECTIONS
         build/src/game/VideoSys.c.o(.text);
         build/src/game/FontHack.cpp.o(.text);
         build/src/game/CdSys.cpp.o(.text);
-        build/src/game/AudioSys.c.o(.text);
+        build/src/game/AudioSys.cpp.o(.text);
         build/src/game/InputSys.cpp.o(.text);
         build/src/game/MemorySys.cpp.o(.text);
         build/src/game/E9A0.cpp.o(.text);
@@ -158,7 +158,7 @@ SECTIONS
         build/asm/game/data/VideoSys.data.s.o(.data);
         build/src/game/VideoSys.c.o(.sbss);
         build/src/game/CdSys.cpp.o(.sdata);
-        build/src/game/AudioSys.c.o(.sdata);
+        build/src/game/AudioSys.cpp.o(.sdata);
         _2F7A0_data__s = .;
         build/asm/game/data/2F7A0.data.s.o(.data);
         _2F964_data__s = .;
@@ -176,7 +176,7 @@ SECTIONS
         vib_ribbon_BSS_START = .;
         build/src/game/VideoSys.c.o(.bss);
         build/src/game/CdSys.cpp.o(.bss);
-        build/src/game/AudioSys.c.o(.bss);
+        build/src/game/AudioSys.cpp.o(.bss);
         build/src/game/InputSys.cpp.o(.bss);
         build/asm/game/data/A44.rodata.s.o(.bss);
         build/asm/game/data/C00.rodata.s.o(.bss);

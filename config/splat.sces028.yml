@@ -76,7 +76,7 @@ segments:
       - [0x4D58, c, VideoSys]
       - [0x5E58, cpp, FontHack]
       - [0x5FE8, cpp, CdSys]
-      - [0x68D4, c, AudioSys]
+      - [0x68D4, cpp, AudioSys]
       - [0x7BB8, cpp, InputSys]
       - [0x8EFC, cpp, MemorySys]
       - [0xE9A0, cpp]

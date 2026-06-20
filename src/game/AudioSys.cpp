@@ -1,3 +1,7 @@
+extern "C" void deletefn(void*) __asm__("delete");
+#define delete deletefn
+
+extern "C" {
 #include "common.h"
 
 #include "globals.h"
@@ -179,7 +183,7 @@ s32* AudioSys__new(s32* arg0, s32 arg1) {
     *(void* volatile*)&self->unk18 = &D_8001918C;
     self->unk10 = 0;
     self->unk18 = &AudioSys__UnknownVar;
-    AudioSys__ParseVH(self, arg1, -1);
+    AudioSys__ParseVH((ParseVHObj*)self, arg1, -1);
     self->unk14 = -1;
     {
         s32 t = self->unkC + 0x200;
@@ -219,7 +223,7 @@ typedef struct {
 
 void AudioSys__Unk02(AudioSysUnkStruct01* arg0, s32 arg1, s32 arg2) {
     arg0->unk1C = arg1;
-    AudioSys__Unk01(arg0, arg2);
+    AudioSys__Unk01((AudioSysUnk01Ext*)arg0, arg2);
 }
 
 s32 AudioSys__IsTransferCompleted(s32 flag)
@@ -351,13 +355,11 @@ extern s32 D_8003FC9C[];
 
 void func_80020020(void) {
     s32 *p;
-    PakFile pf;
     p = (s32*)D_8003FC9C[0];
     if (p == NULL) return;
     *p = *p - 1;
     if (*p != 0) return;
-    pf = *(PakFile *)&D_8003FC9C[1];
-    FileSys__DeleteFile(pf);
+    FileSys__DeleteFile(*(PakFile *)&D_8003FC9C[1]);
     free((void*)D_8003FC9C[0]);
 }
 
@@ -457,3 +459,5 @@ u32 func_8002038C(s32 arg0, u32 arg1) {
 INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", AudioSys__UnknownVar);
 
 INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", D_8001918C);
+
+}
