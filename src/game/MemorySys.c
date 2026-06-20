@@ -11,7 +11,35 @@ void func_80021758(void) {} // MemorySys__Stub [Empty]
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Info);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpUsage);
+typedef struct HeapNode {
+    struct HeapNode* unk0;
+    s32 unk4;
+} HeapNode;
+
+extern HeapNode* D_80047FD0;
+s32 MemorySys__CountHeapFree(void);
+
+extern s32 D_80047FCC;
+extern char D_80019388[];
+extern char D_80019398[];
+
+void MemorySys__DumpUsage(void) {
+    HeapNode* node;
+    s32 total;
+    s32 base;
+
+    base = D_80047FCC - 8;
+    printf(D_80019388, base - MemorySys__CountHeapFree());
+
+    node = D_80047FD0;
+    total = 0;
+    while (node->unk4 != 0) {
+        total += node->unk4 << 3;
+        node = node->unk0;
+    }
+
+    printf(D_80019398, total);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__DumpHead);
 
@@ -30,13 +58,6 @@ void MemorySys__free(void *address) {
         D_80047FC8 += 1;
     }
 }
-
-typedef struct HeapNode {
-    struct HeapNode* unk0;
-    s32 unk4;
-} HeapNode;
-
-extern HeapNode* D_80047FD0;
 
 s32 MemorySys__CountHeapFree(void) {
     HeapNode* node = D_80047FD0;
@@ -500,6 +521,20 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002663C);
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026940);
+
+typedef struct {
+    char* name;
+    char pad4[8];
+    s32 key;
+    s32 val;
+} NameEntry;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[0x54];
+    NameEntry* unk5C;
+} NameTableObj;
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800269A4);
 
