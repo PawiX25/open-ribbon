@@ -382,10 +382,54 @@ void func_80029FA8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", VideoSys__LoadLogos);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_8002A7E4);
-
 extern s32* D_800480AC;
 extern s32* D_800480B0;
+extern void func_8002A960(s32*, s32);
+
+void func_8002A7E4(void) {
+    s32* v;
+    char* data;
+    char* p;
+
+    v = D_800480AC;
+    if (v != 0) {
+        data = (char*)v[1];
+        if (data != 0) {
+            p = data + *(s32*)(data - 8) * 0x18;
+            if (data != p) {
+                p -= 0x18;
+                for (;;) {
+                    func_8002A960((s32*)p, 2);
+                    if ((char*)v[1] == p) {
+                        break;
+                    }
+                    p -= 0x18;
+                }
+            }
+            delete((char*)v[1] - 8);
+        }
+        free(v);
+    }
+    v = D_800480B0;
+    if (v != 0) {
+        data = (char*)v[1];
+        if (data != 0) {
+            p = data + *(s32*)(data - 8) * 0x18;
+            if (data != p) {
+                p -= 0x18;
+                for (;;) {
+                    func_8002A960((s32*)p, 2);
+                    if ((char*)v[1] == p) {
+                        break;
+                    }
+                    p -= 0x18;
+                }
+            }
+            delete((char*)v[1] - 8);
+        }
+        free(v);
+    }
+}
 
 void func_8002A8E8(s32 arg0, s32 arg1, s32 arg2) {
     func_80029FA8(D_800480AC, arg0, arg1, arg2);
