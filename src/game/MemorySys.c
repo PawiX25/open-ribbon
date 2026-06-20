@@ -960,8 +960,6 @@ void func_80026D78(Obj26D78* self) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E08);
-
 typedef struct {
     char* name;
     char pad4[4];
@@ -975,7 +973,21 @@ typedef struct {
     char pad8[4];
     EntryObj* unkC[10];
     NameEntry2* unk34;
+    s32 unk38;
 } NameTableObj2;
+
+s32 func_80026E08(NameTableObj2* self) {
+    s32 result;
+
+    if (self->unk34[self->unk38].val == -0x61) {
+        return 0;
+    }
+    result = 0;
+    if (self->unk4 == self->unk38 - 1) {
+        result = self->unkC[self->unk4]->unk10 != 0;
+    }
+    return result;
+}
 
 void func_80026E64(NameTableObj2* self, s32 key) {
     s32 idx;
