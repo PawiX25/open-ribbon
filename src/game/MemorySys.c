@@ -5,12 +5,6 @@
 #include <psyq/LIBGTE.H>
 #include <psyq/STDIO.H>
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Init);
-
-void func_80021758(void) {} // MemorySys__Stub [Empty]
-
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Info);
-
 typedef struct HeapNode {
     struct HeapNode* unk0;
     s32 unk4;
@@ -18,8 +12,20 @@ typedef struct HeapNode {
 
 extern HeapNode* D_80047FD0;
 s32 MemorySys__CountHeapFree(void);
-
 extern s32 D_80047FCC;
+
+extern void func_8003428C(void);
+extern char D_80019244[];
+extern char D_8001926C[];
+
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Init);
+
+void func_80021758(void) {} // MemorySys__Stub [Empty]
+
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__Info);
+
+extern char D_80019388[];
+extern char D_80019398[];
 extern char D_80019388[];
 extern char D_80019398[];
 
