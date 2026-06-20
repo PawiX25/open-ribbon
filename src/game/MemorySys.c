@@ -826,7 +826,37 @@ void func_80026ED0(NameTableObj2* self) {
     } while (self->unk34[i].name[0] != 0);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026F5C);
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[4];
+    s32 unkC;
+} F5CEntry;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    void* unk8;
+    F5CEntry* unkC;
+} F5CObj;
+
+extern void* D_80019E08;
+
+F5CObj* func_80026F5C(F5CObj* self, F5CEntry* arg1) {
+    *(void* volatile*)&self->unk8 = &D_80019F40;
+    self->unk0 = 0;
+    self->unk4 = 0;
+    self->unk8 = &D_80019E08;
+    self->unkC = arg1;
+    if (arg1->unk0 != -1) {
+        s32 i = 0;
+        do {
+            self->unkC[i].unkC = func_80025EBC(self->unkC[i].unk4);
+            i++;
+        } while (self->unkC[i].unk0 != -1);
+    }
+    return self;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027000);
 
