@@ -242,6 +242,10 @@ void func_80022C80(s32 arg0) {
     } while (MemorySys__malloc(arg0) == 0);
 }
 
+extern StrBuf D_8003FE5C;
+extern StrBuf D_8003FE50;
+extern StrBuf D_8003FE44;
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
 
 u8* func_80022D78(u8* dest, s32 count, u8* value) {

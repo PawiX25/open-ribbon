@@ -212,6 +212,18 @@ void AudioSys__Unk05(s16 arg0, void* data, s16 flag)
 	AudioSys__Unk02(D_8003FD8C[arg0], data, flag == 1);
 }
 
+typedef struct {
+    char pad0[8];
+    s16 unk8;
+    char padA[2];
+    void (*unkC)(void*, s32);
+} AudioVTable;
+
+typedef struct {
+    char pad0[0x18];
+    AudioVTable* unk18;
+} AudioObj;
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk04);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc06);
