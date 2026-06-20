@@ -77,9 +77,35 @@ s32 MemorySys__CountHeapFree(void) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021AC0);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", cbready);
+extern s32 D_80047FFC;
+extern s32* D_80047FF8;
+extern s32 D_80048000;
+extern s32 D_80048004;
+extern char D_80019400[];
+extern s32 func_800324D8(s32*, s32);
+extern void func_80034DF0(void);
 
-extern void cbready(void);
+void cbready(s32 arg0) {
+    s32 v = arg0 & 0xFF;
+
+    if (v == 1) {
+        s32 count = D_80047FFC;
+        if (count > 0x200) {
+            count = 0x200;
+        }
+        func_800324D8(D_80047FF8, count);
+        D_80047FFC = D_80047FFC - count;
+        D_80047FF8 = D_80047FF8 + count;
+        if (D_80047FFC == 0) {
+            func_80034DF0();
+            D_80048000 = v;
+        }
+    } else {
+        printf(D_80019400);
+        D_80048004 = 0;
+    }
+}
+
 extern void func_80034D6C(void* arg0, s32 arg1);
 extern char D_80019414[];
 extern s32 D_80048004;
