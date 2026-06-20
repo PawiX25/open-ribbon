@@ -628,6 +628,17 @@ Obj5590* func_80025590(Obj5590* self, s32 arg1, s32 arg2, s32 arg3) {
     return self;
 }
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[8];
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+} Obj5604;
+
+void func_80025604(Obj5604* self);
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025604);
 
 void UnkFunc05(UnkStruct00 *arg0, s32 arg1)
@@ -702,6 +713,33 @@ void func_80025D1C(DtorObj* self, s32 flags) {
         free(self);
     }
 }
+
+typedef struct {
+    s16 unk0; s16 unk2; s16 unk4; s16 unk6;
+    s16 unk8; s16 unkA; s16 unkC; s16 unkE;
+} ProjEntry;
+
+typedef struct {
+    char pad0[4];
+    ProjEntry* table;
+} ProjTable;
+
+typedef struct {
+    s32 f0; s32 f4; s32 f8; s32 fC;
+    s32 f10; s32 f14; s32 f18; s32 f1C;
+} ProjGlobal;
+
+typedef struct {
+    char pad0[0x1A];
+    s16 unk1A;
+    char pad1C[0x10];
+    void* unk2C;
+    ProjTable* unk30;
+} Obj5DC0;
+
+extern ProjGlobal D_800481AC;
+extern void func_80036994(ProjGlobal*);
+void func_80025DC0(Obj5DC0* self, s32 flip);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
 
@@ -796,7 +834,30 @@ extern void* D_80019F40;
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026CB8);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026D78);
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[4];
+    Obj5DC0* unkC[1];
+    char pad10[0x24];
+    void* unk34;
+} Obj26D78;
+
+void func_80026D78(Obj26D78* self) {
+    s32 idx = self->unk4;
+    char* e = (char*)((idx << 4) + (s32)self->unk34);
+    s32 c = *(s32*)(e + 0xC);
+    if (c != -0x62) {
+        s32 ge = self->unk0 >= c;
+        if (*(s32*)(e + 0x1C) == self->unk0) {
+            self->unk4 = idx + 1;
+        }
+        if (ge) {
+            func_80025DC0(self->unkC[self->unk4], 0);
+        }
+        self->unk0 = self->unk0 + 1;
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026E08);
 
@@ -881,6 +942,26 @@ F5CObj* func_80026F5C(F5CObj* self, F5CEntry* arg1) {
     }
     return self;
 }
+
+typedef struct {
+    s32 unk0;
+    char pad4[8];
+    s32 unkC;
+} Entry27000;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    char pad8[4];
+    Entry27000* unkC;
+} Obj27000;
+
+typedef struct {
+    s32 f0;
+    s32 f4;
+} Local27000;
+
+extern void AudioSys__UnkFunc01(void*, s32, s32, s32);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027000);
 
