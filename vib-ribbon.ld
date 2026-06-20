@@ -23,7 +23,7 @@ SECTIONS
     {
         FILL(0x00000000);
         vib_ribbon_RODATA_START = .;
-        build/src/game/VideoSys.c.o(.rodata);
+        build/src/game/VideoSys.cpp.o(.rodata);
         build/src/game/CdSys.cpp.o(.rodata);
         build/src/game/AudioSys.cpp.o(.rodata);
         build/src/game/InputSys.cpp.o(.rodata);
@@ -52,7 +52,7 @@ SECTIONS
         vib_ribbon_RODATA_END = .;
         vib_ribbon_RODATA_SIZE = ABSOLUTE(vib_ribbon_RODATA_END - vib_ribbon_RODATA_START);
         vib_ribbon_TEXT_START = .;
-        build/src/game/VideoSys.c.o(.text);
+        build/src/game/VideoSys.cpp.o(.text);
         build/src/game/FontHack.cpp.o(.text);
         build/src/game/CdSys.cpp.o(.text);
         build/src/game/AudioSys.cpp.o(.text);
@@ -151,12 +151,12 @@ SECTIONS
         vib_ribbon_DATA_START = .;
         _27118_data__s = .;
         build/asm/game/data/27118.data.s.o(.data);
-        build/src/game/VideoSys.c.o(.sdata);
-        FontHack_c = .;
+        build/src/game/VideoSys.cpp.o(.sdata);
+        FontHack_cpp = .;
         build/src/game/FontHack.cpp.o(.data);
         VideoSys_data__s = .;
         build/asm/game/data/VideoSys.data.s.o(.data);
-        build/src/game/VideoSys.c.o(.sbss);
+        build/src/game/VideoSys.cpp.o(.sbss);
         build/src/game/CdSys.cpp.o(.sdata);
         build/src/game/AudioSys.cpp.o(.sdata);
         _2F7A0_data__s = .;
@@ -174,7 +174,7 @@ SECTIONS
     {
         FILL(0x00000000);
         vib_ribbon_BSS_START = .;
-        build/src/game/VideoSys.c.o(.bss);
+        build/src/game/VideoSys.cpp.o(.bss);
         build/src/game/CdSys.cpp.o(.bss);
         build/src/game/AudioSys.cpp.o(.bss);
         build/src/game/InputSys.cpp.o(.bss);

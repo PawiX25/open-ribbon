@@ -1,3 +1,7 @@
+extern "C" void deletefn(void*) __asm__("delete");
+#define delete deletefn
+
+extern "C" {
 #include "common.h"
 
 #include "globals.h"
@@ -12,21 +16,17 @@ s32 buffer_i = 0; // 0x80047ED0
 // what is this?!
 // s32 D_80047EE0; // 0x2F6E0 -> 0x2573 => "%s"
 
-// .sbss
-s32 D_80047EE4;
-s32 D_80047EE8;
-s32 D_80047EEC;
-s32 D_80047EF0;
-s32 D_80047EF4;
-s32 D_80047EF8;
-s32 D_80047EFC;
-s32 D_80047F00;
-s32 D_80047F04;
-s32 fntStream;  // 0x80047F08
-s32 D_80047F0C;
-s32 D_80047F10;
-s32 D_80047F14;
-s32 D_80047F18;
+// .sbss -- C++ has no tentative defs so these uninit globals would land in
+// .sdata; emit them as .comm (maspsx -> .sbss) to match the original C layout.
+extern s32 D_80047EE4, D_80047EE8, D_80047EEC, D_80047EF0, D_80047EF4,
+    D_80047EF8, D_80047EFC, D_80047F00, D_80047F04, fntStream, D_80047F0C,
+    D_80047F10, D_80047F14, D_80047F18;
+__asm__(
+    ".comm\tD_80047EE4,4\n.comm\tD_80047EE8,4\n.comm\tD_80047EEC,4\n"
+    ".comm\tD_80047EF0,4\n.comm\tD_80047EF4,4\n.comm\tD_80047EF8,4\n"
+    ".comm\tD_80047EFC,4\n.comm\tD_80047F00,4\n.comm\tD_80047F04,4\n"
+    ".comm\tfntStream,4\n.comm\tD_80047F0C,4\n.comm\tD_80047F10,4\n"
+    ".comm\tD_80047F14,4\n.comm\tD_80047F18,4\n");
 
 void VideoSys__FlipBuffer()
 {
@@ -174,7 +174,7 @@ void VideoSys__alloc(s32 arg0) {
     do {
         var_v0 = D_80048028;
         if (var_v0 == NULL) {
-            printf(&D_8001906C);
+            printf((char*)&D_8001906C);
             exit(1);
         }
         var_v0();
@@ -184,3 +184,5 @@ void VideoSys__alloc(s32 arg0) {
 extern void MemorySys__free(void *);
 
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", func_8001E4E4);
+
+}
