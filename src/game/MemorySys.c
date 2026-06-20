@@ -1143,6 +1143,6 @@ typedef struct {
     Entry104* unkC;
 } Obj104;
 
-extern s32 func_8001F57C(s32*, s32);
+extern s32 func_8001F57C(s32*, s32, s32, s32);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027104);
