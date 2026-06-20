@@ -70,7 +70,33 @@ s32 func_8002B0F8(void) {
     return v1;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002B11C);
+typedef struct {
+    char pad44[0x44];
+    s32 unk44;
+    s32 unk48;
+} ObjB11C;
+
+typedef struct {
+    char pad10[0x10];
+    s32 unk10;
+    ObjB11C** unk14;
+} StructB110;
+
+extern StructB110* D_80048110;
+extern s32 func_80029A38(s32, s32);
+
+void func_8002B11C(s32 arg0) {
+    s32 x = func_80029A38(0x78, arg0);
+    StructB110* p = D_80048110;
+    s32 val = (x * x * 7 + 0xA) << 16;
+    s32 one = 1;
+    s32 i;
+    for (i = 0; i < p->unk10; i++) {
+        ObjB11C* o = p->unk14[i];
+        o->unk48 = val;
+        o->unk44 = one;
+    }
+}
 
 extern s32 D_800480E8;
 extern s32 D_800480EC;
