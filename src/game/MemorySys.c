@@ -345,6 +345,19 @@ s32 func_80023060(SVECTOR* vec1, SVECTOR* vec2)
     return 0;
 }
 
+typedef struct {
+    s32 f0;
+    s32 f4;
+    char pad8[0x48];
+    s16* unk50;
+} F800231C4Struct;
+
+extern int D_8003FE8C;
+s16* func_800231C4(F800231C4Struct*, s16, s16, s16);
+void func_800231A8(s32*, s32, s32, s32);
+void func_8002317C(UnkStruct09*, int);
+void func_80023174(s32*);
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002310C);
 
 void func_80023174(s32* arg0) {
@@ -363,11 +376,6 @@ void func_800231A8(s32 *arg0, s32 a1, s32 a2, s32 a3) {
     q[1] = a2;
     q[2] = a3;
 }
-
-typedef struct {
-    char pad0[0x50];
-    s16 *unk50;
-} F800231C4Struct;
 
 s16 *func_800231C4(F800231C4Struct *arg0, s16 arg1, s16 arg2, s16 arg3) {
     s16 *r = arg0->unk50;
