@@ -568,7 +568,27 @@ void func_80025B3C(UnkStruct09* arg0, int arg1) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025B68);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025D1C);
+typedef struct {
+    char pad0[0x1C];
+    s32* unk1C;
+    PakFile unk20;
+    char pad2C[4];
+    void* unk30;
+} DtorObj;
+
+void func_80025D1C(DtorObj* self, s32 flags) {
+    free(self->unk30);
+    if (self->unk1C != NULL) {
+        if (--(*self->unk1C) == 0) {
+            PakFile pf = self->unk20;
+            FileSys__DeleteFile(pf);
+            free(self->unk1C);
+        }
+    }
+    if (flags & 1) {
+        free(self);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
 
