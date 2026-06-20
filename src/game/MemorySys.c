@@ -544,7 +544,27 @@ void UnkFunc05(UnkStruct00 *arg0, s32 arg1)
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800256CC);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800258B0);
+typedef struct {
+    char pad0[0x20];
+    s32* unk20;
+    PakFile unk24;
+    char pad30[4];
+    void* unk34;
+} DtorObj2;
+
+void func_800258B0(DtorObj2* self, s32 flags) {
+    free(self->unk34);
+    if (self->unk20 != NULL) {
+        if (--(*self->unk20) == 0) {
+            PakFile pf = self->unk24;
+            FileSys__DeleteFile(pf);
+            free(self->unk20);
+        }
+    }
+    if (flags & 1) {
+        free(self);
+    }
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025954);
 
