@@ -105,7 +105,33 @@ s32 func_8001F74C(s32* arg0, u8 arg1, u8 arg2, s32* arg3, s32* arg4) {
     return result;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__new);
+typedef struct {
+    s32* unk0;
+    char pad4[8];
+    s32 unkC;
+    void* unk10;
+    s32 unk14;
+    void* unk18;
+    char pad1C[4];
+    s32 unk20;
+} AudioNewObj;
+
+extern void AudioSys__ParseVH(AudioNewObj*, s32, s32);
+
+s32* AudioSys__new(s32* arg0, s32 arg1) {
+    AudioNewObj* self = (AudioNewObj*)arg0;
+
+    *(void* volatile*)&self->unk18 = &D_8001918C;
+    self->unk10 = 0;
+    self->unk18 = &AudioSys__UnknownVar;
+    AudioSys__ParseVH(self, arg1, -1);
+    self->unk14 = -1;
+    {
+        s32 t = self->unkC + 0x200;
+        self->unk20 = self->unk0[3] - (t - arg1);
+    }
+    return arg0;
+}
 
 extern s32 func_80032CA4(s32);
 extern void func_80032944(s32);
