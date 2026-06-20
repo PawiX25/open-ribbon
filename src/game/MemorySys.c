@@ -246,7 +246,27 @@ extern StrBuf D_8003FE5C;
 extern StrBuf D_8003FE50;
 extern StrBuf D_8003FE44;
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80022CDC);
+void func_80022CDC(void) {
+    s32 d;
+    d = (s32)D_8003FE5C.unk8 - (s32)D_8003FE5C.unk0;
+    if (D_8003FE5C.unk0 != 0) {
+        if (d != 0) {
+            MemorySys__free(D_8003FE5C.unk0);
+        }
+    }
+    d = (s32)D_8003FE50.unk8 - (s32)D_8003FE50.unk0;
+    if (D_8003FE50.unk0 != 0) {
+        if (d != 0) {
+            MemorySys__free(D_8003FE50.unk0);
+        }
+    }
+    d = (s32)D_8003FE44.unk8 - (s32)D_8003FE44.unk0;
+    if (D_8003FE44.unk0 != 0) {
+        if (d != 0) {
+            MemorySys__free(D_8003FE44.unk0);
+        }
+    }
+}
 
 u8* func_80022D78(u8* dest, s32 count, u8* value) {
     // memset-like function
