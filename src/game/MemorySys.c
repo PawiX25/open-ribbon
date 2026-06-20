@@ -530,9 +530,15 @@ typedef struct {
 } NameEntry;
 
 typedef struct {
+    char pad0[0x10];
+    s32 unk10;
+} EntryObj;
+
+typedef struct {
     s32 unk0;
     s32 unk4;
-    char pad8[0x54];
+    char pad8[4];
+    EntryObj* unkC[20];
     NameEntry* unk5C;
 } NameTableObj;
 
@@ -554,7 +560,22 @@ void func_800269A4(NameTableObj* self, s32 key) {
     } while (self->unk5C[idx].name[0] != 0);
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026A10);
+void func_80026A10(NameTableObj* self) {
+    s32 i;
+
+    self->unk4 = 0;
+    self->unk0 = 0;
+    if (self->unk5C[0].name[0] == 0) {
+        return;
+    }
+    i = 0;
+    do {
+        EntryObj* o = self->unkC[i];
+        o->unk10 = 0;
+        UnkFunc01(o, 0x8000U);
+        i++;
+    } while (self->unk5C[i].name[0] != 0);
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026AA0);
 
