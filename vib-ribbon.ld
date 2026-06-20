@@ -59,7 +59,7 @@ SECTIONS
         build/src/game/InputSys.c.o(.text);
         build/src/game/MemorySys.c.o(.text);
         build/src/game/E9A0.cpp.o(.text);
-        build/src/game/F2DC.c.o(.text);
+        build/src/game/F2DC.cpp.o(.text);
         build/src/game/12250.cpp.o(.text);
         build/asm/game/entrypoint.s.o(.text);
         build/asm/game/psyq.s.o(.text);
@@ -202,7 +202,7 @@ SECTIONS
         build/src/game/FontHack.cpp.o(.bss);
         build/src/game/MemorySys.c.o(.bss);
         build/src/game/E9A0.cpp.o(.bss);
-        build/src/game/F2DC.c.o(.bss);
+        build/src/game/F2DC.cpp.o(.bss);
         build/src/game/12250.cpp.o(.bss);
         build/asm/game/entrypoint.s.o(.bss);
         build/asm/game/psyq.s.o(.bss);

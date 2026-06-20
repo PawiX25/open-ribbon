@@ -1,3 +1,7 @@
+extern "C" void deletefn(void*) __asm__("delete");
+#define delete deletefn
+
+extern "C" {
 #include "common.h"
 
 #include "globals.h"
@@ -383,7 +387,7 @@ s32 func_80029A80(s32 arg0) {
     do {
         var_v0 = D_80048028;
         if (var_v0 == NULL) {
-            printf(&D_80019FBC);
+            printf((char*)&D_80019FBC);
             exit(1);
         }
         var_v0();
@@ -482,7 +486,7 @@ INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029BE0);
 extern s32 D_80047EC8;
 
 s32 func_80029D88(s32 arg0) {
-    s64 hilo = arg0 * (u64)D_80047EC8;
+    s64 hilo = (s64)arg0 * (s64)D_80047EC8;
     s32 v0 = hilo >> 16;
     return v0 >> 16;
 }
@@ -612,4 +616,6 @@ void func_8002AA14(void) {
     p = D_800480B4;
     func_80025DC0(p + 0x3C, 0);
     func_80025954(p + 0x4);
+}
+
 }
