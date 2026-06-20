@@ -84,7 +84,26 @@ void AudioSys__UnkFunc00(AudioSysUnkStruct02 *arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F74C);
+s32 func_8001F74C(s32* arg0, u8 arg1, u8 arg2, s32* arg3, s32* arg4) {
+    s32 v6;
+    s32 v8;
+    s32 result;
+    u8* v7;
+
+    if (arg1 >= *(u16*)(arg0[0] + 18)) {
+        return 0;
+    }
+    v6 = 16 * arg1;
+    v7 = (u8*)(arg0[1] + v6);
+    v8 = v6 + arg2;
+    if (arg2 >= *v7) {
+        return 0;
+    }
+    result = arg0[2] + 32 * v8;
+    *arg3 = arg0[5] + *(s32*)(4 * *(s16*)(result + 22) + arg0[4]);
+    *arg4 = (*(u8*)(arg0[0] + 24) * v7[1]) >> 7;
+    return result;
+}
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__new);
 
