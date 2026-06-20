@@ -33,7 +33,34 @@ void InputSys__Quit(void) {
     }
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Unk03);
+typedef struct {
+    s32 sub[4];
+    u8* unk10;
+} InputPad;
+
+extern void func_800201C4(s32, u8*);
+
+void InputSys__Unk03(void) {
+    int cond;
+    UnkStruct01** pp;
+    s32 i;
+    for (i = 0; i < 2; i++) {
+        InputPad* pad = ((InputPad**)(pp = &UnkVar03))[i];
+        u8* m = pad->unk10;
+        if ((m[1] & 0xF0) == 0x80) {
+            s32 j;
+            for (j = 0; j < 4; j++) {
+                m = pad->unk10;
+                cond = m[j * 8 + 2] == 0;
+                if (cond) {
+                    func_800201C4(pad->sub[j], &m[j * 8 + 2]);
+                }
+            }
+        } else {
+            func_800201C4(pad->sub[0], m);
+        }
+    }
+}
 
 extern char D_800191E8[];
 extern char D_80019210[];
