@@ -185,4 +185,38 @@ typedef struct {
     s32 f4;
 } Local79E4;
 
-INCLUDE_ASM("asm/game/nonmatchings/E9A0", func_800279E4);
+s32 func_800279E4(Container_E9A0* self) {
+    s32 result;
+    s32 i;
+
+    if (self->unk2C == 0) {
+        if (func_8002990C() != 0) {
+            Local79E4 local;
+            Local79E4* p = &local;
+            self->unk2C = 1;
+            p->f0 = 0;
+            p->f4 = 0;
+            AudioSys__UnkFunc01(p, 1, 0x40, -1);
+        }
+        if (self->unk2C == 0) {
+            result = 1;
+            goto loop;
+        }
+    }
+    if (AudioSys__UnkFunc09(1) != 0) {
+        result = 1;
+        goto loop;
+    }
+    return 1;
+loop:
+    for (i = 0; i < self->count; i++) {
+        s32 r = 0;
+        if (result != 0) {
+            Item_E9A0* item = self->items[i];
+            VT_E9A0* vt = item->vt;
+            r = vt->func1C((s32)item + (s32)vt->offset18) != 0;
+        }
+        result = r;
+    }
+    return result;
+}
