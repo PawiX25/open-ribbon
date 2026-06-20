@@ -51,7 +51,49 @@ INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_80019000);
 
 INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_80019028);
 
-INCLUDE_ASM("asm/game/nonmatchings/VideoSys", VideoSys__Quit);
+typedef struct {
+    s32* u0;
+    s32* u4;
+} VideoSysOT;
+
+extern VideoSysOT D_8003F964[];
+
+typedef struct {
+    s32 unk0;
+    void* unk4;
+    s32 unk8;
+} OTBuf;
+
+extern void func_8002C150(s32);
+extern char D_8001904C[];
+
+void VideoSys__Quit(void) {
+    OTBuf* n;
+    OTBuf* report;
+    s32 i;
+
+    func_8002C150(0);
+
+    report = (OTBuf*)D_8003F964[0].u0;
+    printf(D_8001904C, report->unk8, report->unk0);
+
+    for (i = 0; i < 2; i++) {
+        n = (OTBuf*)D_8003F964[i].u4;
+        if (n != 0) {
+            if (n->unk4 != 0) {
+                delete(n->unk4);
+            }
+            free(n);
+        }
+        n = (OTBuf*)D_8003F964[i].u0;
+        if (n != 0) {
+            free(n->unk4);
+            free(n);
+        }
+    }
+}
+
+INCLUDE_RODATA("asm/game/nonmatchings/VideoSys", D_8001904C);
 
 void VideoSys__Reset()
 {
@@ -73,13 +115,6 @@ void VideoSys__DisplayFnt()
 {
 	FntFlush(fntStream);
 }
-
-typedef struct {
-    s32 *u0;
-    s32 *u4;
-} VideoSysOT;
-
-extern VideoSysOT D_8003F964[];
 
 s32* VideoSys__GetOT(void) {
     return D_8003F964[buffer_i].u4;
