@@ -727,7 +727,7 @@ typedef struct {
     s32 unk18;
 } Obj5604;
 
-void func_80025604(Obj5604* self);
+s32 func_80025604(Obj5604* self);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025604);
 
@@ -844,8 +844,6 @@ INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_800262B4);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002663C);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
-
 typedef struct {
     char* name;
     char pad4[8];
@@ -864,9 +862,15 @@ typedef struct {
     char pad8[4];
     EntryObj* unkC[20];
     NameEntry* unk5C;
-    char pad60[0x10];
+    char pad60[8];
+    s32 unk68;
+    s32 unk6C;
     s32 unk70;
 } NameTableObj;
+
+extern void func_800262B4(NameTableObj*, s32, s32);
+
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026834);
 
 s32 func_80026940(NameTableObj* self) {
     s32 result;
@@ -932,6 +936,7 @@ typedef struct {
 
 extern void* D_80019E38;
 extern void* D_80019F40;
+extern s32 func_80030620(void*);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80026CB8);
 
@@ -1138,6 +1143,6 @@ typedef struct {
     Entry104* unkC;
 } Obj104;
 
-void func_80027104(Obj104* self, s32 key);
+extern s32 func_8001F57C(s32*, s32);
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027104);

@@ -120,6 +120,8 @@ extern char D_8001A164[];
 
 INCLUDE_ASM("asm/game/nonmatchings/12250", func_8002AEC0);
 
+extern s32 func_80030620(void*);
+
 INCLUDE_ASM("asm/game/nonmatchings/12250", FontHack__UnkFunc00);
 
 extern void func_8002F3CC(s32 arg0, s32 arg1);

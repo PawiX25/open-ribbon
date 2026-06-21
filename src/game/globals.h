@@ -63,7 +63,7 @@ extern void VideoSys__RemoveVSyncCB(s32 callback);
 
 extern void MemorySys__free(void *addr);
 
-extern void FontHack__UnkFunc00(FAInstance*, s32); // TO BE FIXED
+extern s32 FontHack__UnkFunc00(FAInstance*, s32);
 
 typedef struct PakFile PakFile;
 struct PakFile {
