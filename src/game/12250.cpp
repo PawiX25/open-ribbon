@@ -146,7 +146,24 @@ ClosureAEC0* func_8002AEC0(ClosureAEC0* arg0, ObjAEC0* arg1) {
 
 extern s32 func_80030620(void*);
 
-INCLUDE_ASM("asm/game/nonmatchings/12250", FontHack__UnkFunc00);
+/* Returns void: the sole caller (FontHack.cpp) ignores the result, and the
+ * target computes `arg1 & 1` only for the branch (left in v0, clobbered by
+ * free) -- i.e. no preserved return value. Matches once declared void. */
+void FontHack__UnkFunc00(FAInstance* arg0, s32 arg1) {
+    ObjAEC0* obj;
+    s32 enc;
+
+    obj = (ObjAEC0*)arg0->unk0;
+    enc = (s32)arg0->unk4;
+    if ((((s32)obj + 0x218) & 0xF0000000) != (enc & 0xF0000000)) {
+        printf(D_8001A13C, D_8001A164, 0x3C);
+        exit(1);
+    }
+    obj->unk218 = (obj->unk218 & 0xFC000000) | ((u32)(enc & 0xFFFFFFF) >> 2);
+    if (arg1 & 1) {
+        free(arg0);
+    }
+}
 
 extern void func_8002F3CC(s32 arg0, s32 arg1);
 
