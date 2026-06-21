@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 extern void *bsearch(unsigned char *, unsigned char *, size_t, size_t, int (*)());
-extern void exit();
+extern void exit() __attribute__((noreturn));
 
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)
 }
