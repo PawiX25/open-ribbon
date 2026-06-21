@@ -31,7 +31,7 @@ s32 D_80047F6C;
 s32 D_80047F70;
 s32 D_80047F74;
 
-void func_80031E48(UnkStruct03*);
+void func_80031E48(UnkStruct04*);
 void func_80031374(void);
 void func_80032158(UnkStruct04*);
 u32  func_80031C40(void);
@@ -114,6 +114,9 @@ void func_8001E9FC(u8 arg0) {
     }
 }
 
+extern u8 D_80048130;
+extern s32 D_80048134;
+
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EA5C);
 
 void UnkFunc03()
@@ -149,13 +152,9 @@ INCLUDE_RODATA("asm/game/nonmatchings/CdSys", D_8001907C);
 
 INCLUDE_RODATA("asm/game/nonmatchings/CdSys", D_800190A4);
 
-#if 0
-// addiu in wrong place
-INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);
+extern char D_800190C8[]; // "setting null home disk\n"
 
-#else
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EC74);
-#endif
 
 extern void func_80031B54(void);
 extern s32 func_800314B8(void);
@@ -164,6 +163,17 @@ s32 func_8001ED44(void) {
     func_80031B54();
     return func_800314B8();
 }
+
+extern s32 func_80031BE4(void);
+extern s32 func_80031C60(void);
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+} CdSysMem;
 
 INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001ED6C);
 
