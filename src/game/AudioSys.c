@@ -47,7 +47,23 @@ INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", D_80019114);
 
 INCLUDE_RODATA("asm/game/nonmatchings/AudioSys", D_8001913C);
 
+extern char D_80019160[];
+extern s32 func_800303BC(s32);
+extern void FileSys__LoadFile(PakFile*, char*, s32);
+extern s32 AudioSys__Unk00(s32, s16);
+extern void AudioSys__Unk05(s16, void*, s16);
+extern s16 UnkVar04;
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F1D8);
+
+typedef struct {
+    s32* unk0;
+    PakFile pak;
+} SharedPak;
+
+extern s32 D_8003FC9C[];
+extern void FileSys__DeleteFile(PakFile);
+extern void AudioSys__Unk04(s16);
 
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_8001F42C);
 
@@ -68,7 +84,41 @@ int AudioSys__UnkFunc09()
     return AudioSys__UnkFunc08();
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__ParseVH);
+typedef struct {
+    void* unk0;
+    s32* unk4;
+    s16* unk8;
+    s32* unkC;
+    s32* unk10;
+    s32 unk14;
+} ParseVHObj;
+
+extern s32* func_80030C74(s32);
+
+void AudioSys__ParseVH(ParseVHObj* self, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 accum;
+    s32 base = arg1 + 0x820;
+
+    self->unk0 = (void*)arg1;
+    self->unk14 = arg2;
+    self->unk4 = (s32*)(arg1 + 0x20);
+    self->unk8 = (s16*)base;
+    self->unkC = (s32*)(base + (*(u16*)(arg1 + 0x12) << 9));
+    free(self->unk10);
+    self->unk10 = func_80030C74((*(u16*)((s32)self->unk0 + 0x16) + 1) << 2);
+
+    i = 1;
+    accum = 0;
+    if (*(u16*)((s32)self->unk0 + 0x16) == 0) {
+        return;
+    }
+    do {
+        self->unk10[i] = accum;
+        accum += ((u16*)self->unkC)[i] << 3;
+        i++;
+    } while (i <= *(u16*)((s32)self->unk0 + 0x16));
+}
 
 typedef struct {
     char pad0[0x10];
@@ -122,8 +172,6 @@ typedef struct {
     char pad1C[4];
     s32 unk20;
 } AudioNewObj;
-
-extern void AudioSys__ParseVH(AudioNewObj*, s32, s32);
 
 s32* AudioSys__new(s32* arg0, s32 arg1) {
     AudioNewObj* self = (AudioNewObj*)arg0;
@@ -215,7 +263,6 @@ void UnkFunc00(void) {
     }
 }
 
-extern s32 *func_800303BC(s32);
 extern s32 *AudioSys__new(s32 *, s32);
 
 s32 AudioSys__Unk00(s32 arg0, s16 arg1) {
@@ -233,7 +280,7 @@ s32 AudioSys__Unk00(s32 arg0, s16 arg1) {
     }
     if (i == 10) return -1;
     slot = &D_8003FD8C[i];
-    new_obj = func_800303BC(0x24);
+    new_obj = (s32 *)func_800303BC(0x24);
     *slot = (s32)AudioSys__new(new_obj, arg0);
     return (s16)i;
 }
@@ -289,6 +336,9 @@ void AudioSys__UnkFunc07() // Clears the UnkVar05 values
     }
 }
 
+extern s32 func_800326F4(s32);
+extern void func_80032AE4(s32);
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__CallBack);
 
 extern s32 D_80047F84;
@@ -316,7 +366,7 @@ void UnkCtor02(void) {
     D_8003FC9C[1] = 0;
 }
 
-extern void *func_800202C0(void *, s32);
+extern void func_800202C0();
 
 void *func_800200AC(void *arg0) {
     *(u8*)arg0 = 1;
@@ -368,9 +418,28 @@ void UnkFunc04(UnkStruct10* arg0, s32 arg1) {
     }
 }
 
+extern s32 func_80033FD0(s32);
+extern void func_80034170(s32, void*);
+
+typedef struct {
+    s8 b0;
+    s8 b1;
+    u16 h2;
+} U201C4Hdr;
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800201C4);
 
+extern u32 func_8002038C(s32, u32);
+
+#define B(o) (*(s8*)((s8*)arg0 + (o)))
+#define H(o) (*(u16*)((s8*)arg0 + (o)))
+#define W(o) (*(u32*)((s8*)arg0 + (o)))
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", func_800202C0);
+
+#undef B
+#undef H
+#undef W
 
 u32 func_8002038C(s32 arg0, u32 arg1) {
     s32 a, b;
