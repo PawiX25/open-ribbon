@@ -118,7 +118,49 @@ void func_8001E9FC(u8 arg0) {
 extern u8 D_80048130;
 extern s32 D_80048134;
 
-INCLUDE_ASM("asm/game/nonmatchings/CdSys", func_8001EA5C);
+void func_8001EA5C(u8 arg0, u8 *arg1) {
+    u8 sp10[3];
+    s32 result;
+    s32 idx;
+    s32 n;
+    s32 q;
+
+    if (arg0 == 2) {
+        sp10[2] = 0;
+        sp10[0] = arg1[1];
+        sp10[1] = arg1[2];
+        result = func_8003261C(&sp10);
+
+        idx = D_80047F70;
+        if (UnkVar01 >= idx) {
+            UnkStruct08 e;
+            UnkStruct08* arr = D_8003F96C;
+            UnkStruct08* pe = &arr[idx];
+            e.unk0 = result;
+            e.unk4 = (s32)&D_8003F96C[idx] + 8;
+            *pe = e;
+
+            D_80047F70 = idx + 1;
+            if (UnkVar01 >= idx + 1) {
+                n = idx + 1;
+            } else {
+                n = 0;
+            }
+
+            q = n / 10;
+            D_80048130 = (q * 16) + (n - (q * 10));
+            func_800314D8(0x14, &D_80048130, func_8001EA5C, 0);
+        } else {
+            UnkStruct08 e;
+            e.unk0 = result;
+            e.unk4 = 0;
+            D_8003F96C[idx] = e;
+            UnkVar02 = 1;
+            func_80032518(D_8003F96C[1].unk0, &D_80048134);
+            func_800314D8(0x1B, &D_80048134, func_8001E9FC, 0);
+        }
+    }
+}
 
 void UnkFunc03()
 {
@@ -136,7 +178,7 @@ s32 func_8001EBD4(void) {
 }
 
 extern u8 D_80048138;
-extern void func_8001EA5C();
+extern void func_8001EA5C(u8, u8*);
 
 void func_8001EC08(void) {
     UnkFunc03();
