@@ -862,7 +862,23 @@ extern ProjGlobal D_800481AC;
 extern void func_80036994(ProjGlobal*);
 void func_80025DC0(Obj5DC0* self, s32 flip);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025DC0);
+void func_80025DC0(Obj5DC0* self, s32 flip) {
+    ProjEntry* e = &self->unk30->table[self->unk1A];
+    ProjEntry* e2;
+
+    D_800481AC.f0 = flip ? -(&self->unk30->table[self->unk1A])->unk0 : e->unk0;
+    e2 = e;
+    D_800481AC.f4 = e2->unk2;
+    D_800481AC.f8 = e2->unk4;
+    D_800481AC.fC = flip ? -e2->unk6 : e->unk6;
+    D_800481AC.f10 = e->unk8;
+    D_800481AC.f14 = e2->unkA;
+    D_800481AC.f18 = e->unkC;
+    D_800481AC.f1C = ((void*)&D_8003FE8C == self->unk2C) ? 0 : (s32)self->unk2C;
+    VideoSys__SetProjection(e->unkE * 360);
+    func_80036994(&D_800481AC);
+    func_80025604((Obj5604*)self);
+}
 
 extern s32 D_80047EC8;
 extern s32 D_80047EFC;
