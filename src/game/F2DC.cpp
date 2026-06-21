@@ -472,6 +472,7 @@ typedef struct {
     s8 c2;
     s16 e0;
     s16 e1;
+    char pad[16];
 } F29BE0_Prim;
 
 extern u16 D_80047EF4;
@@ -481,7 +482,50 @@ extern s32 func_8002AA0C(s32 arg0);
 extern void func_800304A0(F29BE0_Prim* prim, s32* ot, s32 flag);
 extern s32* VideoSys__GetOT(void);
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029BE0);
+void func_80029BE0(UnkStruct08* self, s32 arg1, s32 arg2, s32 arg3) {
+    F29BE0_Prim prim;
+    s32 w;
+    s32 sc;
+    s32 f = self->unk4 & 7;
+    u32 ef;
+    s32 shifted = f << 24;
+    s32 scale = 4 / (1 << f);
+    F29BE0_Tile* p;
+    s32* ot;
+
+    if (func_8002A9F8(self) != 0) {
+        s32 q = func_8002AA0C((s32)self);
+        p = (F29BE0_Tile*)(q + *(s32*)q);
+    } else {
+        p = (F29BE0_Tile*)func_8002AA0C((s32)self);
+    }
+
+    prim.tag = shifted | 0x40;
+    prim.x = D_80047EF4 + arg1;
+    prim.y = D_80047EF8 + arg2;
+    w = p->unk8 * scale;
+    prim.w = w;
+    sc = scale;
+    ef = (u32)self->unk4;
+    ef = ef >> 3;
+    prim.h = p->unkA;
+    { s32 _u4 = p->unk4; s32 _u6 = p->unk6; prim.uv = (_u4 >> 6) + ((_u6 >> 8) << 4); }
+    prim.c1 = ((u16)p->unk4 & 0x3F) * sc;
+    prim.c2 = *(u8*)((s32)p + 6);
+    if ((ef & 1) != 0) {
+        F29BE0_Tile* q;
+        if (func_8002A9F8(self) != 0) {
+            q = (F29BE0_Tile*)func_8002AA0C((s32)self);
+        } else {
+            q = (F29BE0_Tile*)0;
+        }
+        prim.e0 = *(u16*)((s32)q + 4);
+        prim.e1 = *(u16*)((s32)q + 6);
+    }
+
+    ot = VideoSys__GetOT();
+    func_800304A0(&prim, ot, arg3 & 0xFFFF);
+}
 
 extern s32 D_80047EC8;
 
