@@ -181,4 +181,6 @@ void VideoSys__alloc(s32 arg0) {
     } while (MemorySys__malloc(arg0) == 0);
 }
 
+extern void MemorySys__free(void *);
+
 INCLUDE_ASM("asm/game/nonmatchings/VideoSys", func_8001E4E4);
