@@ -308,7 +308,19 @@ typedef struct {
     AudioVTable* unk18;
 } AudioObj;
 
-INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__Unk04);
+void AudioSys__Unk04(s16 arg0) {
+    s32 i = arg0;
+
+    if (i >= 0xA) {
+        printf(D_80019114, D_8001913C, 0x17A);
+        exit(1);
+    }
+    if ((AudioObj*)D_8003FD8C[i] != NULL) {
+        AudioVTable* vt = ((AudioObj*)D_8003FD8C[i])->unk18;
+        vt->unkC((char*)((AudioObj*)D_8003FD8C[i]) + vt->unk8, 3);
+    }
+    D_8003FD8C[i] = 0;
+}
 
 extern s32 func_8001F74C(s32* arg0, u8 arg1, u8 arg2, s32* arg3, s32* arg4);
 extern s16 func_80033204(s16, s16, u8, u8);
