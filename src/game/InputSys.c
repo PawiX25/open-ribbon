@@ -4,6 +4,19 @@
 
 #include <psyq/STDIO.H>
 
+extern void func_80033930(char*, char*);
+extern void* func_800303BC(s32);
+extern void func_800200E4(void*, s32);
+extern void func_80033F90(void);
+extern void func_800201C4(s32, u8*);
+extern s32 VSync(s32);
+extern char D_8003FE00[];
+
+typedef struct {
+    s32 sub[4];
+    u8* unk10;
+} InitPad;
+
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", InputSys__Init);
 
 extern void PadStartCom(void);
@@ -98,6 +111,15 @@ void* func_800207C4(void) {
     return &D_8003FDCC;
 }
 
+typedef struct {
+    char* unk0;
+    char* unk4;
+    char* unk8;
+} StrSlot3;
+
+extern StrInputSys func_800211D4(void*, StrSlot3*);
+extern s32 func_800341FC(char*, char*, s32);
+
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_800207D0);
 
 void func_800208BC(void) {}
@@ -125,11 +147,19 @@ void InputSys__alloc(s32 arg0) {
     } while (MemorySys__malloc(arg0) == 0);
 }
 
+typedef struct {
+    char* start;
+    char* end;
+    char* unk8;
+} Str3;
+
+extern void* func_80030BF4(void*, const void*, s32);
+
 INCLUDE_ASM("asm/game/nonmatchings/InputSys", func_80020920);
 
 extern void *func_8003424C(void *, const void *, int);
 extern void *func_80030BF4(void *, const void *, int);
-extern void func_80020920(StrInputSys *, char *, char *, s32);
+extern StrInputSys* func_80020920(StrInputSys *, char *, char *, s8);
 
 StrInputSys* func_80020AE4(StrInputSys* self, char* new_start, char* new_end) {
     char *curEnd;
