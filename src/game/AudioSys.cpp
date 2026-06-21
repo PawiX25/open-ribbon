@@ -315,6 +315,29 @@ extern s16 func_80033204(s16, s16, u8, u8);
 extern void func_80033330(void*);
 extern s32 UnkVar05[24];
 
+/* psyq SpuVoiceAttr layout (LIBSPU.H), defined locally to avoid pulling in
+ * LIBSPU.H which conflicts with this file's local SpuFree decl. */
+typedef struct { s16 left, right; } LSpuVolume;
+typedef struct {
+    u32 voice;          /* 0x00 */
+    u32 mask;           /* 0x04 */
+    LSpuVolume volume;  /* 0x08 */
+    LSpuVolume volmode; /* 0x0C */
+    LSpuVolume volumex; /* 0x10 */
+    u16 pitch;          /* 0x14 */
+    u16 note;           /* 0x16 */
+    u16 sample_note;    /* 0x18 */
+    s16 envx;           /* 0x1A */
+    u32 addr;           /* 0x1C */
+    u32 loop_addr;      /* 0x20 */
+    s32 a_mode;         /* 0x24 */
+    s32 s_mode;         /* 0x28 */
+    s32 r_mode;         /* 0x2C */
+    u16 ar, dr, sr, rr, sl; /* 0x30..0x38 */
+    u16 adsr1;          /* 0x3A */
+    u16 adsr2;          /* 0x3C */
+} LSpuVoiceAttr;
+
 INCLUDE_ASM("asm/game/nonmatchings/AudioSys", AudioSys__UnkFunc06);
 
 s32 func_8001FE34(s32 arg0) {
