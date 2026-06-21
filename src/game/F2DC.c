@@ -250,7 +250,7 @@ typedef struct {
 
 void func_800290DC(GridCursor* c, s32 dx, s32 dy, s32 wrapY, s32 wrapX);
 
-void func_80028F98(s32 startIdx, GridCursor* cur, s32 dx, s32 dy) {
+void func_80028F98(s32 startIdx, GridCursor* cur, s32 dx, s32 dy, s32 wrapX, s32 wrapY) {
     s32 w;
     do {
         func_800290DC(cur, dx, dy, 1, 1);
@@ -309,6 +309,7 @@ void func_800290DC(GridCursor* c, s32 dx, s32 dy, s32 wrapY, s32 wrapX) {
 
 extern s32 D_80048098;
 extern s32 D_8004809C;
+extern s32 D_800480A0;
 extern s32 D_800480A8;
 
 void func_800291FC(s32 arg0, s32 arg1) {
@@ -317,7 +318,29 @@ void func_800291FC(s32 arg0, s32 arg1) {
     D_800480A8 = 0;
 }
 
+typedef struct {
+    s32 base;
+    s32 active;
+    s32 limit;
+} F29210_State;
+
+extern s32 D_80040834[];
+extern s32 D_80042968;
+extern s32 D_80047EC4;
+
+#define F29210_ST (*(F29210_State*)D_80040834)
+
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029210);
+
+typedef struct { char* unk0; char* unk4; char* unk8; } StrSlot3;
+
+extern s32 func_80035C6C(void*);
+extern void *func_80030BF4(void *, const void *, int);
+extern s32 func_800207D0(StrSlot3*);
+extern s32 func_8002B0D4(void);
+extern s32 func_8002B0F8(void);
+extern s32 func_80029A80(s32);
+extern void func_80029ADC(void*);
 
 extern void func_800291FC(s32 arg0, s32 arg1);
 
@@ -340,7 +363,7 @@ extern int (*D_80048028)();
 extern char D_80019FBC[]; // "out of memory\n"
 extern s32 MemorySys__malloc(s32);
 
-void func_80029A80(s32 arg0) {
+s32 func_80029A80(s32 arg0) {
     int (*var_v0)();
 
     do {
@@ -353,7 +376,7 @@ void func_80029A80(s32 arg0) {
     } while (MemorySys__malloc(arg0) == 0);
 }
 
-void func_80029ADC(void) {}
+void func_80029ADC(void* arg) {}
 
 extern s32 D_80040834[];
 extern s32 D_80042968;
@@ -366,7 +389,79 @@ void func_80029AE4(void) {
     D_80040834[0] = D_80042968;
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029B0C);
+typedef struct {
+    s16 a;
+    s16 b;
+    s16 c;
+    s16 d;
+} F29B0C_Quad;
+
+typedef struct {
+    s32 stride;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    char unkC[0];
+} F29B0C_Item;
+
+typedef struct {
+    s32 unk0;
+    u32 unk4;
+} F29B0C_Self;
+
+extern void* func_80030644(void* dst, s32 val, s32 count);
+extern void func_8002D268(F29B0C_Quad* dst, void* src);
+
+void func_80029B0C(F29B0C_Self* self, s32 arg1) {
+    F29B0C_Item* item = (F29B0C_Item*)((char*)self + 8);
+    u32 b = (self->unk4 >> 3) & 1;
+    s32 i = b < 1;
+    F29B0C_Quad q;
+    F29B0C_Quad tmp;
+
+    while (i < 2) {
+        if (arg1 != 0 || i == 1) {
+            func_80030644(&tmp, 0, 8);
+            tmp.a = item->unk4;
+            tmp.b = item->unk6;
+            tmp.c = item->unk8;
+            tmp.d = item->unkA;
+            q = tmp;
+            func_8002D268(&q, item->unkC);
+        }
+        item = (F29B0C_Item*)((char*)item + item->stride);
+        i++;
+    }
+}
+
+typedef struct {
+    s32 unk0;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+    u16 unkA;
+} F29BE0_Tile;
+
+typedef struct {
+    u32 tag;
+    s16 x;
+    s16 y;
+    s16 w;
+    s16 h;
+    s16 uv;
+    s8 c1;
+    s8 c2;
+    s16 e0;
+    s16 e1;
+} F29BE0_Prim;
+
+extern u16 D_80047EF4;
+extern u16 D_80047EF8;
+extern s32 func_8002A9F8(UnkStruct08* arg0);
+extern s32 func_8002AA0C(s32 arg0);
+extern void func_800304A0(F29BE0_Prim* prim, s32* ot, s32 flag);
+extern s32* VideoSys__GetOT(void);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029BE0);
 
@@ -377,6 +472,10 @@ s32 func_80029D88(s32 arg0) {
     s32 v0 = hilo >> 16;
     return v0 >> 16;
 }
+
+extern s32 D_80047EE4;
+extern s32 D_80047EE8;
+extern void func_8002CB48(void*, s32*, s32);
 
 INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80029DB8);
 
