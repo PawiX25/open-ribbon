@@ -58,7 +58,39 @@ void MemorySys__Init01(void) {
     MemorySys__Init();
 }
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", MemorySys__malloc);
+extern void* func_800342EC(s32);
+extern s32 D_80047FC4;
+extern char D_800192C4[];
+extern char D_800192E0[];
+extern char D_8001926C[];
+
+void* MemorySys__malloc(s32 size) {
+    void* ret;
+
+    if (size == 0) {
+        ret = NULL;
+    } else {
+        ret = func_800342EC(size);
+        if (ret == NULL) {
+            HeapNode* node;
+            s32 total;
+
+            printf(D_800192C4);
+            node = D_80047FD0;
+            total = 0;
+            while (node->unk4 != 0) {
+                total += node->unk4 << 3;
+                node = node->unk0;
+            }
+            printf(D_800192E0, total, size);
+            MemorySys__DumpHead();
+            printf(D_80019244, D_8001926C, 0x140);
+            exit(1);
+        }
+        D_80047FC4 = D_80047FC4 + 1;
+    }
+    return ret;
+}
 
 extern void func_8003439C(void);
 extern s32 D_80047FC8;
@@ -79,6 +111,17 @@ s32 MemorySys__CountHeapFree(void) {
     }
     return total;
 }
+
+typedef struct {
+    char* unk0;
+    char* unk4;
+    char* unk8;
+} StrBuf;
+
+extern void func_80022660(StrBuf*, char*, char*, s32);
+extern char D_80047FE4[];
+extern char D_80047FE8[];
+extern StrBuf D_8003FE5C;
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021AC0);
 
@@ -124,15 +167,32 @@ void cbsync(s32 arg0) {
     }
 }
 
+extern void func_800314D8(s32, void*, void*, s32);
+extern char D_80047FE8[];
+extern s32 D_80047FF4;
+
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80021CD0);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Read);
+extern StrBuf D_8003FE44;
+extern void func_80021AC0(StrBuf*, void*);
+extern s32 func_8003530C(char*, void*);
+extern void* func_80030C74(s32);
+extern char D_80019424[];
+extern char D_80019438[];
 
 typedef struct {
-    char* unk0;
-    char* unk4;
-    char* unk8;
-} StrBuf;
+    s32 f0;
+    s32 f4;
+    char pad8[0x10];
+} ReadLocal;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} ReadOut;
+
+INCLUDE_ASM("asm/game/nonmatchings/MemorySys", FileSys__Read);
 
 s32 func_80021E6C(s32 arg0, StrBuf* arg1, StrBuf* arg2) {
     s32 result;
@@ -993,7 +1053,24 @@ typedef struct {
 
 extern void AudioSys__UnkFunc01(void*, s32, s32, s32);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80027000);
+void func_80027000(Obj27000* self) {
+    s32 idx = self->unk4;
+    Entry27000* e = (Entry27000*)((idx << 4) + (s32)self->unkC);
+    s32 c = e->unkC;
+    if (c != -0x61) {
+        if (c == self->unk0) {
+            s32 raw;
+            Local27000 local;
+            Local27000* p = &local;
+            raw = e->unk0;
+            self->unk4 = idx + 1;
+            p->f0 = raw >> 4;
+            p->f4 = raw & 0xF;
+            AudioSys__UnkFunc01(p, 0, 0x40, -1);
+        }
+        self->unk0 = self->unk0 + 1;
+    }
+}
 
 typedef struct {
     char pad0[0xC];
