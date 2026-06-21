@@ -446,13 +446,21 @@ typedef struct {
     s16* unk50;
 } F800231C4Struct;
 
-extern int D_8003FE8C;
+extern long long D_8003FE8C;
 s16* func_800231C4(F800231C4Struct*, s16, s16, s16);
 void func_800231A8(s32*, s32, s32, s32);
 void func_8002317C(UnkStruct09*, int);
 void func_80023174(s32*);
 
-INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_8002310C);
+void func_8002310C(void) {
+    F800231C4Struct* obj = (F800231C4Struct*)&D_8003FE8C;
+
+    obj->unk50 = (s16*)&obj->f4;
+    func_800231C4(obj, 0x1000, 0x1000, 0x1000);
+    func_800231A8((s32*)obj, 0, 0, 0);
+    func_8002317C((UnkStruct09*)obj, (int)obj);
+    func_80023174((s32*)obj);
+}
 
 void func_80023174(s32* arg0) {
     *arg0 = 0;
@@ -485,7 +493,7 @@ s16 *func_800231C4(F800231C4Struct *arg0, s16 arg1, s16 arg2, s16 arg3) {
     return r;
 }
 
-extern int D_8003FE8C;
+extern long long D_8003FE8C;
 
 s32 func_800231F4(s32 arg0) {
     s32 var_v1;
@@ -786,7 +794,7 @@ void func_800258B0(DtorObj2* self, s32 flags) {
 
 INCLUDE_ASM("asm/game/nonmatchings/MemorySys", func_80025954);
 
-extern int D_8003FE8C;
+extern long long D_8003FE8C;
 
 s32 func_80025B18(s32 arg0) {
     s32 var_v1;
