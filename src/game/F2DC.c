@@ -180,7 +180,21 @@ typedef struct {
     F8DE4Obj* unk4[1];
 } F8DE4Self;
 
-INCLUDE_ASM("asm/game/nonmatchings/F2DC", func_80028DE4);
+s32 func_80028DE4(F8DE4Self* self) {
+    s32 result = 1;
+    s32 i;
+
+    for (i = 0; i < self->unk0; i++) {
+        s32 r = 0;
+        if (result != 0) {
+            F8DE4Obj* obj = self->unk4[i];
+            F8DE4VTable* vt = obj->unk8;
+            r = vt->unk1C((char*)obj + vt->unk18) != 0;
+        }
+        result = r;
+    }
+    return result;
+}
 
 typedef struct Container_28E74 {
     s32 count;
